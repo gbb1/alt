@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import { auth } from '../../firebaseConfig'
 
+import { MdOutlineDragIndicator } from 'react-icons/md'
+
 import Draggable from 'react-draggable'
 
 import Column from '../components/Column';
@@ -18,16 +20,12 @@ const Project = () => {
   ref.push({
     color: 'blue',
     sentence: '',
+    variations: [''],
   })
-  // for (const item of test) {
-  //   ref.push({
-  //     color: item,
-  //     sentence: '',
-  //   })
-  // }
 
-  const [positions, setPositions] = useState<object>({})
+  // const [positions, setPositions] = useState<object>({})
   const [items, setItems] = useState<[]>(ref)
+  const [dragging, setDragging] = useState<boolean>(false)
 
   const moveRef = useRef<any>(null)
   const moveOverRef = useRef<any>(null)
@@ -35,6 +33,11 @@ const Project = () => {
 
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
+
+  const [varMoved, setVarMoved] = useState(null)
+  const [varMovedOver, setVarMovedOver] = useState(null)
+
+  const [selected, setSelected] = useState(null)
 
   const handleSort = () => {
 
@@ -67,11 +70,6 @@ const Project = () => {
     });
   }
 
-  // useEffect(() => {
-  //   console.log(items)
-  //   // reorderItems(0, 4)
-  //   console.log(items);
-  // }, [items])
 
   const dragOver = (moveFrom, moveTo) => {
 
@@ -81,51 +79,44 @@ const Project = () => {
     _items[moveFrom] = _items[moveTo]
     _items[moveTo] = temp
 
-
-    // const draggedItemContent = _items.splice(moveFrom, 1)[0]
-
-    // _items.splice(moveTo, 0, draggedItemContent)
-
     setItems(_items)
-    // moveRef.current = moveFrom
   }
 
-  const coordinateToIndex = (x:number) => {
-    let i = 0;
-    const keys = Object.keys(positions);
-
-    while (Number(keys[i]) < x) {
-      i++;
-    }
-
-    return i;
-  }
 
   const onDragStart = (e, index) => {
-    moveRef.current = index
-    setMoved(index)
+    // console.log(e)
+    console.log(e.target.id)
+    if (e.target.id==='drag-column') {
+      moveRef.current = index
+      setMoved(index)
+      setDragging(true)
+    } else if (e.target.id === 'drag-variation') {
+      console.log("firing2")
+    }
   }
 
-  useEffect(() => {
-    const element = document.getElementById('drag-' + moved)
+  // useEffect(() => {
+  //   const element = document.getElementById('drag-' + moved)
 
-    if (element?.classList.contains('border-2')) {
-      element?.classList.remove('border-2')
-    } else {
-      element?.classList.remove('border-2')
-    }
+  //   if (element?.classList.contains('border-2')) {
+  //     element?.classList.remove('border-2')
+  //   } else {
+  //     element?.classList.remove('border-2')
+  //   }
 
 
-    setTimeout(function(){
-      // e.target.style.visibility = "hidden";
-      // e.target.classList.add('border-2')
-      // e.target.classList.add('p-0')
-    }, 0);
-  }, [moved])
+  //   // setTimeout(function(){
+  //   //   // e.target.style.visibility = "hidden";
+  //   //   // e.target.classList.add('border-2')
+  //   //   // e.target.classList.add('p-0')
+  //   // }, 0);
+  // }, [moved])
 
   const onDragOver = (e, index) => {
-    moveOverRef.current = index
-    setMovedOver((curr) => index)
+    if (dragging) {
+      moveOverRef.current = index
+      setMovedOver((curr) => index)
+    }
   }
 
   const handleClick = (e) => {
@@ -133,46 +124,50 @@ const Project = () => {
     let ref = [...items]
     let index = Math.floor(Math.random() * (test.length))
 
-    console.log(index)
     ref.push({
       color: test[index],
       sentence:'',
+      variations: [''],
     })
+    setSelected(ref.length - 1)
     setItems(ref)
   }
 
   useEffect(() => {
     dragOver(moved, movedOver)
     setMoved((curr) => movedOver)
+    setSelected((curr) => movedOver)
   }, [movedOver])
 
   const onDragEnd = (e) => {
-    // handleSort()
-    // e.target.style.visibility = "visible";
-    // e.target.classList.remove('border-2')
-    // e.target.classList.remove('`)
+    e.preventDefault()
+    setDragging(false)
   }
 
   useEffect(() => {
     console.log(moveOverRef.current)
   }, [moveOverRef])
 
-  // useEffect(() => {
-  //   dragOver(moveRef.current, movedOver)
-  // }, [movedOver])
+  useEffect(() => {
+    console.log(selected)
+  }, [selected])
+
 
   return (
-    <div>
+    <div className="bg-[#FBF5EC]">
       Project:
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 w-[90%] max-w-min ml-[10%] border-2 absolute left-0 top-[20%] justify-start px-10">
         {
           items.map((x:object, index:number) => {
             return (
-              <div key={index} >
+              <div key={index} className="" onClick={() => setSelected(index)}>
                 <div
-                  id={`drag-${index}`}
+                  id={`drag-column`}
                   className={`
                     cursor-move
+                    bg-gray-100/70
+                    p-2
+                    rounded-sm
                   `}
                   draggable
                   onDragStart={(e) => onDragStart(e, index)}
@@ -181,13 +176,24 @@ const Project = () => {
                   onDragOver={(e) => e.preventDefault()}
                   ref={dragged}
                 >
-                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.sentence} />
+                  <div className="w-full flex-row flex justify-center p-1">
+                    <div
+                    id='dragger'
+                    className="rotate-90 w-min h-min bg-gray-200 rounded-sm py-2 px-1 z-[3]"
+                    >
+                      <MdOutlineDragIndicator />
+                    </div>
+                  </div>
+                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} selected={selected} dragging={dragging} setDragging={setDragging} />
                 </div>
               </div>
             )
           })
         }
-      <button onClick={handleClick}>
+      <button
+        onClick={handleClick}
+        className="w-[40px] h-[40px] rounded-[1000px] flex flex-row items-center justify-center"
+      >
         +
       </button>
       </div>

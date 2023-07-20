@@ -1,81 +1,111 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 
+import Textblock from './Textblock';
+
+import { MdOutlineDragIndicator } from 'react-icons/md'
+
+// import { Trie } from '../Trie.ts'
 
 
 import Draggable from 'react-draggable'
 
-const Column = ({ index, items, setItems, color, sentence }:any) => {
+const Column = ({ index, items, setItems, color, sentence, selected, dragging, setDragging }:any) => {
 
-  const [input, setInput] = useState('')
 
-  const handleChange = (e) => {
+  const [moved, setMoved] = useState(null)
+  const [movedOver, setMovedOver] = useState(null)
+  const [varDragging, setVarDragging] = useState(false)
+
+  const dragOver = (moveFrom, moveTo) => {
+
+    const ref = [...items]
+    const _vars = [...ref[index].variations]
+
+    const temp = _vars[moveFrom]
+    _vars[moveFrom] = _vars[moveTo]
+    _vars[moveTo] = temp
+
+    ref[index].variations = _vars
+
+    setItems(ref)
+  }
+
+
+  const onDragStart = (e, index) => {
+    // console.log(e)
+    console.log(e.target.id)
+    if (e.target.id==='drag-variation') {
+      setMoved(index)
+      setVarDragging(true)
+    }
+  }
+
+  const addVar = (e) => {
     e.preventDefault()
-    console.log('trigged')
     let ref = [...items]
-    ref[index].sentence = e.target.value
+    // ref[index].variations.push({
+    //   index: ref[index].variations.length + 1,
+    //   var: ''
+    // })
+    ref[index].variations.push('')
     // if (div) ref[index].sentence = e.target.textContent
     setItems(ref)
   }
 
-  // const handleClick = (e) => {
-  //   e.preventDefault()
-  //   let id = 'input' + index
-  //   let ref = [...items]
-  //   ref[index].sentence = e.target.value
-  //   if (div) ref[index].sentence = e.target.textContent
-  //   setItems(ref)
-  // }
+  const startDrag = (e) => {
+    e.preventDefault()
+    setDragging(true)
+    console.log('dragging')
+  }
 
-  // useEffect(() => {
-  //   const target = document.getElementById('input' + index)
+  const onDragOver = (e, index) => {
+    console.log('firing')
+    if (varDragging) {
+      setMovedOver((curr) => index)
+    }
+  }
 
-  //   // Create an observer instance.
-  //   const observer = new MutationObserver(function(mutations) {
-  //       console.log(target.innerText);
-  //   });
+  useEffect(() => {
+    dragOver(moved, movedOver)
+    setMoved((curr) => movedOver)
+    // setSelected((curr) => movedOver)
+  }, [movedOver])
 
-  //   // Pass in the target node, as well as the observer options.
-  //   observer.observe(target, {
-  //       attributes:    true,
-  //       childList:     true,
-  //       characterData: true
-  //   });
-  // }, [])
+  const onDragEnd = (e) => {
+    e.preventDefault()
+    setDragging(false)
+  }
 
   return (
-    // <Draggable
-    //   key={index}
-    //   position={{ x: x, y: y}}
-    //   onDrag={handleDrag}
-    //   onStop={endHandler}
-    // >
-    <div className="">
-      <div className={`cursor-pointer max-w-[300px] bg-gray-200 rounded-lg active:opacity-75 active:z-[3] w-min h-min p-1 inset-0 top-0`}>
-        <div>{color}</div>
-        <div className="flex flex-col items-start p-3 m-3 relative h-min border-black border-2">
-          <textarea
-            placeholder='hello'
-            value={sentence}
-            className='p-3 min-w-full min-h-full max-w-full min-h-[10px] h-full w-full rounded-md z-[1] absolute top-0 left-0'
-            onChange={handleChange}
-            style={{resize: 'none'}}
-          >
-          </textarea>
 
-          <div
-            className={`border-2 min-w-[200px] w-full max-w-full min-h-[10px] p-3 bg-white rounded-md m-0 text-left opacity-0`}
-            style={{ marginLeft: `${0}%`}}
-            id={'input' + index}
-            contentEditable={true}
-            suppressContentEditableWarning={true}
-          >
-            {sentence}
-          </div>
+    <div className="flex flex-col gap-3 p-2">
+      {/* <div
+        id='dragger'
+        className="rotate-90 w-min h-min z-[3]"
+      >
+        <MdOutlineDragIndicator />
+      </div> */}
+      <Textblock xIndex={index} yIndex={0} sentence={sentence} items={items} setItems={setItems} />
+      {
+        selected === index
+        ?
+        items[index].variations.slice(1).map((vari, yIndex) => {
+            return (
+              <Textblock
+                xIndex={index} yIndex={yIndex + 1} setItems={setItems} items={items} sentence={vari}
+                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
+              />
+              // <div
+              //   className="bg-black w-full h-[40px]"
+              // >alt {index}
 
-        </div>
-
-      </div>
+              // </div>
+            )
+          })
+        : null
+      }
+      <button onClick={addVar}>+</button>
     </div>
     // </Draggable>
   )
