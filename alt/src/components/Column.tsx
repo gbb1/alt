@@ -6,7 +6,6 @@ import Original from './Original';
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
 
-// import { Trie } from '../Trie.ts'
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 
@@ -51,7 +50,10 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
     //   index: ref[index].variations.length + 1,
     //   var: ''
     // })
-    ref[index].variations.push('')
+    ref[index].variations.push({
+      text: '',
+      starred: false,
+    })
     // if (div) ref[index].sentence = e.target.textContent
     setItems(ref)
   }
@@ -59,11 +61,11 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
   const startDrag = (e) => {
     e.preventDefault()
     setDragging(true)
-    console.log('dragging')
+
   }
 
   const onDragOver = (e, index) => {
-    console.log('firing')
+
     if (varDragging) {
       setMovedOver((curr) => index)
     }
@@ -97,15 +99,15 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
           if (yIndex === 0) {
 
             return (
-              <Original
-                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} sentence={vari} obj={obj}
+              <Original key={'var' + yIndex}
+                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} obj={obj}
                 onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
               />
             )
           } else {
             return (
-              <Textblock
-                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} sentence={vari}
+              <Textblock key={'var' + yIndex}
+                moved={moved} xIndex={index} yIndex={yIndex} setItems={setItems} items={items}
                 onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
               />
             )

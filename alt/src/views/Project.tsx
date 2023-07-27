@@ -10,8 +10,6 @@ import { auth } from '../../firebaseConfig'
 import { MdOutlineDragIndicator } from 'react-icons/md'
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
-import Draggable from 'react-draggable'
-
 import Column from '../components/Column';
 
 const Project = () => {
@@ -21,7 +19,10 @@ const Project = () => {
   ref.push({
     color: 'blue',
     sentence: '',
-    variations: [''],
+    variations: [{
+      text: '',
+      starred: false,
+    }],
     translation_string: {
       show: false,
       text: '',
@@ -138,7 +139,10 @@ const Project = () => {
     ref.push({
       color: test[index],
       sentence:'',
-      variations: [''],
+      variations: [{
+        text: '',
+        starred: false,
+      }],
       translation_string: {
         show: false,
         text: '',
@@ -175,11 +179,11 @@ const Project = () => {
   return (
     <div className="">
       {/* Project: */}
-      <div className="flex flex-row flex-wrap gap-4 w-max max-w-[95%] ml-[5%] absolute left-0 top-[15%] justify-start px-10 pb-20">
+      <div className="flex flex-row flex-wrap gap-4 w-max max-w-[95%] ml-[2%] absolute left-0 top-[15%] justify-start px-10 pb-20">
         {
           items.map((x:object, index:number) => {
             return (
-              <div key={index} className="" onClick={() => setSelected(index)}>
+              <div key={'column' + index} className="" onClick={() => setSelected(index)}>
                 <div
                   id={`drag-column`}
                   className={`

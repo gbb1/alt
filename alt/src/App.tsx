@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 // import './App.css'
@@ -17,10 +17,26 @@ import Project from './views/Project'
 
 function App() {
 
+  const navRef = useRef(null)
+
+  const handleScroll = (event) => {
+    console.log('scrolling', event.target.scrollTop)
+    if (event.target.scrollTop > 0) {
+      navRef.current.classList.add('transition-all');
+      navRef.current.classList.add('border-b-2');
+      navRef.current.classList.add('border-b-[#1C1E21]');
+    } else {
+      navRef.current.classList.remove('shadow-md');
+      navRef.current.classList.remove('border-b-2');
+      navRef.current.classList.remove('border-b-[#1C1E21]');
+    }
+  };
+
   return (
+
     <div className="">
-      <div className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
-        <NavBar />
+      <div onScroll={handleScroll} className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
+        <NavBar navRef={navRef} />
         <Router>
           <Routes>
             <Route path='/' element={<div>hello</div>} />

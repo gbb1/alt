@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { IoClose } from 'react-icons/io5'
@@ -6,14 +6,12 @@ import { IoClose } from 'react-icons/io5'
 
 const TextField = ({ state, handleChange, xIndex, id }:any) => {
 
-  console.log('textField:', state)
-
   return (
 
         <div className="flex flex-col items-start p-3 m-1 relative h-min">
           <textarea
             id={id}
-            placeholder='hello'
+            placeholder='...'
             value={state}
             className='p-3 min-w-full max-h-[300px] min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
             onChange={handleChange}
