@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+// import './App.css'
 
 import Draggable from 'react-draggable';
+
+import NavBar from './components/Navbar';
 
 import {
   BrowserRouter as Router, Route, Routes,
@@ -16,14 +18,17 @@ import Project from './views/Project'
 function App() {
 
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path='/' element={<div>hello</div>} />
-          <Route path='/project' element={<Project />} />
-        </Routes>
-      </Router>
-    </>
+    <div className="border-2">
+      <div className="bg-black fixed top-0 left-0 h-full w-full bg-[#FBF5EC]">
+        <NavBar />
+        <Router>
+          <Routes>
+            <Route path='/' element={<div>hello</div>} />
+            <Route path='/project' element={<Project />} />
+          </Routes>
+        </Router>
+      </div>
+    </div>
   )
 }
 

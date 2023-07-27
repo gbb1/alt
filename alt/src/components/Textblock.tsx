@@ -41,11 +41,11 @@ const Textblock = ({ xIndex, yIndex, sentence, items, setItems, onDragStart, onD
 
   return (
       <div
-        className={`cursor-pointer max-w-[300px] bg-gray-200 rounded-md active:opacity-75 active:z-[3] w-min h-min p-1 inset-0 top-0`}
+        className={`cursor-pointer max-w-[300px] bg-[#F0F2F5] rounded-md w-full h-min p-1 inset-0 top-0`}
         draggable
         id={`drag-variation`}
-        onDragStart={onDragStart}
-        onDragEnter={onDragOver}
+        onDragStart={(e) => onDragStart(e, yIndex)}
+        onDragEnter={(e) => onDragOver(e, yIndex)}
         onDragEnd={onDragEnd}
         onDragOver={(e) => e.preventDefault()}
       >
@@ -64,9 +64,9 @@ const Textblock = ({ xIndex, yIndex, sentence, items, setItems, onDragStart, onD
           <textarea
             placeholder='hello'
             value={sentence}
-            className='p-3 min-w-full min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
+            className='p-3 min-w-full max-h-[300px] min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
             onChange={handleChange}
-            style={{resize: 'both'}}
+            style={{resize: 'none'}}
           >
           </textarea>
 
@@ -77,7 +77,7 @@ const Textblock = ({ xIndex, yIndex, sentence, items, setItems, onDragStart, onD
             contentEditable={true}
             suppressContentEditableWarning={true}
           >
-            {sentence}
+            {sentence.replaceAll(' ','0')}
           </div>
         </div>
       </div>

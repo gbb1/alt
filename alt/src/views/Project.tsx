@@ -8,6 +8,7 @@ import {
 import { auth } from '../../firebaseConfig'
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
+import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 import Draggable from 'react-draggable'
 
@@ -34,8 +35,9 @@ const Project = () => {
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
 
-  const [varMoved, setVarMoved] = useState(null)
-  const [varMovedOver, setVarMovedOver] = useState(null)
+  // const [varMoved, setVarMoved] = useState(null)
+  // const [varMovedOver, setVarMovedOver] = useState(null)
+  // const [varDragging, setVarDragging] = useState(false)
 
   const [selected, setSelected] = useState(null)
 
@@ -73,11 +75,14 @@ const Project = () => {
 
   const dragOver = (moveFrom, moveTo) => {
 
-    const _items = [...items]
+    let _items = [...items]
 
-    const temp = _items[moveFrom]
-    _items[moveFrom] = _items[moveTo]
-    _items[moveTo] = temp
+    const moved = _items.splice(moveFrom, 1)
+    _items = _items.slice(0, moveTo).concat(moved).concat(_items.slice(moveTo))
+
+    // const temp = _items[moveFrom]
+    // _items[moveFrom] = _items[moveTo]
+    // _items[moveTo] = temp
 
     setItems(_items)
   }
@@ -85,13 +90,11 @@ const Project = () => {
 
   const onDragStart = (e, index) => {
     // console.log(e)
-    console.log(e.target.id)
+    // console.log(e.target.id)
     if (e.target.id==='drag-column') {
       moveRef.current = index
       setMoved(index)
       setDragging(true)
-    } else if (e.target.id === 'drag-variation') {
-      console.log("firing2")
     }
   }
 
@@ -144,19 +147,19 @@ const Project = () => {
     setDragging(false)
   }
 
-  useEffect(() => {
-    console.log(moveOverRef.current)
-  }, [moveOverRef])
+  // useEffect(() => {
+  //   console.log(moveOverRef.current)
+  // }, [moveOverRef])
 
-  useEffect(() => {
-    console.log(selected)
-  }, [selected])
+  // useEffect(() => {
+  //   console.log(selected)
+  // }, [selected])
 
 
   return (
-    <div className="bg-[#FBF5EC]">
-      Project:
-      <div className="flex flex-row gap-4 w-[90%] max-w-min ml-[10%] border-2 absolute left-0 top-[20%] justify-start px-10">
+    <div className="">
+      {/* Project: */}
+      <div className="flex flex-row flex-wrap gap-4 w-max max-w-[95%] ml-[5%] absolute left-0 top-[15%] justify-start px-10 pb-20">
         {
           items.map((x:object, index:number) => {
             return (
@@ -165,9 +168,9 @@ const Project = () => {
                   id={`drag-column`}
                   className={`
                     cursor-move
-                    bg-gray-100/70
+                    bg-[#1C1E21]/90
                     p-2
-                    rounded-sm
+                    rounded-md
                   `}
                   draggable
                   onDragStart={(e) => onDragStart(e, index)}
@@ -176,7 +179,7 @@ const Project = () => {
                   onDragOver={(e) => e.preventDefault()}
                   ref={dragged}
                 >
-                  <div className="w-full flex-row flex justify-center p-1">
+                  <div className="w-full flex-row flex justify-center items-center p-1">
                     <div
                     id='dragger'
                     className="rotate-90 w-min h-min bg-gray-200 rounded-sm py-2 px-1 z-[3]"
@@ -184,7 +187,7 @@ const Project = () => {
                       <MdOutlineDragIndicator />
                     </div>
                   </div>
-                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} selected={selected} dragging={dragging} setDragging={setDragging} />
+                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                 </div>
               </div>
             )
@@ -192,7 +195,7 @@ const Project = () => {
         }
       <button
         onClick={handleClick}
-        className="w-[40px] h-[40px] rounded-[1000px] flex flex-row items-center justify-center"
+        className="w-[40px] h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072]"
       >
         +
       </button>

@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import Textblock from './Textblock';
+import Original from './Original';
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
 
 // import { Trie } from '../Trie.ts'
+import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 
 import Draggable from 'react-draggable'
@@ -17,14 +19,15 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
   const [movedOver, setMovedOver] = useState(null)
   const [varDragging, setVarDragging] = useState(false)
 
+  const [hide, setHide] = useState(false)
+
   const dragOver = (moveFrom, moveTo) => {
 
     const ref = [...items]
-    const _vars = [...ref[index].variations]
+    let _vars = [...ref[index].variations]
 
-    const temp = _vars[moveFrom]
-    _vars[moveFrom] = _vars[moveTo]
-    _vars[moveTo] = temp
+    const moved = _vars.splice(moveFrom, 1)
+    _vars = _vars.slice(0, moveTo).concat(moved).concat(_vars.slice(moveTo))
 
     ref[index].variations = _vars
 
@@ -34,8 +37,8 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
 
   const onDragStart = (e, index) => {
     // console.log(e)
-    console.log(e.target.id)
     if (e.target.id==='drag-variation') {
+      console.log('this one')
       setMoved(index)
       setVarDragging(true)
     }
@@ -81,14 +84,17 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
 
     <div className="flex flex-col gap-3 p-2">
       {/* <div
-        id='dragger'
-        className="rotate-90 w-min h-min z-[3]"
+        className="w-min h-min z-[0] absolute -translate-y-9"
       >
-        <MdOutlineDragIndicator />
+        {
+          hide
+          ? <BiSolidShow />
+          : <BiSolidHide />
+        }
       </div> */}
-      <Textblock xIndex={index} yIndex={0} sentence={sentence} items={items} setItems={setItems} />
+      <Original xIndex={index} yIndex={0} sentence={sentence} items={items} setItems={setItems} onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd} />
       {
-        selected === index
+        selected !== null
         ?
         items[index].variations.slice(1).map((vari, yIndex) => {
             return (
@@ -105,7 +111,7 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
           })
         : null
       }
-      <button onClick={addVar}>+</button>
+      <button className="bg-gray-200 py-2 rounded-lg" onClick={addVar}>+</button>
     </div>
     // </Draggable>
   )
