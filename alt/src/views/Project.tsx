@@ -22,6 +22,14 @@ const Project = () => {
     color: 'blue',
     sentence: '',
     variations: [''],
+    translation_string: {
+      show: false,
+      text: '',
+    },
+    ui_component: {
+      show: false,
+      text: '',
+    },
   })
 
   // const [positions, setPositions] = useState<object>({})
@@ -131,6 +139,14 @@ const Project = () => {
       color: test[index],
       sentence:'',
       variations: [''],
+      translation_string: {
+        show: false,
+        text: '',
+      },
+      ui_component: {
+        show: false,
+        text: '',
+      },
     })
     setSelected(ref.length - 1)
     setItems(ref)
@@ -187,7 +203,7 @@ const Project = () => {
                       <MdOutlineDragIndicator />
                     </div>
                   </div>
-                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
+                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                 </div>
               </div>
             )

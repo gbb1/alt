@@ -12,7 +12,7 @@ import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 import Draggable from 'react-draggable'
 
-const Column = ({ index, items, setItems, color, sentence, selected, dragging, setDragging }:any) => {
+const Column = ({ index, items, setItems, color, sentence, obj, selected, dragging, setDragging }:any) => {
 
 
   const [moved, setMoved] = useState(null)
@@ -92,8 +92,27 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
           : <BiSolidHide />
         }
       </div> */}
-      <Original xIndex={index} yIndex={0} sentence={sentence} items={items} setItems={setItems} onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd} />
       {
+        obj.variations.map((vari, yIndex) => {
+          if (yIndex === 0) {
+
+            return (
+              <Original
+                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} sentence={vari} obj={obj}
+                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
+              />
+            )
+          } else {
+            return (
+              <Textblock
+                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} sentence={vari}
+                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
+              />
+            )
+          }
+        })
+      }
+      {/* {
         selected !== null
         ?
         items[index].variations.slice(1).map((vari, yIndex) => {
@@ -110,7 +129,7 @@ const Column = ({ index, items, setItems, color, sentence, selected, dragging, s
             )
           })
         : null
-      }
+      } */}
       <button className="bg-gray-200 py-2 rounded-lg" onClick={addVar}>+</button>
     </div>
     // </Draggable>

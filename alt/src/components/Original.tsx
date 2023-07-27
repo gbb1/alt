@@ -2,13 +2,38 @@ import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { IoClose } from 'react-icons/io5'
+import { FaCircleMinus } from 'react-icons/fa6'
+import { FaCirclePlus } from 'react-icons/fa6'
+
+import TextField from './TextField';
 
 
-const Original = ({ xIndex, yIndex, sentence, items, setItems, onDragStart, onDragEnd, onDragOver }:any) => {
-
-  const [input, setInput] = useState('')
+const Original = ({ xIndex, yIndex, sentence, obj, items, setItems, onDragStart, onDragEnd, onDragOver }:any) => {
 
   const [show, setShow] = useState(false)
+
+
+  const [showUIComp, setShowUIComp] = useState(false)
+  const [showTranslation, setShowTranslation] = useState(false)
+
+  const handleShow = (e, key) => {
+    e.preventDefault()
+    const ref = [...items]
+    ref[xIndex][key].show = !ref[xIndex][key].show
+    setItems(ref)
+  }
+
+
+
+  const handleAltInput = (e) => {
+    e.preventDefault()
+
+    let ref = [...items]
+    // console.log('va', ref[xIndex])
+    ref[xIndex][e.target.id] = e.target.value
+
+    setItems(ref)
+  }
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -65,76 +90,40 @@ const Original = ({ xIndex, yIndex, sentence, items, setItems, onDragStart, onDr
             <IoClose value={{ color: 'white' }} />
           </div> */}
         </div>
-        <div className="flex flex-col items-start p-3 m-1 relative h-min">
-          <textarea
-            placeholder='hello'
-            value={sentence}
-            className='p-3 min-w-full max-h-[300px] min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
-            onChange={handleChange}
-            style={{resize: 'none'}}
-          >
-          </textarea>
-          <div
-            className={`border-2 min-w-[200px] w-full max-w-full min-h-[10px] p-3 bg-white rounded-sm m-0 text-left opacity-0`}
-            style={{ marginLeft: `${0}%`}}
-            id={'input' + xIndex}
-            contentEditable={true}
-            suppressContentEditableWarning={true}
-          >
-            {sentence.replaceAll(' ','0')}
-          </div>
-        </div>
-
+        <TextField state={sentence} handleChange={handleChange} xIndex={xIndex} id={''} />
         <div>
-          <div className="flex flex-row justify-between">
-            <div className="p-2 text-xs bg-white w-max rounded-sm ml-1">Translation info:</div>
-            <div>button</div>
-          </div>
-          <div className="flex flex-col items-start p-3 m-1 relative h-min">
-            <textarea
-              placeholder='hello'
-              value={sentence}
-              className='p-3 min-w-full max-h-[300px] min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
-              onChange={handleChange}
-              style={{resize: 'none'}}
-            >
-            </textarea>
-            <div
-              className={`border-2 min-w-[200px] w-full max-w-full min-h-[10px] p-3 bg-white rounded-sm m-0 text-left opacity-0`}
-              style={{ marginLeft: `${0}%`}}
-              id={'input' + xIndex}
-              contentEditable={true}
-              suppressContentEditableWarning={true}
-            >
-              {sentence.replaceAll(' ','0')}
+        <div className="flex flex-row justify-between items-center">
+          <div className="py-2 text-xs w-max rounded-sm ml-1">UI component:</div>
+            <div className="" id="ui_component"  onClick={(e) => handleShow(e, 'ui_component')}>
+              {
+                obj.ui_component.show
+                ? <FaCircleMinus />
+                : <FaCirclePlus />
+              }
             </div>
           </div>
+          {
+            obj.ui_component.show
+            ? <TextField state={obj.ui_component.text} handleChange={handleAltInput} xIndex={xIndex} id={'ui_component'} />
+            : null
+          }
         </div>
-
         <div>
-          <div className="flex flex-row justify-between">
-            <div className="p-2 text-xs bg-white w-max rounded-sm ml-1">Content type:</div>
-            <div>button</div>
-          </div>
-          <div className="flex flex-col items-start p-3 m-1 relative h-min">
-            <textarea
-              placeholder='hello'
-              value={sentence}
-              className='p-3 min-w-full max-h-[300px] min-h-full max-w-full min-h-[10px] h-full w-full rounded-sm z-[1] absolute top-0 left-0'
-              onChange={handleChange}
-              style={{resize: 'none'}}
-            >
-            </textarea>
-            <div
-              className={`border-2 min-w-[200px] w-full max-w-full min-h-[10px] p-3 bg-white rounded-sm m-0 text-left opacity-0`}
-              style={{ marginLeft: `${0}%`}}
-              id={'input' + xIndex}
-              contentEditable={true}
-              suppressContentEditableWarning={true}
-            >
-              {sentence.replaceAll(' ','0')}
+          <div className="flex flex-row justify-between items-center">
+            <div className="py-2 text-xs w-max rounded-sm ml-1">Translation info:</div>
+            <div className="" id="translation_string" onClick={(e) => handleShow(e, 'translation_string')}>
+              {
+                obj.translation_string.show
+                ? <FaCircleMinus />
+                : <FaCirclePlus />
+              }
             </div>
           </div>
+          {
+            obj.translation_string.show
+            ? <TextField state={obj.translation_string.text} handleChange={handleAltInput} xIndex={xIndex} id={'translation_string'} />
+            : null
+          }
         </div>
 
       </div>

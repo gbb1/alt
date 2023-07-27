@@ -18,8 +18,8 @@ import Project from './views/Project'
 function App() {
 
   return (
-    <div className="border-2">
-      <div className="bg-black fixed top-0 left-0 h-full w-full bg-[#FBF5EC]">
+    <div className="">
+      <div className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
         <NavBar />
         <Router>
           <Routes>
