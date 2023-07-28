@@ -12,18 +12,26 @@ import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 import Column from '../components/Column';
 
+import { createUser, addProject, getProjects } from '../../db/projects.ts'
+import { useGetProjects } from '../hooks/projects'
+
+
 const Overview = () => {
 
   const navigate = useNavigate()
+  const [update, setUpdate] = useState(false)
+  const [load, setLoad] = useState(false)
 
-  const [projects, setProjects] = useState([])
+  // const [projects, setProjects] = useState([])
+  const { projects, loading, error } = useGetProjects('test@gmail.com', update);
 
-  const project = {
-    id: '',
-    data: [],
-    accessed: '',
-    name: '',
-  }
+  // useEffect(() => {
+  //   // createUser('test@gmail.com')
+  //   // addProject('test@gmail.com').then(res => {
+  //   //   console.log(res)
+  //   // })
+  //   // getProjects('test@gmail.com').then(res => console.log(res))
+  // }, [])
 
 
   // useEffect(() => {
@@ -44,25 +52,17 @@ const Overview = () => {
   // }, [moved])
 
   const handleClick = (e) => {
-    e.preventDefault()
-    let ref = [...projects]
-
-    ref.push(project)
-    setProjects(ref)
+    setLoad(true)
+    addProject('test@gmail.com').then(() => {
+      setUpdate(!update)
+      setLoad(false)
+    })
   }
 
   const handleNav = (e) => {
     const project_id = e.target.id
     navigate('/project', { state: { project_id } });
   }
-
-  // useEffect(() => {
-  //   console.log(moveOverRef.current)
-  // }, [moveOverRef])
-
-  // useEffect(() => {
-  //   console.log(selected)
-  // }, [selected])
 
 
   return (
@@ -73,19 +73,29 @@ const Overview = () => {
           <h1>Your projects</h1>
           <button
             onClick={handleClick}
-            className="w-max px-4 py-2 rounded-full flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+            className="w-max px-4 py-2 rounded-full flex flex-row items-center gap-2 justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
           >
-            Create project
+            <div className=''>Create project</div>
+            {
+              !load
+              ? null
+              : <span className="loading loading-dots loading-xs"></span>
+            }
           </button>
         </div>
         <div className="flex flex-row flex-wrap gap-4">
+          {/* {
+            load
+            ? <span className="loading loading-dots loading-xs"></span>
+            : null
+          } */}
           {
             projects && projects.map((p, index) => {
               return (
                 <div id={p.id} className="w-max p-4 cursor-pointer bg-white rounded-lg" onClick={handleNav}>
                   {
-                    project.name.length > 0
-                    ? project.name
+                    p.name.length > 0
+                    ? p.name
                     : 'Project ' + index
                   }
                 </div>
