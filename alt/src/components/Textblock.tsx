@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { IoClose } from 'react-icons/io5'
-import { FaStar, FaRegStar } from 'react-icons/fa6'
+import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'
 
 import TextField from './TextField';
 
@@ -13,11 +13,24 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
     return items[xIndex].variations[yIndex].text
   }, [items[xIndex].variations[yIndex].text])
 
+  // const [cloneable, setCloneable] = useState(false)
+
+  // useEffect(() => {
+
+  // })
+
   const handleChange = (e) => {
     e.preventDefault()
 
     let ref = [...items]
     ref[xIndex].variations[yIndex].text = e.target.value
+    setItems(ref)
+  }
+
+  const handleClone = (e) => {
+    e.preventDefault()
+    let ref = [...items]
+    ref[xIndex].variations[yIndex].text = ref[xIndex].variations[0].text
     setItems(ref)
   }
 
@@ -61,6 +74,12 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
             className="self-center text-xs"
           >line {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
+            <div
+              className="bg-gray-100 rounded-[100%] p-1"
+              onClick={handleClone}
+            >
+              <FaClone />
+            </div>
             <div
               className="bg-gray-100 rounded-[100%] p-1"
             >

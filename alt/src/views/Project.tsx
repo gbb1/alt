@@ -179,7 +179,7 @@ const Project = () => {
   return (
     <div className="">
       {/* Project: */}
-      <div className="flex flex-row flex-wrap gap-4 w-max max-w-[95%] ml-[2%] absolute left-0 top-[15%] justify-start px-10 pb-20">
+      <div className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[2%] absolute left-0 top-[15%] justify-start px-10 pb-20">
         {
           items.map((x:object, index:number) => {
             return (
@@ -215,7 +215,7 @@ const Project = () => {
         }
       <button
         onClick={handleClick}
-        className="w-[40px] h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072]"
+        className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
       >
         +
       </button>

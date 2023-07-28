@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 
 import Textblock from './Textblock';
 import Original from './Original';
+import Screenshot from './Screenshot';
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
 
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
-
 
 import Draggable from 'react-draggable'
 
@@ -17,6 +17,7 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
   const [varDragging, setVarDragging] = useState(false)
+
 
   const [hide, setHide] = useState(false)
 
@@ -37,7 +38,6 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
   const onDragStart = (e, index) => {
     // console.log(e)
     if (e.target.id==='drag-variation') {
-      console.log('this one')
       setMoved(index)
       setVarDragging(true)
     }
@@ -94,6 +94,7 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
           : <BiSolidHide />
         }
       </div> */}
+      <Screenshot items={items} setItems={setItems} xIndex={index} />
       {
         obj.variations.map((vari, yIndex) => {
           if (yIndex === 0) {

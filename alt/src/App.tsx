@@ -14,13 +14,13 @@ import {
 import { auth, db } from '../firebaseConfig'
 
 import Project from './views/Project'
+import Overview from './views/Overview';
 
 function App() {
 
   const navRef = useRef(null)
 
   const handleScroll = (event) => {
-    console.log('scrolling', event.target.scrollTop)
     if (event.target.scrollTop > 0) {
       navRef.current.classList.add('transition-all');
       navRef.current.classList.add('border-b-2');
@@ -39,7 +39,7 @@ function App() {
         <NavBar navRef={navRef} />
         <Router>
           <Routes>
-            <Route path='/' element={<div>hello</div>} />
+            <Route path='/' element={<Overview />} />
             <Route path='/project' element={<Project />} />
           </Routes>
         </Router>
