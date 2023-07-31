@@ -25,31 +25,6 @@ const Overview = () => {
   // const [projects, setProjects] = useState([])
   const { projects, loading, error } = useGetProjects('test@gmail.com', update);
 
-  // useEffect(() => {
-  //   // createUser('test@gmail.com')
-  //   // addProject('test@gmail.com').then(res => {
-  //   //   console.log(res)
-  //   // })
-  //   // getProjects('test@gmail.com').then(res => console.log(res))
-  // }, [])
-
-
-  // useEffect(() => {
-  //   const element = document.getElementById('drag-' + moved)
-
-  //   if (element?.classList.contains('border-2')) {
-  //     element?.classList.remove('border-2')
-  //   } else {
-  //     element?.classList.remove('border-2')
-  //   }
-
-
-  //   // setTimeout(function(){
-  //   //   // e.target.style.visibility = "hidden";
-  //   //   // e.target.classList.add('border-2')
-  //   //   // e.target.classList.add('p-0')
-  //   // }, 0);
-  // }, [moved])
 
   const handleClick = (e) => {
     setLoad(true)
@@ -110,3 +85,30 @@ const Overview = () => {
 
 export default Overview
 
+
+
+  // useEffect(() => {
+  //   // createUser('test@gmail.com')
+  //   // addProject('test@gmail.com').then(res => {
+  //   //   console.log(res)
+  //   // })
+  //   // getProjects('test@gmail.com').then(res => console.log(res))
+  // }, [])
+
+
+  // useEffect(() => {
+  //   const element = document.getElementById('drag-' + moved)
+
+  //   if (element?.classList.contains('border-2')) {
+  //     element?.classList.remove('border-2')
+  //   } else {
+  //     element?.classList.remove('border-2')
+  //   }
+
+
+  //   // setTimeout(function(){
+  //   //   // e.target.style.visibility = "hidden";
+  //   //   // e.target.classList.add('border-2')
+  //   //   // e.target.classList.add('p-0')
+  //   // }, 0);
+  // }, [moved])

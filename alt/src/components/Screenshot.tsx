@@ -1,33 +1,31 @@
 import { useEffect, useState, useMemo } from "react";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { MD5 } from 'crypto-js';
 
+import { storage } from '../../firebaseConfig'
 import { FaRegImage } from 'react-icons/fa6'
 
-const Screenshot = ({ items, setItems, xIndex }) => {
-  const [files, setFiles] = useState();
-  const [preview, setPreview] = useState();
+const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
+  const [files, setFiles] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  const storage = getStorage()
 
   const image = useMemo(() => {
+    // console.log('inmemo', items[xIndex], items[xIndex].screenshot)
     return items[xIndex].screenshot || ''
   }, [items[xIndex].screenshot])
   // rendering previews
   useEffect(() => {
     if (!files) return;
-    // let tmp = [];
-    const objUrl = URL.createObjectURL(files[0])
-    // for (let i = 0; i < files.length; i++) {
-    //   tmp.push(URL.createObjectURL(files[i]));
-    // }
-    // const objectUrls = tmp;
-    setPreview(objUrl);
 
-    // free memory
+    const objUrl = URL.createObjectURL(files[0])
+    uploadFile(files[0], objUrl)
+
     return () => {
       URL.revokeObjectURL(objUrl);
     }
-    // for (let i = 0; i < objectUrls.length; i++) {
-    //   return () => {
-    //   };
-    // }
+
   }, [files]);
 
   // useEffect(() => {
@@ -37,17 +35,60 @@ const Screenshot = ({ items, setItems, xIndex }) => {
   //   }
   // }, [items])
 
+  const uploadFile = (file, url) => {
+
+    const split = url.split('/')
+    const objUrl = split[split.length - 1]
+
+    const hash = MD5(user).toString();
+
+    const path = 'screenshots/' + hash + '/' + projectId + '/' + objUrl
+
+    const fileImageRef = ref(storage, path);
+    const storageRef = ref(storage, fileImageRef)
+
+    uploadBytes(storageRef, file).then((snapshot) => {
+      getDownloadURL(storageRef)
+        .then((url) => {
+          const ref = [...items]
+          const obj = ref[xIndex]
+          if (!('screenshot' in obj)) {
+            obj.screenshot = ''
+            obj.path = ''
+          }
+          let prior = obj.path
+          obj.screenshot = url;
+          obj.path = path
+          setItems(ref)
+
+          return prior
+        })
+        .then((old) => {
+          if (!old.length) return
+
+          const oldRef = ref(storage, old);
+          return deleteObject(oldRef)
+        })
+        .then((res) => {
+          console.log(res)
+        })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
 
-  useEffect(() => {
-    let ref = [...items]
-    let obj = ref[xIndex]
-    if (!('screenshot' in obj)) {
-      obj.screenshot = ''
-    }
-    obj.screenshot = preview;
-    setItems(ref)
-  }, [preview])
+  // useEffect(() => {
+  //   if (!preview) return
+  //   let ref = [...items]
+  //   let obj = ref[xIndex]
+  //   if (!('screenshot' in obj)) {
+  //     obj.screenshot = ''
+  //   }
+  //   obj.screenshot = preview;
+  //   setItems(ref)
+  // }, [preview])
 
   return (
     <div className="w-[300px] flex flex-col gap-2 items-center">

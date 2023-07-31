@@ -3,38 +3,28 @@ import ReactDOM from 'react-dom/client';
 import { useNavigate } from 'react-router';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import {
-  BrowserRouter as Router, Link, Route, Routes,
+  BrowserRouter as Router, Link, Route, Routes, useLocation
 } from 'react-router-dom';
 import { auth } from '../../firebaseConfig'
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
+import { getProject, saveProject } from '../../db/projects';
+import { useGetProject } from '../hooks/getProject';
+import { useSaveProject } from '../hooks/saveProject';
+
 import Column from '../components/Column';
 
 const Project = () => {
 
-  const test = ['blue','green','red','pink','purple','yellow','gray','cyan','orange']
-  const ref = []
-  ref.push({
-    color: 'blue',
-    sentence: '',
-    variations: [{
-      text: '',
-      starred: false,
-    }],
-    translation_string: {
-      show: false,
-      text: '',
-    },
-    ui_component: {
-      show: false,
-      text: '',
-    },
-  })
+  const location = useLocation();
+  const [update, setUpdate] = useState(false)
+  const { project_id } = location.state;
 
-  // const [positions, setPositions] = useState<object>({})
-  const [items, setItems] = useState<[]>(ref)
+  const { project, loading, error } = useGetProject('test@gmail.com', project_id, update);
+
+  const [items, setItems] = useState<[]>([])
   const [dragging, setDragging] = useState<boolean>(false)
 
   const moveRef = useRef<any>(null)
@@ -44,11 +34,46 @@ const Project = () => {
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
 
+  const user = 'test@gmail.com'
+
+  const { saving, saveError } = useSaveProject(user, project_id, items, false)
+
+  useEffect(() => {
+    setItems(project.data)
+  }, [project])
+
+  // useEffect(() => {
+  //   console.log('items',items)
+  // }, [items])
+
+  // useEffect(() => {
+  //   console.log(saving)
+  // }, [saving])
   // const [varMoved, setVarMoved] = useState(null)
   // const [varMovedOver, setVarMovedOver] = useState(null)
   // const [varDragging, setVarDragging] = useState(false)
 
   const [selected, setSelected] = useState(null)
+
+  // useEffect(() => {
+  //   const saveTimer = setInterval(saveUpdates, 5000); // Save updates every 5 seconds
+
+  //   // Cleanup the timer on unmount
+  //   return () => clearInterval(saveTimer);
+  // }, []);
+
+  // const saveUpdates = () => {
+  //   const data = [...items]
+  //   console.log('data', data)
+  //   console.log('items in saver', items)
+  //   saveProject('test@gmail.com', project_id, data)
+  //     .then(() => {
+  //       console.log('saved')
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
 
   const handleSort = () => {
 
@@ -68,15 +93,11 @@ const Project = () => {
   }
 
   const reorderItems = (moveFrom:number, moveTo:number) => {
-    // const ref:[] = items;
-    // const moved:any = ref.splice(moveFrom, 1)[0];
-    // ref.splice(moveTo, 0, moved);
-    // console.log(ref);
     setItems(curr => {
       const ref = curr
       const moved = ref.splice(moveFrom, 1)[0];
       ref.splice(moveTo, 0, moved)
-      console.log(ref)
+
       return ref
     });
   }
@@ -134,10 +155,10 @@ const Project = () => {
   const handleClick = (e) => {
     e.preventDefault()
     let ref = [...items]
-    let index = Math.floor(Math.random() * (test.length))
+    // let index = Math.floor(Math.random() * (test.length))
 
     ref.push({
-      color: test[index],
+      // color: test[index],
       sentence:'',
       variations: [{
         text: '',
@@ -174,7 +195,7 @@ const Project = () => {
   // useEffect(() => {
   //   console.log(selected)
   // }, [selected])
-
+  if (loading) return <div className="mt-[100px] w-full flex ">...</div>
 
   return (
     <div className="">
@@ -207,7 +228,7 @@ const Project = () => {
                       <MdOutlineDragIndicator />
                     </div>
                   </div>
-                  <Column index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
+                  <Column user={user} projectId={project_id} index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                 </div>
               </div>
             )

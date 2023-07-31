@@ -11,7 +11,7 @@ import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 import Draggable from 'react-draggable'
 
-const Column = ({ index, items, setItems, color, sentence, obj, selected, dragging, setDragging }:any) => {
+const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:any) => {
 
 
   const [moved, setMoved] = useState(null)
@@ -94,7 +94,7 @@ const Column = ({ index, items, setItems, color, sentence, obj, selected, draggi
           : <BiSolidHide />
         }
       </div> */}
-      <Screenshot items={items} setItems={setItems} xIndex={index} />
+      <Screenshot user={user} projectId={projectId} items={items} setItems={setItems} xIndex={index} />
       {
         obj.variations.map((vari, yIndex) => {
           if (yIndex === 0) {
