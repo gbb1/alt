@@ -17,6 +17,7 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
   const [varDragging, setVarDragging] = useState(false)
+  // const [width, setWidth] = useState(300)
 
 
   const [hide, setHide] = useState(false)
@@ -80,6 +81,7 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   const onDragEnd = (e) => {
     e.preventDefault()
     setDragging(false)
+    setVarDragging(false)
   }
 
   return (
@@ -109,7 +111,7 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
             return (
               <Textblock key={'var' + yIndex}
                 moved={moved} xIndex={index} yIndex={yIndex} setItems={setItems} items={items}
-                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
+                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd} varDragging={varDragging}
               />
             )
           }

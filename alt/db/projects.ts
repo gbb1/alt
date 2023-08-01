@@ -24,7 +24,7 @@ const createUser = async (email:string) => {
   }
 }
 
-const addProject = async (userId) => {
+const addProject = async (userId:string) => {
 
   const hash = MD5(userId).toString();
   const userRef = doc(db, 'users', hash);
@@ -134,8 +134,10 @@ const saveProject = async (userId:string, projectId:string, projData:object) => 
     }
 
     const data = {...userSnap.data()}
+
     for (const proj of data.projects) {
       if (proj.id === intId) {
+        proj.accessed = new Date()
         proj.data = projData
       }
     }

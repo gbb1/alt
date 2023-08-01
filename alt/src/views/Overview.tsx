@@ -15,20 +15,37 @@ import Column from '../components/Column';
 import { createUser, addProject, getProjects } from '../../db/projects.ts'
 import { useGetProjects } from '../hooks/projects'
 
+import { UserStateContext, AuthContext } from '../auth/AuthProvider';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+import ProjectName from '../components/ProjectName.tsx';
 
 const Overview = () => {
 
   const navigate = useNavigate()
   const [update, setUpdate] = useState(false)
   const [load, setLoad] = useState(false)
+  const [email, setEmail] = useState('')
 
-  // const [projects, setProjects] = useState([])
-  const { projects, loading, error } = useGetProjects('test@gmail.com', update);
+  const user = useAuthState(auth);
 
+  const AuthCheck = onAuthStateChanged(auth, (user) => {
+    // console.log('changed', auth.currentUser?.email)
+    if (user) {
+      // setLoading(false);
+      if (email.length === 0) setEmail(user.email)
+      // setEmail(user.email)
+    } else {
+      // console.log('unauthorized');
+      navigate('/login');
+    }
+  });
+
+  const { projects, loading, error } = useGetProjects(email, update);
 
   const handleClick = (e) => {
     setLoad(true)
-    addProject('test@gmail.com').then(() => {
+    addProject(email).then(() => {
       setUpdate(!update)
       setLoad(false)
     })
@@ -36,19 +53,20 @@ const Overview = () => {
 
   const handleNav = (e) => {
     const project_id = e.target.id
-    navigate('/project', { state: { project_id } });
+    navigate('/project', { state: { project_id, email } });
   }
 
 
   return (
     <div className="">
       {/* Project: */}
-      <div className="flex flex-col w-full gap-4 mt-[10vh] px-[5%]">
-        <div className="flex flex-row gap-4 items-center">
-          <h1>Your projects</h1>
+      <div className="flex flex-col w-full gap-4 mt-[5vh] px-[5%]">
+        <div className="flex flex-row justify-between gap-4">
+          <h1 className="text-5xl text-[#1C1E21]/90 font-bold">Your projects:</h1>
+
           <button
             onClick={handleClick}
-            className="w-max px-4 py-2 rounded-full flex flex-row items-center gap-2 justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+            className="btn normal-case w-max px-4 py-2 rounded-full flex flex-row items-center gap-2 justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
           >
             <div className=''>Create project</div>
             {
@@ -58,21 +76,50 @@ const Overview = () => {
             }
           </button>
         </div>
-        <div className="flex flex-row flex-wrap gap-4">
+        <div className="flex flex-col flex-wrap gap-4">
           {/* {
             load
             ? <span className="loading loading-dots loading-xs"></span>
             : null
           } */}
+          <div className="flex flex-row w-full p-4 rounded-lg justify-between">
+            Project
+            <div className="">
+              Details
+            </div>
+            <div>
+            </div>
+            <div className="mr-20">
+              Last updated
+            </div>
+
+          </div>
           {
             projects && projects.map((p, index) => {
+              const date = new Date(p.accessed.seconds * 1000)
+              const count = p.data.length
               return (
-                <div id={p.id} className="w-max p-4 cursor-pointer bg-white rounded-lg" onClick={handleNav}>
+                <div id={p.id} className="flex flex-row w-full px-4 py-2 cursor-pointer bg-white rounded-lg justify-between items-center">
                   {
                     p.name.length > 0
-                    ? p.name
-                    : 'Project ' + index
+                    ? <ProjectName name={p.name} />
+                    : <ProjectName name={'Project' + ' ' +  p.id} />
                   }
+                  <div>
+                    {
+                      count === 1
+                      ? <div className="">1 string</div>
+                      : <div className="">{count} strings</div>
+                    }
+                  </div>
+                  <div>
+                  </div>
+                  <div>
+                    {date.toDateString() + ' - ' + date.getUTCHours() + ':' + date.getUTCMinutes()}
+                  </div>
+                  <button className="btn normal-case" onClick={handleNav}>
+                    Edit
+                  </button>
                 </div>
               )
             })

@@ -11,7 +11,7 @@ const useSaveProject = (user:string, project_id:string, dataState:[], refresh:bo
   const saveUpdates = (projectData:[]) => {
     if (!projectData.length) return
     setSaving(true)
-    saveProject('test@gmail.com', project_id, projectData)
+    saveProject(user, project_id, projectData)
       .then(() => {
         // console.log('saved', projectData)
         setTimeout(() => {

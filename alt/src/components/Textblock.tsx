@@ -7,17 +7,12 @@ import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'
 import TextField from './TextField';
 
 
-const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDragEnd, onDragOver }:any) => {
+const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDragEnd, onDragOver, varDragging }:any) => {
 
   const content = useMemo(() => {
     return items[xIndex].variations[yIndex].text
   }, [items[xIndex].variations[yIndex].text])
 
-  // const [cloneable, setCloneable] = useState(false)
-
-  // useEffect(() => {
-
-  // })
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -59,9 +54,17 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
     setItems(ref)
   }
 
+  const handleStar = (e) => {
+    e.preventDefault()
+    let ref = [...items]
+
+    ref[xIndex].variations[yIndex].starred = !ref[xIndex].variations[yIndex].starred
+    setItems(ref)
+  }
+
   return (
       <div
-        className={`cursor-pointer max-w-[300px] bg-[#F0F2F5] rounded-md w-full h-min p-1 inset-0 top-0 `}
+        className={`cursor-pointer max-w-[300px] bg-[#F0F2F5] rounded-md w-full h-min p-1 inset-0 top-0 ${moved === yIndex && varDragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0' : ''}`}
         draggable
         id={`drag-variation`}
         onDragStart={(e) => onDragStart(e, yIndex)}
@@ -82,8 +85,14 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
             </div>
             <div
               className="bg-gray-100 rounded-[100%] p-1"
+              onClick={handleStar}
             >
-              <FaStar value={{ color: 'blue' }} />
+              {
+                items[xIndex].variations[yIndex].starred
+                ? <FaStar value={{ color: 'blue' }} />
+                : <FaRegStar value={{ color: 'blue' }} />
+
+              }
             </div>
             <div
               onClick={deleteVar}

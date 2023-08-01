@@ -14,15 +14,26 @@ import { getProject, saveProject } from '../../db/projects';
 import { useGetProject } from '../hooks/getProject';
 import { useSaveProject } from '../hooks/saveProject';
 
+import html2canvas from 'html2canvas'
+import LoadingColumns from '../components/LoadingColumns';
+
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "firebase/storage";
+import { storage } from '../../firebaseConfig'
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+
 import Column from '../components/Column';
 
 const Project = () => {
 
+  // const user = auth.currentUser
+
   const location = useLocation();
   const [update, setUpdate] = useState(false)
-  const { project_id } = location.state;
+  const { project_id, email } = location.state;
 
-  const { project, loading, error } = useGetProject('test@gmail.com', project_id, update);
+  const { project, loading, error } = useGetProject(email, project_id, update);
 
   const [items, setItems] = useState<[]>([])
   const [dragging, setDragging] = useState<boolean>(false)
@@ -34,9 +45,11 @@ const Project = () => {
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
 
-  const user = 'test@gmail.com'
+  // const user = 'test@gmail.com'
 
-  const { saving, saveError } = useSaveProject(user, project_id, items, false)
+  const canvasRef = useRef(null)
+
+  const { saving, saveError } = useSaveProject(email, project_id, items, false)
 
   useEffect(() => {
     setItems(project.data)
@@ -55,6 +68,10 @@ const Project = () => {
 
   const [selected, setSelected] = useState(null)
 
+
+  useEffect(() => {
+    console.log(loading)
+  }, [loading])
   // useEffect(() => {
   //   const saveTimer = setInterval(saveUpdates, 5000); // Save updates every 5 seconds
 
@@ -75,6 +92,21 @@ const Project = () => {
   //     })
   // }
 
+  const [test, setTest] = useState(null)
+
+  const takeScreenShot = () => {
+    const element = canvasRef.current
+    if (!element) return
+    html2canvas(element).then((canvas) => {
+      let image = canvas.toDataURL('image/jpeg')
+      setTest(image)
+
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   const handleSort = () => {
 
     const [moveFrom, moveTo] = [moveRef.current, moveOverRef.current]
@@ -89,6 +121,28 @@ const Project = () => {
 
     moveRef.current = null
     moveOverRef.current = null
+
+  }
+
+  const handleDelete = (e, index) => {
+    e.preventDefault()
+
+    const _items = [...items]
+    const old = _items.splice(index, 1)
+
+    console.log('old', old)
+    const path = old[0].path
+
+    const oldRef = ref(storage, path);
+    setItems(_items)
+    deleteObject(oldRef)
+      .then(() => {
+        console.log('deleted')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
 
   }
 
@@ -188,58 +242,63 @@ const Project = () => {
     setDragging(false)
   }
 
-  // useEffect(() => {
-  //   console.log(moveOverRef.current)
-  // }, [moveOverRef])
-
-  // useEffect(() => {
-  //   console.log(selected)
-  // }, [selected])
-  if (loading) return <div className="mt-[100px] w-full flex ">...</div>
+  // if (loading) return <div className="mt-[100px] w-full flex ">...</div>
 
   return (
     <div className="">
       {/* Project: */}
-      <div className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[2%] absolute left-0 top-[15%] justify-start px-10 pb-20">
+      {/* <div className="h-[8vh] w-full min-h-[50px]"></div> */}
+      {/* <button onClick={takeScreenShot}>Test</button> */}
+      {/* <img src={test} /> */}
+      <div ref={canvasRef} className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[.5%] absolute left-0 justify-start px-10 pb-20">
         {
-          items.map((x:object, index:number) => {
-            return (
-              <div key={'column' + index} className="" onClick={() => setSelected(index)}>
-                <div
-                  id={`drag-column`}
-                  className={`
-                    cursor-move
-                    bg-[#1C1E21]/90
-                    p-2
-                    rounded-md
-                  `}
-                  draggable
-                  onDragStart={(e) => onDragStart(e, index)}
-                  onDragEnter={(e) => onDragOver(e, index)}
-                  onDragEnd={onDragEnd}
-                  onDragOver={(e) => e.preventDefault()}
-                  ref={dragged}
-                >
-                  <div className="w-full flex-row flex justify-center items-center p-1">
-                    <div
-                    id='dragger'
-                    className="rotate-90 w-min h-min bg-gray-200 rounded-sm py-2 px-1 z-[3]"
-                    >
-                      <MdOutlineDragIndicator />
+          loading
+          ? <LoadingColumns />
+          : items.map((x:object, index:number) => {
+              return (
+                <div key={'column' + index} className="w-min" onClick={() => setSelected(index)}>
+                  <div
+                    id={`drag-column`}
+                    className={`
+                      cursor-move
+                      bg-[#1C1E21]/90
+                      p-2
+                      rounded-md
+                      ${ index === moved && dragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0' : ''}
+                    `}
+                    // border-[#65D072]
+                    draggable
+                    onDragStart={(e) => onDragStart(e, index)}
+                    onDragEnter={(e) => onDragOver(e, index)}
+                    onDragEnd={onDragEnd}
+                    onDragOver={(e) => e.preventDefault()}
+                    ref={dragged}
+                  >
+                    <div className="w-full flex justify-between items-center p-1 gap-5">
+                      <div
+                      id='dragger'
+                      className="rotate-90 flex w-min h-min bg-gray-200 rounded-sm py-2 px-1 z-[3]"
+                      >
+                        <MdOutlineDragIndicator />
+                      </div>
+                      <div className='text-white flex cursor-pointer ml-auto' onClick={(e) => handleDelete(e, index)}>x</div>
                     </div>
+                    <Column user={email} projectId={project_id} index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                   </div>
-                  <Column user={user} projectId={project_id} index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                 </div>
-              </div>
-            )
-          })
+              )
+            })
         }
-      <button
-        onClick={handleClick}
-        className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
-      >
-        +
-      </button>
+      {
+        loading
+        ? null
+        : <button
+          onClick={handleClick}
+          className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+        >
+          +
+        </button>
+      }
       </div>
     </div>
   )
