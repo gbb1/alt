@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import {
   BrowserRouter as Router, Link, Route, Routes,
 } from 'react-router-dom';
@@ -19,6 +19,25 @@ import { createUser } from '../../db/projects'
 
 const Login = () => {
 
+  const navigate = useNavigate()
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+      // console.log('changed', auth.currentUser?.email)
+      if (user) {
+        // setLoading(false);
+        setUser(user)
+        // setEmail(user.email)
+      }
+    });
+  }, [])
+
+
+  const handleNav = (e) => {
+    e.preventDefault()
+    navigate('/')
+  }
   // const navigate = useNavigate();
   // const [email, setEmail] = useState('')
   // const [pw, setPw] = useState('')
@@ -72,7 +91,18 @@ const Login = () => {
             <p className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</p>
             {/* <button className="btn btn-primary">Get Started</button> */}
             <div className="mt-8">
-              <LoginButton />
+              {
+                user
+                ? <button
+                  type="submit"
+                  className=""
+                  onClick={handleNav} >
+                    <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+                      Let's go
+                    </div>
+                </button>
+                : <LoginButton />
+              }
             </div>
           </div>
         </div>

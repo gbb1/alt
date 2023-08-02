@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const LoadingColumns = () => {
+const LoadingColumns = ({ size }) => {
 
-  const [loads, setLoads] = useState([0,0,0])
+  size = size || 3
+  const [loads, setLoads] = useState(new Array(size).fill(0))
 
   useEffect(() => {
 

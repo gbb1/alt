@@ -31,7 +31,7 @@ const Project = () => {
 
   const location = useLocation();
   const [update, setUpdate] = useState(false)
-  const { project_id, email } = location.state;
+  const { project_id, email, size } = location.state;
 
   const { project, loading, error } = useGetProject(email, project_id, update);
 

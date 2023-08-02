@@ -10,7 +10,7 @@ const ProjectName = ({ email, name, project, update, id }:any) => {
 
   // console.log('in row', name)
 
-  const [text, setText] = useState('')
+  const [text, setText] = useState(name || '')
   const [debouncedText, setDebouncedText] = useState('');
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const ProjectName = ({ email, name, project, update, id }:any) => {
   return (
 
         <div className="flex flex-col items-start p-2 m-1 relative h-min text-white bg-transparent">
-          <input type="text" className="bg-transparent p-1" value={text + ',' + name} onChange={handleChange} />
+          <input type="text" className="bg-transparent p-1" value={text || ''} onChange={handleChange} />
         </div>
   )
 }

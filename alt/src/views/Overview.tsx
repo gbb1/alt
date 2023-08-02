@@ -15,7 +15,6 @@ import Column from '../components/Column';
 import { createUser, addProject, getProjects, deleteProject } from '../../db/projects.ts'
 import { useGetProjects } from '../hooks/projects'
 
-import { UserStateContext, AuthContext } from '../auth/AuthProvider';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import ProjectName from '../components/ProjectName.tsx';
@@ -35,18 +34,19 @@ const Overview = () => {
 
   const user = useAuthState(auth);
 
-
-  const AuthCheck = onAuthStateChanged(auth, (user) => {
-    // console.log('changed', auth.currentUser?.email)
-    if (user) {
-      // setLoading(false);
-      if (email.length === 0) setEmail(user.email)
-      // setEmail(user.email)
-    } else {
-      // console.log('unauthorized');
-      navigate('/login');
-    }
-  });
+  useEffect(() => {
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+      // console.log('changed', auth.currentUser?.email)
+      if (user) {
+        // setLoading(false);
+        if (email.length === 0) setEmail(user.email)
+        // setEmail(user.email)
+      } else {
+        // console.log('unauthorized');
+        navigate('/login');
+      }
+    });
+  }, [])
 
   const { projects, loading, error } = useGetProjects(email, update);
   // useEffect(() => {
@@ -92,12 +92,12 @@ const Overview = () => {
         </div>
         <div className="flex flex-row w-full pt-4 px-4 rounded-lg justify-between">
           Project
-          <div className="translate-x-24 invisible md:visible">
+          <div className="translate-x-20 invisible md:visible">
             Details
           </div>
           <div>
           </div>
-          <div className="invisible md:visible -translate-x-6">
+          <div className="invisible md:visible -translate-x-16">
             Last updated
           </div>
           <button className="btn invisible">
