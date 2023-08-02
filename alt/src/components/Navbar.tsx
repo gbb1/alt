@@ -10,16 +10,19 @@ import Logo from '../assets/logo2.png'
 const NavBar = ({ navRef, user }) => {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
 
   useEffect(() => {
+    setLoading(true)
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);
       }
+      setLoading(false)
     });
 
     return () => {
@@ -36,16 +39,18 @@ const NavBar = ({ navRef, user }) => {
       <div className="flex flex-row cursor-pointer" onClick={homeNav} >
         <img src={Logo} className="w-[40px]" />
       </div>
-      <div className="flex flex-row  ">
+      <div className="flex flex-row hidden">
         center
       </div>
       <div className="flex flex-row ">
         {
-          user
-          ? <button
-            onClick={() => signOut(auth).then(() => console.log("out"))}
-            className="btn gap-2 normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4 py-2" >Log out</button>
-          : <LoginButton />
+          loading
+          ? null
+          : user
+            ? <button
+              onClick={() => signOut(auth).then(() => console.log("out"))}
+              className="gap-2 normal-case font-medium flex flex-row text-sm hover:text-[#65D072] text-[#1C1E21]/90 transition-opacity transition-all" >Log out</button>
+            : <LoginButton />
         }
       </div>
     </div>
@@ -54,3 +59,5 @@ const NavBar = ({ navRef, user }) => {
 }
 
 export default NavBar
+
+// text-[#65D072]

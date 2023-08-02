@@ -19,6 +19,10 @@ import { UserStateContext, AuthContext } from '../auth/AuthProvider';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import ProjectName from '../components/ProjectName.tsx';
+import ProjectRow from '../components/ProjectRow.tsx';
+import LoadingProjects from '../components/LoadingProjects.tsx';
+
+import '../App.css'
 
 const Overview = () => {
 
@@ -58,9 +62,9 @@ const Overview = () => {
 
 
   return (
-    <div className="">
+    <div className="overscroll-none fixed w-full">
       {/* Project: */}
-      <div className="flex flex-col w-full gap-4 mt-[5vh] px-[5%]">
+      <div className="flex flex-col w-full gap-4 mt-[5vh] px-[5%] overscroll-none ">
         <div className="flex flex-row justify-between gap-4">
           <h1 className="text-5xl text-[#1C1E21]/90 font-bold">Your projects:</h1>
 
@@ -76,55 +80,40 @@ const Overview = () => {
             }
           </button>
         </div>
-        <div className="flex flex-col flex-wrap gap-4">
+        <div className="flex flex-row w-full pt-4 px-4 rounded-lg justify-between">
+          Project
+          <div className="translate-x-24 invisible md:visible">
+            Details
+          </div>
+          <div>
+          </div>
+          <div className="invisible md:visible -translate-x-6">
+            Last updated
+          </div>
+          <button className="btn invisible">
+            Edit
+          </button>
+        </div>
+        {
+          loading
+          ? <LoadingProjects />
+          : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain max-h-[50vh] px-2 pt-2">
           {/* {
             load
             ? <span className="loading loading-dots loading-xs"></span>
             : null
           } */}
-          <div className="flex flex-row w-full p-4 rounded-lg justify-between">
-            Project
-            <div className="">
-              Details
-            </div>
-            <div>
-            </div>
-            <div className="mr-20">
-              Last updated
-            </div>
-
+            {
+              projects && projects.map((p, index) => {
+                const date = new Date(p.accessed.seconds * 1000)
+                const count = p.data.length
+                return (
+                  <ProjectRow key={index} email={email} project={p} date={date} count={count} handleNav={handleNav} projects={projects} refresh={update} />
+                )
+              })
+            }
           </div>
-          {
-            projects && projects.map((p, index) => {
-              const date = new Date(p.accessed.seconds * 1000)
-              const count = p.data.length
-              return (
-                <div id={p.id} className="flex flex-row w-full px-4 py-2 cursor-pointer bg-white rounded-lg justify-between items-center">
-                  {
-                    p.name.length > 0
-                    ? <ProjectName name={p.name} />
-                    : <ProjectName name={'Project' + ' ' +  p.id} />
-                  }
-                  <div>
-                    {
-                      count === 1
-                      ? <div className="">1 string</div>
-                      : <div className="">{count} strings</div>
-                    }
-                  </div>
-                  <div>
-                  </div>
-                  <div>
-                    {date.toDateString() + ' - ' + date.getUTCHours() + ':' + date.getUTCMinutes()}
-                  </div>
-                  <button className="btn normal-case" onClick={handleNav}>
-                    Edit
-                  </button>
-                </div>
-              )
-            })
-          }
-        </div>
+        }
       </div>
     </div>
   )

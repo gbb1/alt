@@ -7,6 +7,8 @@ const useGetProject = (user:string, project_id:number, refresh:boolean) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log(user, project_id, refresh)
+
   useEffect(() => {
 
     getProject(user, project_id)

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const LoadingColumns = () => {
 
-  const [loads, setLoads] = useState([0,0,0,0,0])
+  const [loads, setLoads] = useState([0,0,0])
 
   useEffect(() => {
 

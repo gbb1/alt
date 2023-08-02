@@ -154,6 +154,39 @@ const saveProject = async (userId:string, projectId:string, projData:object) => 
   })
 }
 
+const updateName = async (userId:string, projectId:string, name:string) => {
+  const hash = MD5(userId).toString();
+  const userRef = doc(db, 'users', hash);
+  const userSnap = await getDoc(userRef);
+
+  const intId = Number(projectId)
+
+  return new Promise((resolve, reject) => {
+
+    if (!userSnap.exists()) {
+      reject()
+    }
+
+    const data = {...userSnap.data()}
+
+    for (const proj of data.projects) {
+      if (proj.id === intId) {
+        proj.accessed = new Date()
+        proj.name = name
+      }
+    }
+
+    setDoc(userRef, data, { merge: true })
+      .then(() => {
+        resolve(name)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+
+  })
+}
+
 
 export {
   createUser,
@@ -161,4 +194,5 @@ export {
   getProjects,
   getProject,
   saveProject,
+  updateName,
 }

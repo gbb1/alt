@@ -250,7 +250,7 @@ const Project = () => {
       {/* <div className="h-[8vh] w-full min-h-[50px]"></div> */}
       {/* <button onClick={takeScreenShot}>Test</button> */}
       {/* <img src={test} /> */}
-      <div ref={canvasRef} className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[.5%] absolute left-0 justify-start px-10 pb-20">
+      <div ref={canvasRef} className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[.5%] pt-10 absolute left-0 justify-start px-10 pb-20">
         {
           loading
           ? <LoadingColumns />
