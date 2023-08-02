@@ -6,13 +6,19 @@ import { IoClose } from 'react-icons/io5'
 import { updateName } from '../../db/projects'
 
 
-const ProjectName = ({ email, name, project, update }:any) => {
+const ProjectName = ({ email, name, project, update, id }:any) => {
 
-  const [text, setText] = useState(name)
-  const [debouncedText, setDebouncedText] = useState("");
+  // console.log('in row', name)
 
+  const [text, setText] = useState('')
+  const [debouncedText, setDebouncedText] = useState('');
 
   useEffect(() => {
+    setText(name)
+  }, [name])
+
+  useEffect(() => {
+    if (text === name) return
     const timeoutId = setTimeout(() => {
       setDebouncedText(text);
     }, 500);
@@ -20,14 +26,16 @@ const ProjectName = ({ email, name, project, update }:any) => {
   }, [text, 500]);
 
   const handleChange = (e) => {
+    // console.log('detecting change', e.target)
     e.preventDefault()
     setText(e.target.value)
   }
 
   useEffect(() => {
-    updateName(email, project.id, debouncedText)
+    if (!debouncedText) return
+    updateName(email, id, debouncedText)
       .then(() => {
-        console.log('saved')
+        console.log('saved new name')
       })
       .catch((err) => {
         console.log(err)
@@ -37,8 +45,8 @@ const ProjectName = ({ email, name, project, update }:any) => {
 
   return (
 
-        <div className="flex flex-col items-start p-2 m-1 relative h-min text-white bg-[#202C34]">
-          <input type="text" className="bg-transparent p-1" value={text} onChange={handleChange} />
+        <div className="flex flex-col items-start p-2 m-1 relative h-min text-white bg-transparent">
+          <input type="text" className="bg-transparent p-1" value={text + ',' + name} onChange={handleChange} />
         </div>
   )
 }

@@ -35,7 +35,7 @@ const NavBar = ({ navRef, user }) => {
   }
 
   return (
-    <div ref={navRef} className="flex flex-row w-full h-[8vh] min-h-[50px] bg-[#FBF5EC] z-[4] top-0 max-h-[60px] sticky flex flex-row items-center px-5 justify-between py-2">
+    <div ref={navRef} className=" flex flex-row w-full h-[8vh] min-h-[60px] bg-[#FBF5EC] z-[4] top-0 max-h-[60px] sticky flex flex-row items-center px-5 justify-between py-2">
       <div className="flex flex-row cursor-pointer" onClick={homeNav} >
         <img src={Logo} className="w-[40px]" />
       </div>

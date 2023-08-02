@@ -44,11 +44,11 @@ function App() {
     if (event.target.scrollTop > 0) {
       navRef.current.classList.add('transition-all');
       navRef.current.classList.add('border-b-2');
-      navRef.current.classList.add('border-b-[#1C1E21]');
+      navRef.current.classList.add('border-b-[#1C1E21]/60');
     } else {
       navRef.current.classList.remove('shadow-md');
       navRef.current.classList.remove('border-b-2');
-      navRef.current.classList.remove('border-b-[#1C1E21]');
+      navRef.current.classList.remove('border-b-[#1C1E21]/60');
     }
   };
 

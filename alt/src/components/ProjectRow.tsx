@@ -4,18 +4,22 @@ import ReactDOM from 'react-dom/client';
 import { IoClose } from 'react-icons/io5'
 
 import ProjectName from './ProjectName';
+import DeleteProject from './DeleteProject';
 
 
-const ProjectRow = ({ project, count, date, handleNav, projects, update, email }:any) => {
+const ProjectRow = ({ project, count, date, handleNav, projects, email, update, setUpdate }:any) => {
 
+  const [id, setId] = useState()
+  const [name, setName] = useState()
+
+  useEffect(() => {
+    setId(project.id)
+    setName(project.name)
+  }, [projects, project])
 
   return (
-    <div className="flex flex-row w-full px-4 py-2 cursor-pointer bg-[#202C34] rounded-lg justify-between items-center">
-      {
-        project.name.length > 0
-        ? <ProjectName email={email} project={project} name={project.name} projects={projects} />
-        : <ProjectName email={email} project={project} name={'Project' + ' ' +  project.id} projects={projects} />
-      }
+    <div className="flex flex-row w-full px-4 py-2 cursor-pointer bg-[#202C34] hover:bg-[#202C34]/80 rounded-lg justify-between items-center">
+      <ProjectName email={email} project={project} id={id} name={name} projects={projects} />
       <div className="text-white invisible md:visible">
         {
           count === 1
@@ -28,9 +32,15 @@ const ProjectRow = ({ project, count, date, handleNav, projects, update, email }
       <div className="text-white invisible md:visible">
         {date.toDateString() + ' - ' + date.getUTCHours() + ':' + date.getUTCMinutes()}
       </div>
-      <button id={project.id} className="btn normal-case" onClick={handleNav}>
-        Edit
-      </button>
+      <div className="flex flex-row gap-2">
+        <button id={project.id} className="btn normal-case" onClick={handleNav}>
+          Edit
+        </button>
+        <DeleteProject email={email} id={id} update={update} setUpdate={setUpdate} />
+        {/* <button id={project.id} className="btn normal-case" onClick={handleDelete}>
+          x
+        </button> */}
+      </div>
     </div>
   )
 }

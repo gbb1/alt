@@ -12,7 +12,7 @@ import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 
 import Column from '../components/Column';
 
-import { createUser, addProject, getProjects } from '../../db/projects.ts'
+import { createUser, addProject, getProjects, deleteProject } from '../../db/projects.ts'
 import { useGetProjects } from '../hooks/projects'
 
 import { UserStateContext, AuthContext } from '../auth/AuthProvider';
@@ -31,7 +31,10 @@ const Overview = () => {
   const [load, setLoad] = useState(false)
   const [email, setEmail] = useState('')
 
+  // const [projs, setProjs] = useState([])
+
   const user = useAuthState(auth);
+
 
   const AuthCheck = onAuthStateChanged(auth, (user) => {
     // console.log('changed', auth.currentUser?.email)
@@ -46,6 +49,13 @@ const Overview = () => {
   });
 
   const { projects, loading, error } = useGetProjects(email, update);
+  // useEffect(() => {
+  //   setProjs(projects)
+  // }, [projects])
+
+  // useEffect(() => {
+  //   console.log('projects changed')
+  // }, [projects])
 
   const handleClick = (e) => {
     setLoad(true)
@@ -97,7 +107,7 @@ const Overview = () => {
         {
           loading
           ? <LoadingProjects />
-          : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain max-h-[50vh] px-2 pt-2">
+          : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain scroll max-h-[50vh] px-2 pt-2">
           {/* {
             load
             ? <span className="loading loading-dots loading-xs"></span>
@@ -105,10 +115,11 @@ const Overview = () => {
           } */}
             {
               projects && projects.map((p, index) => {
+                console.log(p)
                 const date = new Date(p.accessed.seconds * 1000)
                 const count = p.data.length
                 return (
-                  <ProjectRow key={index} email={email} project={p} date={date} count={count} handleNav={handleNav} projects={projects} refresh={update} />
+                  <ProjectRow update={update} setUpdate={setUpdate} key={index} email={email} project={p} date={date} count={count} handleNav={handleNav} projects={projects} />
                 )
               })
             }

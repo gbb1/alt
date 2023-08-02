@@ -4,9 +4,14 @@ import { createUser, addProject, getProjects } from '../../db/projects.ts'
 
 
 const useGetProjects = (user:string, refresh:boolean) => {
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   console.log(projects)
+  // }, [projects])
 
   useEffect(() => {
 
