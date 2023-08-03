@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useNavigate } from 'react-router';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
@@ -12,32 +12,84 @@ import { AiFillGoogleCircle } from 'react-icons/ai'
 
 import LoginButton from '../components/SignInButton';
 import Module2 from '../components/Module2';
+import Module3 from '../components/Module3';
 
 import { createUser } from '../../db/projects'
 // Import the functions you need from the SDKs you ne
 // import { userAuth } from '../AuthContext'
 
-const Login = () => {
+const Login = ({ }) => {
 
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
 
+  const [mod2Vis, setMod2Vis] = useState(false)
+  const [mod3Vis, setMod3Vis] = useState(false)
+
+  const handleVisible = (callback) => {
+    callback(true)
+  }
+
+  const module2Ref = useRef(null)
+  const module3Ref = useRef(null)
+
   useEffect(() => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
-      // console.log('changed', auth.currentUser?.email)
       if (user) {
-        // setLoading(false);
         setUser(user)
-        // setEmail(user.email)
       }
     });
   }, [])
+
+  useEffect(() => {
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 0.5, // Adjust this value as needed, 0.1 means 10% of the target element is visible
+    };
+
+    const observer2 = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          handleVisible(setMod2Vis); // Call the callback when the element is visible
+          observer2.unobserve(entry.target); // Stop observing once the element is visible
+        }
+      });
+    }, options);
+
+    const observer3 = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          handleVisible(setMod3Vis); // Call the callback when the element is visible
+          observer3.unobserve(entry.target); // Stop observing once the element is visible
+        }
+      });
+    }, options);
+
+    if (module2Ref.current) {
+      observer2.observe(module2Ref.current);
+    }
+
+    if (module3Ref.current) {
+      observer3.observe(module3Ref.current);
+    }
+
+    return () => {
+      observer2.disconnect();
+      observer3.disconnect();
+    };
+  }, [handleVisible]);
 
 
   const handleNav = (e) => {
     e.preventDefault()
     navigate('/')
   }
+
+  // useEffect(() => {
+  //   console.log(module1Ref.current)
+
+  // }, [module1Ref])
   // const navigate = useNavigate();
   // const [email, setEmail] = useState('')
   // const [pw, setPw] = useState('')
@@ -88,7 +140,7 @@ const Login = () => {
           <div className="bg-[#1C1E21]/90 p-10 rounded-lg">
             {/* <img src="/images/stock/photo-1635805737707-575885ab0820.jpg" className="max-w-sm rounded-lg shadow-2xl" /> */}
             <h1 className="text-8xl text-[#65D072] font-bold w-[90%]">Figma, Google docs, and Trello walk into a bar...</h1>
-            <p className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</p>
+            <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</div>
             {/* <button className="btn btn-primary">Get Started</button> */}
             <div className="mt-8">
               {
@@ -107,7 +159,15 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Module2 />
+      <div ref={module2Ref} className={`${mod2Vis ? '' : 'invisible'}`}>
+        <Module2 isVisible={mod2Vis} />
+      </div>
+      <div ref={module3Ref} className={`${mod3Vis ? '' : 'invisible'}`}>
+        <Module3 isVisible={mod3Vis} />
+      </div>
+      <div ref={module2Ref} className={`${mod2Vis ? '' : 'invisible'}`}>
+        <Module2 isVisible={mod2Vis} />
+      </div>
     </div>
 
   )

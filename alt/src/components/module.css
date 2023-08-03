@@ -1,0 +1,28 @@
+.fade-in-bg {
+  animation: fadeIn-bg 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeIn-bg {
+  0% { background: rgba(28, 30, 33, 0);  }
+  100% { background: rgba(28, 30, 33, .9); }
+}
+
+.fade-in-delay0 {
+  animation: fadeIn 1s;
+  animation-timing-function: linear;
+}
+
+
+.fade-in-delay1 {
+  animation: fadeIn 3s;
+}
+
+.fade-in-delay2 {
+  animation: fadeIn 4s;
+}
+

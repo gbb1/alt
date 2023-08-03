@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+
+import { onVisible } from 'intersection-observer'
 // import './App.css'
 
 import Draggable from 'react-draggable';
@@ -25,30 +27,24 @@ import Footer from './components/Footer';
 function App() {
 
   const navRef = useRef(null)
+  const [mod2Vis, setMod2Vis] = useState(false)
+
+  const handleVisible = () => {
+    setMod2Vis(true)
+  }
   // const navigate = useNavigate()
 
   const [user] = useAuthState(auth);
-
-  // const AuthCheck = onAuthStateChanged(auth, (user) => {
-  //   console.log('changed', auth.currentUser?.email)
-  //   if (user) {
-  //     // setLoading(false);
-  //   } else {
-  //     console.log('unauthorized');
-  //     navigate('/login');
-  //   }
-  // });
-
 
   const handleScroll = (event) => {
     if (event.target.scrollTop > 0) {
       navRef.current.classList.add('transition-all');
       navRef.current.classList.add('border-b-2');
-      navRef.current.classList.add('border-b-[#1C1E21]/60');
+      navRef.current.classList.add('border-b-[#1C1E21]/90');
     } else {
       navRef.current.classList.remove('shadow-md');
       navRef.current.classList.remove('border-b-2');
-      navRef.current.classList.remove('border-b-[#1C1E21]/60');
+      navRef.current.classList.remove('border-b-[#1C1E21]/90');
     }
   };
 
@@ -60,7 +56,7 @@ function App() {
           <NavBar navRef={navRef} user={user} />
           <Routes>
             <Route path='/' element={<Overview />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<Login handleVisible={handleVisible} mod2Vis={mod2Vis} />} />
             <Route path='/project' element={<Project />} />
           </Routes>
           {/* <Footer /> */}
