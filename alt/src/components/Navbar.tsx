@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router';
 
 import { auth } from '../../firebaseConfig'
@@ -6,6 +6,12 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import LoginButton from './SignInButton';
 
 import Logo from '../assets/logo2.png'
+import { ProjectContext } from '../context/mainProject';
+import { ItemsContext } from '../context/itemsContext';
+
+import './module.css'
+
+import CSVExport from './CSVExport';
 
 const NavBar = ({ navRef, user }) => {
 
@@ -13,6 +19,15 @@ const NavBar = ({ navRef, user }) => {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
+
+  const { mainProject, setMainProject } = useContext(ProjectContext)
+  const { mainItems, setMainItems } = useContext(ItemsContext)
+
+  // const [projName, setProjName] = useState('')
+
+  // useEffect(() => {
+  //   setProjName(mainProject.name)
+  // }, [mainProject])
 
   useEffect(() => {
     setLoading(true)
@@ -35,14 +50,22 @@ const NavBar = ({ navRef, user }) => {
   }
 
   return (
-    <div ref={navRef} className=" flex flex-row w-full h-[8vh] min-h-[60px] bg-[#FBF5EC] z-[4] top-0 max-h-[60px] sticky flex flex-row items-center px-5 justify-between py-2">
-      <div className="flex flex-row cursor-pointer" onClick={homeNav} >
+    <div ref={navRef} className="flex flex-row min-w-full fixed h-[8vh] min-h-[60px] bg-[#FBF5EC] z-[4] top-0 left-0 max-h-[60px] sticky flex flex-row items-center px-5 justify-between py-2">
+      <div className="flex flex-row cursor-pointer items-center gap-5" onClick={homeNav} >
         <img src={Logo} className="w-[40px]" />
+        {/* <div className="flex flex-row font-bold fade-in-delay0">
+          {mainProject ? mainProject.name : ''}
+        </div> */}
       </div>
-      <div className="flex flex-row hidden">
-        center
+      <div className="flex flex-row font-bold fade-in-delay0 fixed left-[45%]">
+        {mainProject ? mainProject.name : ''}
       </div>
-      <div className="flex flex-row ">
+      <div className="flex flex-row items-center gap-5">
+        {
+          mainProject && mainItems.length > 0
+          ? <div className="fade-in-delay0 "><CSVExport items={mainItems} project={mainProject} /></div>
+          : null
+        }
         {
           loading
           ? null

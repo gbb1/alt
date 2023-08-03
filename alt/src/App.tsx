@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext, createContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
@@ -24,15 +24,25 @@ import Overview from './views/Overview';
 import Login from './views/Login';
 import Footer from './components/Footer';
 
+import { ProjectContext } from './context/mainProject';
+import { ItemsContext } from './context/itemsContext';
+
 function App() {
 
   const navRef = useRef(null)
-  const [mod2Vis, setMod2Vis] = useState(false)
+  // const [mod2Vis, setMod2Vis] = useState(false)
 
-  const handleVisible = () => {
-    setMod2Vis(true)
-  }
+  // const handleVisible = () => {
+  //   setMod2Vis(true)
+  // }
   // const navigate = useNavigate()
+  // const ProjectContext = createContext({})
+  const [mainProject, setMainProject] = useState({})
+  const [mainItems, setMainItems] = useState([])
+
+  useEffect(() => {
+    console.log('main', mainProject)
+  }, [])
 
   const [user] = useAuthState(auth);
 
@@ -52,15 +62,19 @@ function App() {
 
     <div className="">
       <div onScroll={handleScroll} className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
-        <Router>
-          <NavBar navRef={navRef} user={user} />
-          <Routes>
-            <Route path='/' element={<Overview />} />
-            <Route path='/login' element={<Login handleVisible={handleVisible} mod2Vis={mod2Vis} />} />
-            <Route path='/project' element={<Project />} />
-          </Routes>
-          {/* <Footer /> */}
-        </Router>
+        <ProjectContext.Provider value={{ mainProject, setMainProject }} >
+          <ItemsContext.Provider value={{ mainItems, setMainItems }} >
+            <Router>
+              <NavBar navRef={navRef} user={user} />
+              <Routes>
+                <Route path='/' element={<Overview setMainProject={setMainProject} />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/project' element={<Project setMainProject={setMainProject} />} />
+              </Routes>
+            {/* <Footer /> */}
+            </Router>
+            </ItemsContext.Provider>
+        </ProjectContext.Provider>
       </div>
     </div>
   )

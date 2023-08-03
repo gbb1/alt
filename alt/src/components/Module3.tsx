@@ -44,7 +44,7 @@ const Module3 = ({ isVisible }) => {
   // bg-[#1C1E21]/90
   return (
 
-    <div className="h-min mx-10 border-2 relative">
+    <div className="h-min mx-10 relative">
       <div className="flex-col justify-center">
 
         <div className={`p-10 rounded-lg flex flex-col items-center py-20 ${ isVisible ? '' : 'invisible'}`}>
@@ -58,10 +58,10 @@ const Module3 = ({ isVisible }) => {
         <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`w-[80%] rounded-lg h-[90%] md:h-[80%] bg-[#1C1E21]/10 z-[1] lg:invisible transition-all absolute top-[5vh] md:top-[10%] left-[10%] ${ show3 ? 'fade-in-delay1' : 'invisible'}`}></div>
         </div>
-        <div className={`${ show1 ? 'fade-in-delay1' : 'invisible'}`}>
+        <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white cursor-pointer text-[#1C1E21]/90 top-[20%] left-[5%] z-[0] `}>Get started</div>
         </div>
-        <div className={`${ show1 ? 'fade-in-delay1' : 'invisible'}`}>
+        <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white line-through cursor-pointer text-[#1C1E21]/90 bottom-40 right-10 z-[0] ${ show2 ? 'fade-in-delay1' : 'invisible'}`}>Click me to continue</div>
         </div>
 
@@ -69,8 +69,8 @@ const Module3 = ({ isVisible }) => {
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white line-through cursor-pointer text-[#1C1E21]/90 top-[70%] left-[2%] z-[0] ${ show1 ? 'fade-in-delay1' : 'invisible'}`}>Do this</div>
         </div>
 
-        <div className={`${ show1 ? 'fade-in-delay1' : 'invisible'}`}>
-          <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white  cursor-pointer text-[#1C1E21]/90 top-2 right-[60%] z-[0] ${ show3 ? 'fade-in-delay1' : 'invisible'}`}>Let's go</div>
+        <div className={`${ show2 ? 'fade-in-delay1' : 'invisible'}`}>
+          <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white  cursor-pointer text-[#1C1E21]/90 top-2 right-[60%] z-[0] ${ show1 ? 'fade-in-delay1' : 'invisible'}`}>Let's go</div>
         </div>
 
 
@@ -78,11 +78,11 @@ const Module3 = ({ isVisible }) => {
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white cursor-pointer text-[#1C1E21]/90 bottom-10 left-[55%] z-[0] ${ show3 ? 'fade-in-delay1' : 'invisible'}`}>Try it out</div>
         </div>
 
-        <div className={`${ show1 ? 'fade-in-delay1' : 'invisible'}`}>
+        <div className={`${ show2 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white cursor-pointer text-[#1C1E21]/90 top-[3%] right-20 z-[0] ${ show3 ? 'fade-in-delay1' : 'invisible'}`}>Start now</div>
         </div>
 
-        <div className={`${ show1 ? 'fade-in-delay1' : 'invisible'}`}>
+        <div className={`${ show2 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white cursor-pointer text-[#1C1E21]/90 bottom-[5%] left-[25%] z-[0] ${ show2 ? 'fade-in-delay1' : 'invisible'}`}>Learn more</div>
         </div>
       </div>

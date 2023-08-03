@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useNavigate } from 'react-router';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
@@ -17,11 +17,14 @@ import { useSaveProject } from '../hooks/saveProject';
 
 import html2canvas from 'html2canvas'
 import LoadingColumns from '../components/LoadingColumns';
+import CSVExport from '../components/CSVExport';
 
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "firebase/storage";
 import { storage } from '../../firebaseConfig'
 
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { ProjectContext } from '../context/mainProject';
+import { ItemsContext } from '../context/itemsContext';
 
 
 import Column from '../components/Column';
@@ -46,15 +49,30 @@ const Project = () => {
   const [moved, setMoved] = useState(null)
   const [movedOver, setMovedOver] = useState(null)
 
-  // const user = 'test@gmail.com'
+  const { mainProject, setMainProject } = useContext(ProjectContext)
+  const { mainItems, setMainItems } = useContext(ItemsContext)
 
   const canvasRef = useRef(null)
 
   const { saving, saveError } = useSaveProject(email, project_id, items, false)
 
   useEffect(() => {
+    console.log('setting context,', project)
     setItems(project.data)
+    setMainProject(project)
   }, [project])
+
+  useEffect(() => {
+    return () => {
+      setMainItems([])
+      setMainProject({})
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('setting items')
+    setMainItems(items)
+  }, [items])
 
   // useEffect(() => {
   //   console.log('items',items)
@@ -70,9 +88,9 @@ const Project = () => {
   const [selected, setSelected] = useState(null)
 
 
-  useEffect(() => {
-    console.log(loading)
-  }, [loading])
+  // useEffect(() => {
+  //   console.log(loading)
+  // }, [loading])
   // useEffect(() => {
   //   const saveTimer = setInterval(saveUpdates, 5000); // Save updates every 5 seconds
 
@@ -95,18 +113,18 @@ const Project = () => {
 
   const [test, setTest] = useState(null)
 
-  const takeScreenShot = () => {
-    const element = canvasRef.current
-    if (!element) return
-    html2canvas(element).then((canvas) => {
-      let image = canvas.toDataURL('image/jpeg')
-      setTest(image)
+  // const takeScreenShot = () => {
+  //   const element = canvasRef.current
+  //   if (!element) return
+  //   html2canvas(element).then((canvas) => {
+  //     let image = canvas.toDataURL('image/jpeg')
+  //     setTest(image)
 
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
 
   const handleSort = () => {
 
@@ -246,12 +264,12 @@ const Project = () => {
   // if (loading) return <div className="mt-[100px] w-full flex ">...</div>
 
   return (
-    <div className="">
+    <div className="relative">
       {/* Project: */}
       {/* <div className="h-[8vh] w-full min-h-[50px]"></div> */}
       {/* <button onClick={takeScreenShot}>Test</button> */}
       {/* <img src={test} /> */}
-      <div ref={canvasRef} className="flex flex-row gap-4 min-w-max max-w-[95%] ml-[.5%] pt-10 absolute left-0 justify-start px-10 pb-20">
+      <div ref={canvasRef} className="flex flex-row gap-4 w-max ml-[.5%] pt-10 absolute left-0 justify-start px-10 pb-20">
         {
           loading
           ? <LoadingColumns />
@@ -297,7 +315,7 @@ const Project = () => {
         ? null
         : <button
           onClick={handleClick}
-          className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+          className="hover:bg-gray-200 transition-all w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
         >
           +
         </button>

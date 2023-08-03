@@ -1,21 +1,19 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { IoClose } from 'react-icons/io5'
 import { FaCircleMinus } from 'react-icons/fa6'
 import { FaCirclePlus } from 'react-icons/fa6'
 
 import TextField from './TextField';
 
 
-const Original = ({ xIndex, yIndex, obj, items, setItems, onDragStart, onDragEnd, onDragOver }:any) => {
+const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, onDragEnd, onDragOver, varDragging }:any) => {
 
   const content = useMemo(() => {
     return items[xIndex].variations[yIndex].text
   }, [items[xIndex].variations[yIndex].text])
 
   const handleShow = (e, key) => {
-    console.log(key)
     e.preventDefault()
     const ref = [...items]
     ref[xIndex][key].show = !ref[xIndex][key].show
@@ -43,7 +41,7 @@ const Original = ({ xIndex, yIndex, obj, items, setItems, onDragStart, onDragEnd
 
   return (
       <div
-        className={`cursor-pointer max-w-[300px] bg-[#65D072] rounded-md w-full h-min p-1 inset-0 top-0 flex flex-col gap-2 `}
+        className={`cursor-pointer max-w-[300px] bg-[#65D072] rounded-md w-full h-min p-1 inset-0 top-0 flex flex-col gap-2 ${moved === yIndex && varDragging ? 'border-2 border-[#1C1E21]/90 translate-x-0 translate-y-0' : ''}`}
         draggable
         id={`drag-variation`}
         onDragStart={(e) => onDragStart(e, yIndex)}
@@ -51,12 +49,12 @@ const Original = ({ xIndex, yIndex, obj, items, setItems, onDragStart, onDragEnd
         onDragEnd={onDragEnd}
         onDragOver={(e) => e.preventDefault()}
       >
-        <div className="flex flex-row p-1 items-center justify-between">
+        <div className="flex flex-row p-2 items-center justify-between">
           <div
             className="self-center text-xs"
-          >line {xIndex}, alt {yIndex}</div>
+          >string {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
-            test
+            {/* test */}
           </div>
           {/* <div
             onClick={deleteVar}

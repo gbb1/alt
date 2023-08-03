@@ -28,6 +28,10 @@ const useSaveProject = (user:string, project_id:string, dataState:[], refresh:bo
 
     if (!saving) {
       saveUpdates(dataState)
+    } else {
+      setTimeout(() => {
+        saveUpdates(dataState)
+      }, 5000)
     }
 
   }, [dataState]);

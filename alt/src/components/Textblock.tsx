@@ -75,7 +75,7 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
         <div className="flex flex-row p-1 items-center justify-between">
           <div
             className="self-center text-xs"
-          >line {xIndex}, alt {yIndex}</div>
+          >string {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
             <div
               className="bg-gray-100 rounded-[100%] p-1"

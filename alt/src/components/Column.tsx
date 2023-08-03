@@ -103,8 +103,8 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
 
             return (
               <Original key={'var' + yIndex}
-                xIndex={index} yIndex={yIndex} setItems={setItems} items={items} obj={obj}
-                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
+                moved={moved} xIndex={index} yIndex={yIndex} setItems={setItems} items={items} obj={obj}
+                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd} varDragging={varDragging}
               />
             )
           } else {

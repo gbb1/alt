@@ -37,12 +37,20 @@ const Login = ({ }) => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
+      } else {
+        setUser(null)
       }
     });
   }, [])
 
   useEffect(() => {
-    const options = {
+    const options1 = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 0.6, // Adjust this value as needed, 0.1 means 10% of the target element is visible
+    };
+
+    const options2 = {
       root: null, // Use the viewport as the root
       rootMargin: '0px',
       threshold: 0.5, // Adjust this value as needed, 0.1 means 10% of the target element is visible
@@ -55,7 +63,7 @@ const Login = ({ }) => {
           observer2.unobserve(entry.target); // Stop observing once the element is visible
         }
       });
-    }, options);
+    }, options1);
 
     const observer3 = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -64,7 +72,7 @@ const Login = ({ }) => {
           observer3.unobserve(entry.target); // Stop observing once the element is visible
         }
       });
-    }, options);
+    }, options2);
 
     if (module2Ref.current) {
       observer2.observe(module2Ref.current);
@@ -137,9 +145,9 @@ const Login = ({ }) => {
                 </div>
               </div>
           </div> */}
-          <div className="bg-[#1C1E21]/90 p-10 rounded-lg">
+          <div className="bg-[#1C1E21]/90 p-10 rounded-lg min-h-[60vh] flex flex-col justify-center">
             {/* <img src="/images/stock/photo-1635805737707-575885ab0820.jpg" className="max-w-sm rounded-lg shadow-2xl" /> */}
-            <h1 className="text-8xl text-[#65D072] font-bold w-[90%]">Figma, Google docs, and Trello walk into a bar...</h1>
+            <h1 className="text-8xl text-[#65D072] font-bold w-[90%] ">Figma, Google docs, and Trello walk into a bar...</h1>
             <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</div>
             {/* <button className="btn btn-primary">Get Started</button> */}
             <div className="mt-8">
@@ -165,9 +173,9 @@ const Login = ({ }) => {
       <div ref={module3Ref} className={`${mod3Vis ? '' : 'invisible'}`}>
         <Module3 isVisible={mod3Vis} />
       </div>
-      <div ref={module2Ref} className={`${mod2Vis ? '' : 'invisible'}`}>
+      {/* <div ref={module2Ref} className={`${mod2Vis ? '' : 'invisible'}`}>
         <Module2 isVisible={mod2Vis} />
-      </div>
+      </div> */}
     </div>
 
   )

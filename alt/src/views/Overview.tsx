@@ -23,7 +23,7 @@ import LoadingProjects from '../components/LoadingProjects.tsx';
 
 import '../App.css'
 
-const Overview = () => {
+const Overview = ({ setMainProject }) => {
 
   const navigate = useNavigate()
   const [update, setUpdate] = useState(false)
