@@ -30,18 +30,19 @@ const Module3 = ({ isVisible }) => {
     <div className="h-min mx-10 relative my-20">
       <div className="flex-col justify-center">
 
-        <div className={`p-10 rounded-lg flex flex-col items-center py-20 ${ isVisible ? '' : 'invisible'}`}>
+        <div className={`p-10 rounded-lg flex flex-col gap-4 items-center py-20 ${ isVisible ? '' : 'invisible'}`}>
 
           <h1 className={`text-6xl text-[#65D072] font-bold z-[2] max-w-[70%] text-left lg:text-center ${ show1 ? 'fade-in-delay2' : 'invisible'}`}>So... what is Content Design?</h1>
-          <div className={`py-6 text-2xl font-light  z-[2] text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left max-w-[70%] ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>Content Designers bring empathy and clarity to every word you see on screen so that UI can be effective, appropriate, and engaging.   </div>
-          <div className={`text-2xl font-light text-[#1C1E21]/90 z-[2]  flex flex-row gap-2 text-left lg:text-right max-w-[70%] ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>They use tools like tone, vocabulary level, and iconography to make UI accessible, scalable, and consistent. </div>
-          <div className={`py-6 text-2xl font-light text-[#1C1E21]/90  z-[2]  flex flex-row gap-2 text-left lg:text-left max-w-[70%] ${ show3 ? 'fade-in-delay2' : 'invisible'}`}>And they touch everything from titles, to buttons, tooltips, and terms and conditions.</div>
+
+          <div className={`py-3 text-2xl font-light bg-white/60 rounded-lg px-4 z-[2] text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left max-w-[70%] ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>Content Designers bring empathy and clarity to every word you see on screen so that UI can be effective, appropriate, and engaging.   </div>
+          <div className={`text-2xl font-light text-[#1C1E21]/90 z-[2] bg-white/60  rounded-lg px-4 py-3 flex flex-row gap-2 text-left lg:text-right max-w-[70%] ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>They use tools like tone, vocabulary level, and iconography to make UI accessible, scalable, and consistent. </div>
+          <div className={`py-3 text-2xl font-light text-[#1C1E21]/90 bg-white/60  rounded-lg px-4  z-[2]  flex flex-row gap-2 text-left lg:text-left max-w-[70%] ${ show3 ? 'fade-in-delay2' : 'invisible'}`}>And they touch everything from titles, to buttons, tooltips, and terms and conditions.</div>
 
         </div>
 
-        <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
+        {/* <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`w-[80%] rounded-lg h-[90%] md:h-[80%] bg-[#1C1E21]/10 z-[1] lg:invisible transition-all absolute top-[5vh] md:top-[10%] left-[10%] ${ show3 ? 'fade-in-delay1' : 'invisible'}`}></div>
-        </div>
+        </div> */}
 
         <div className={`${ show3 ? 'fade-in-delay1' : 'invisible'}`}>
           <div className={`absolute btn rounded-full bg-gray-/5 normal-case font-light hover:text-white cursor-pointer text-[#1C1E21]/90 top-[20%] left-[5%] z-[0] `}>Get started</div>
