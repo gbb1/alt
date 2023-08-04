@@ -1,36 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
-import {
-  BrowserRouter as Router, Link, Route, Routes,
-} from 'react-router-dom';
-import { auth } from '../../firebaseConfig'
-
-import { FcGoogle } from 'react-icons/fc'
-import { AiFillGoogleCircle } from 'react-icons/ai'
-
-import LoginButton from '../components/SignInButton';
 import { ExportToCsv } from 'export-to-csv';
-import * as XLSX from 'xlsx'
-
-import { createUser } from '../../db/projects'
-import { utils, writeFile } from 'xlsx';
 
 import { LuDownloadCloud } from 'react-icons/lu'
 
 import './module.css'
-// Import the functions you need from the SDKs you ne
-// import { userAuth } from '../AuthContext'
 
 const CSVExport = ({ items, project }) => {
 
   items = items || []
 
-  const formatItems = (data) => {
-    let vals = []
+  const formatItems = (data:[]) => {
+    const vals = []
 
-    for (let col of data) {
+    for (const col of data) {
       const newData = {}
       const imageString = '=IMAGE("' + col.screenshot + '", 1)'
       newData.screenshot = col.screenshot === undefined ? '=IMAGE' : imageString
@@ -42,31 +23,6 @@ const CSVExport = ({ items, project }) => {
 
     return vals
   }
-  // bg-[#1C1E21]/90
-
-  // const data = [
-  //   {
-  //     name: 'Test 1',
-  //     age: 13,
-  //     average: 8.2,
-  //     approved: true,
-  //     description: "using 'Content here, content here' "
-  //   },
-  //   {
-  //     name: 'Test 2',
-  //     age: 11,
-  //     average: 8.2,
-  //     approved: true,
-  //     description: "using 'Content here, content here' "
-  //   },
-  //   {
-  //     name: 'Test 4',
-  //     age: 10,
-  //     average: 8.2,
-  //     approved: true,
-  //     description: "using 'Content here, content here' "
-  //   },
-  // ];
 
     const options = {
       fieldSeparator: ',',
@@ -109,7 +65,7 @@ const CSVExport = ({ items, project }) => {
   //   XLSX.writeFile(workbook, "Presidents.xlsx", { compression: true });
   // }
 
-  const handleClick = (e) => {
+  const handleClick = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     csvExporter.generateCsv(formatItems(items));
     // genExcel()

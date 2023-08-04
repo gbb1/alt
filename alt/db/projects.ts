@@ -82,8 +82,6 @@ const addProject = async (userId:string) => {
 
 const getProjects = async (userId:string) => {
 
-  // console.log('geting projects')
-
   const hash = MD5(userId).toString();
   const userRef = doc(db, 'users', hash);
   const userSnap = await getDoc(userRef);
@@ -150,7 +148,6 @@ const saveProject = async (userId:string, projectId:string, projData:object) => 
         proj.data = projData
       }
     }
-    // console.log(projData)
 
     setDoc(userRef, data, { merge: true })
       .then(() => {
@@ -165,7 +162,6 @@ const saveProject = async (userId:string, projectId:string, projData:object) => 
 
 const updateName = async (userId:string, projectId:string, name:string) => {
 
-  // console.log('running', projectId, name)
   const hash = MD5(userId).toString();
   const userRef = doc(db, 'users', hash);
   const userSnap = await getDoc(userRef);
@@ -202,14 +198,11 @@ const updateName = async (userId:string, projectId:string, name:string) => {
 
 const deleteProject = async (userId:string, projectId:string) => {
 
-  // console.log('trying to delete project', projectId)
-
   const hash = MD5(userId).toString();
   const userRef = doc(db, 'users', hash);
   const userSnap = await getDoc(userRef);
 
   const intId = Number(projectId)
-  // console.log('check id', intId)
 
   return new Promise((resolve, reject) => {
 
@@ -225,14 +218,12 @@ const deleteProject = async (userId:string, projectId:string) => {
       const proj = data.projects[i]
 
       if (proj.id === intId) {
-        // console.log('found', data.projects[i])
         [target] = data.projects.splice(i, 1);
         break;
       }
     }
 
     if (!target) reject('mismatch id id:' + projectId + '.')
-    // console.log('here', target, target.data)
 
     const promises = []
 
@@ -247,7 +238,6 @@ const deleteProject = async (userId:string, projectId:string) => {
     }
 
     Promise.all(promises).then(() => {
-      // console.log(data.projects)
       return setDoc(userRef, data, { merge: true })
     })
     .then(() => {

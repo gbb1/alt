@@ -8,10 +8,8 @@ import { updateName } from '../../db/projects'
 
 const ProjectName = ({ email, name, project, update, id }:any) => {
 
-  // console.log('in row', name)
-
-  const [text, setText] = useState(name || '')
-  const [debouncedText, setDebouncedText] = useState('');
+  const [text, setText] = useState<string>(name || '')
+  const [debouncedText, setDebouncedText] = useState<string>('');
 
   useEffect(() => {
     setText(name)
@@ -23,10 +21,9 @@ const ProjectName = ({ email, name, project, update, id }:any) => {
       setDebouncedText(text);
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [text, 500]);
+  }, [text, name]);
 
-  const handleChange = (e) => {
-    // console.log('detecting change', e.target)
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setText(e.target.value)
   }
@@ -41,7 +38,7 @@ const ProjectName = ({ email, name, project, update, id }:any) => {
         console.log(err)
       })
 
-  }, [debouncedText])
+  }, [debouncedText, email, id])
 
   return (
 

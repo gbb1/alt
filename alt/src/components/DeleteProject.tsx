@@ -1,14 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
-import {
-  BrowserRouter as Router, Link, Route, Routes,
-} from 'react-router-dom';
-import { auth } from '../../firebaseConfig'
-
-import { FcGoogle } from 'react-icons/fc'
-import { AiFillGoogleCircle } from 'react-icons/ai'
 
 import { deleteProject } from '../../db/projects'
 import { IoClose } from 'react-icons/io5'
@@ -16,15 +6,15 @@ import { IoClose } from 'react-icons/io5'
 
 const DeleteProject = ({ email, setUpdate, update, id }) => {
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     setLoading(false)
   }, [id])
 
-  const handleDelete = (e) => {
+  const handleDelete = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    // console.log(e.target)
+
     setLoading(true)
     if (id === undefined) console.log("id issue")
     deleteProject(email, id)

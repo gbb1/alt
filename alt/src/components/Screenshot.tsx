@@ -6,17 +6,17 @@ import { storage } from '../../firebaseConfig'
 import { FaRegImage } from 'react-icons/fa6'
 
 const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
-  const [files, setFiles] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [files, setFiles] = useState<[] | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false)
 
   const storage = getStorage()
 
   const image = useMemo(() => {
-    // console.log('inmemo', items[xIndex], items[xIndex].screenshot)
+
     return items[xIndex].screenshot || ''
   }, [items[xIndex].screenshot])
-  // rendering previews
+
   useEffect(() => {
     if (!files) return;
 
@@ -29,18 +29,11 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
 
   }, [files]);
 
-  // useEffect(() => {
-  //   let obj = items[xIndex]
-  //   if ('screenshot' in obj) {
-  //     setPreview(obj.screenshot)
-  //   }
-  // }, [items])
-
   useEffect(() => {
     if (image) setLoading(false)
   }, [image])
 
-  const uploadFile = (file, url) => {
+  const uploadFile = (file:any, url:string) => {
     setLoading(true)
 
     const split = url.split('/')
@@ -110,17 +103,9 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
         loading && (!image)
           ? <div className="w-full max-w-full rounded-lg bg-gray-400 h-[40px] animate-pulse"></div>
           : <img className="w-full max-w-full rounded-lg object-cover" src={image} />
-          // ? <div className="w-full max-w-full rounded-lg bg-gray-400 h-[20px]">Loading</div>
-          // : null
+
       }
-      {/* <div className="flex flex-col relative">
-        {
-          image
-            ? <img className="w- full max-w-full rounded-lg object-cover absolute" src={image} />
-            : null
-        }
-        <div className="w-full max-w-full rounded-lg bg-gray-400 h-[40px] animate-pulse absolute"></div>
-      </div> */}
+
     </div>
   );
 }

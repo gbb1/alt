@@ -13,9 +13,7 @@ const useSaveProject = (user:string, project_id:string, dataState:[], refresh:bo
     setSaving(true)
     saveProject(user, project_id, projectData)
       .then(() => {
-        // console.log('saved', projectData)
         setTimeout(() => {
-          // console.log('end saving')
           setSaving(false)
         }, 5000)
       })

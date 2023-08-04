@@ -9,10 +9,6 @@ const useGetProjects = (user:string, refresh:boolean) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   console.log(projects)
-  // }, [projects])
-
   useEffect(() => {
 
     getProjects(user)

@@ -1,23 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ReactDOM from 'react-dom/client';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import {
-  BrowserRouter as Router, Link, Route, Routes,
-} from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig'
 
-import { MdOutlineDragIndicator } from 'react-icons/md'
-import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
-
-import Column from '../components/Column';
-
-import { createUser, addProject, getProjects, deleteProject } from '../../db/projects.ts'
+import { addProject } from '../../db/projects.ts'
 import { useGetProjects } from '../hooks/projects'
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import ProjectName from '../components/ProjectName.tsx';
 import ProjectRow from '../components/ProjectRow.tsx';
 import LoadingProjects from '../components/LoadingProjects.tsx';
 
@@ -26,38 +16,30 @@ import '../App.css'
 const Overview = ({ setMainProject }) => {
 
   const navigate = useNavigate()
-  const [update, setUpdate] = useState(false)
-  const [load, setLoad] = useState(false)
-  const [email, setEmail] = useState('')
+  const [update, setUpdate] = useState<boolean>(false)
+  const [load, setLoad] = useState<boolean>(false)
+  const [email, setEmail] = useState<string>('')
 
-  // const [projs, setProjs] = useState([])
 
   const user = useAuthState(auth);
 
   useEffect(() => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
-      // console.log('changed', auth.currentUser?.email)
+
       if (user) {
-        // setLoading(false);
+
         if (email.length === 0) setEmail(user.email)
-        // setEmail(user.email)
+
       } else {
-        // console.log('unauthorized');
+
         navigate('/login');
       }
     });
   }, [])
 
   const { projects, loading, error } = useGetProjects(email, update);
-  // useEffect(() => {
-  //   setProjs(projects)
-  // }, [projects])
 
-  // useEffect(() => {
-  //   console.log('projects changed')
-  // }, [projects])
-
-  const handleClick = (e) => {
+  const handleClick = (e:React.MouseEvent<HTMLElement>) => {
     setLoad(true)
     addProject(email).then(() => {
       setUpdate(!update)
@@ -65,7 +47,7 @@ const Overview = ({ setMainProject }) => {
     })
   }
 
-  const handleNav = (e) => {
+  const handleNav = (e:React.MouseEvent<HTMLElement>) => {
     const project_id = e.target.id
     navigate('/project', { state: { project_id, email } });
   }
@@ -73,7 +55,6 @@ const Overview = ({ setMainProject }) => {
 
   return (
     <div className="overscroll-none fixed w-full">
-      {/* Project: */}
       <div className="flex flex-col w-full gap-4 mt-[5vh] px-[5%] overscroll-none ">
         <div className="flex flex-row justify-between gap-4">
           <h1 className="text-5xl text-[#1C1E21]/90 font-bold">Your projects:</h1>
@@ -108,14 +89,9 @@ const Overview = ({ setMainProject }) => {
           loading
           ? <LoadingProjects />
           : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain scroll max-h-[50vh] px-2 pt-2">
-          {/* {
-            load
-            ? <span className="loading loading-dots loading-xs"></span>
-            : null
-          } */}
             {
               projects && projects.map((p, index) => {
-                console.log(p)
+
                 const date = new Date(p.accessed.seconds * 1000)
                 const count = p.data.length
                 return (
@@ -131,31 +107,3 @@ const Overview = ({ setMainProject }) => {
 }
 
 export default Overview
-
-
-
-  // useEffect(() => {
-  //   // createUser('test@gmail.com')
-  //   // addProject('test@gmail.com').then(res => {
-  //   //   console.log(res)
-  //   // })
-  //   // getProjects('test@gmail.com').then(res => console.log(res))
-  // }, [])
-
-
-  // useEffect(() => {
-  //   const element = document.getElementById('drag-' + moved)
-
-  //   if (element?.classList.contains('border-2')) {
-  //     element?.classList.remove('border-2')
-  //   } else {
-  //     element?.classList.remove('border-2')
-  //   }
-
-
-  //   // setTimeout(function(){
-  //   //   // e.target.style.visibility = "hidden";
-  //   //   // e.target.classList.add('border-2')
-  //   //   // e.target.classList.add('p-0')
-  //   // }, 0);
-  // }, [moved])

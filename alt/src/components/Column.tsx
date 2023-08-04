@@ -5,24 +5,16 @@ import Textblock from './Textblock';
 import Original from './Original';
 import Screenshot from './Screenshot';
 
-import { MdOutlineDragIndicator } from 'react-icons/md'
-
-import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
-
-import Draggable from 'react-draggable'
-
 const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:any) => {
 
 
-  const [moved, setMoved] = useState(null)
-  const [movedOver, setMovedOver] = useState(null)
-  const [varDragging, setVarDragging] = useState(false)
-  // const [width, setWidth] = useState(300)
+  const [moved, setMoved] = useState<number | null>(null)
+  const [movedOver, setMovedOver] = useState<number | null>(null)
+  const [varDragging, setVarDragging] = useState<boolean>(false)
 
+  // const [hide, setHide] = useState(false)
 
-  const [hide, setHide] = useState(false)
-
-  const dragOver = (moveFrom, moveTo) => {
+  const dragOver = (moveFrom:number, moveTo:number) => {
 
     const ref = [...items]
     let _vars = [...ref[index].variations]
@@ -35,38 +27,32 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
     setItems(ref)
   }
 
-
-  const onDragStart = (e, index) => {
-    // console.log(e)
-    if (e.target.id==='drag-variation') {
+  const onDragStart = (e:DragEvent, index:number) => {
+    if (e.target?.id === 'drag-variation') {
       setMoved(index)
       setVarDragging(true)
     }
   }
 
-  const addVar = (e) => {
+  const addVar = (e:any) => {
     e.preventDefault()
-    let ref = [...items]
-    // ref[index].variations.push({
-    //   index: ref[index].variations.length + 1,
-    //   var: ''
-    // })
-    ref[index].variations.push({
+    const _items = [...items]
+
+    _items[index].variations.push({
       text: '',
       starred: false,
     })
-    // if (div) ref[index].sentence = e.target.textContent
-    setItems(ref)
+
+    setItems(_items)
   }
 
-  const startDrag = (e) => {
+  const startDrag = (e:DragEvent) => {
     e.preventDefault()
     setDragging(true)
 
   }
 
-  const onDragOver = (e, index) => {
-
+  const onDragOver = (e:DragEvent, index:number) => {
     if (varDragging) {
       setMovedOver((curr) => index)
     }
@@ -75,10 +61,9 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   useEffect(() => {
     dragOver(moved, movedOver)
     setMoved((curr) => movedOver)
-    // setSelected((curr) => movedOver)
   }, [movedOver])
 
-  const onDragEnd = (e) => {
+  const onDragEnd = (e:DragEvent) => {
     e.preventDefault()
     setDragging(false)
     setVarDragging(false)
@@ -87,18 +72,9 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   return (
 
     <div className="flex flex-col gap-3 p-2">
-      {/* <div
-        className="w-min h-min z-[0] absolute -translate-y-9"
-      >
-        {
-          hide
-          ? <BiSolidShow />
-          : <BiSolidHide />
-        }
-      </div> */}
       <Screenshot user={user} projectId={projectId} items={items} setItems={setItems} xIndex={index} />
       {
-        obj.variations.map((vari, yIndex) => {
+        obj.variations.map((vari:object, yIndex:number) => {
           if (yIndex === 0) {
 
             return (
@@ -117,97 +93,9 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
           }
         })
       }
-      {/* {
-        selected !== null
-        ?
-        items[index].variations.slice(1).map((vari, yIndex) => {
-            return (
-              <Textblock
-                xIndex={index} yIndex={yIndex + 1} setItems={setItems} items={items} sentence={vari}
-                onDragStart={onDragStart} onDragOver={onDragOver} onDragEnd={onDragEnd}
-              />
-              // <div
-              //   className="bg-black w-full h-[40px]"
-              // >alt {index}
-
-              // </div>
-            )
-          })
-        : null
-      } */}
       <button className="bg-gray-200 py-2 rounded-lg" onClick={addVar}>+</button>
     </div>
-    // </Draggable>
   )
 }
 
 export default Column
-
-
-/*
-
-                  <Draggable
-                    key={`user${user.user_id}`}
-                    position={{ x: x, y: y }}
-                    onDrag={dragHandler}
-                    onStop={upHandler}
-                    axis="x"
-                  >
-                    <div
-                      id="test"
-                      key={`user${user.user_id}`}
-                      className={`profile-card
-                        ${out === user.user_id ? 'unmount' : ''}
-                        ${pass === user.user_id ? 'pass-unmount' : ''}
-                        ${front === user.user_id ? 'mount' : ''}
-                        ${back === user.user_id ? 'back-mount' : ''}
-                        ${index === 0 ? 'back' : ''}
-                      `}
-                    >
-                      <div className="card-wrapper">
-                        <ProfileCard user={user} distance={distances[user.location]} />
-                      </div>
-                    </div>
-                  </Draggable>
-
-
-                  */
-
-
-
-  // const [startX, setStartX] = useState<number>(0)
-  // const [startY, setStartY] = useState<number>(0);
-  // const [x, setX] = useState(0);
-  // const [y, setY] = useState(0);
-
-  // const [moveTo, setMoveTo] = useState<number>(index)
-
-  // useEffect(() => {
-    //   if (columnRef.current) {
-      //     setStartX(columnRef.current.offsetLeft)
-      //     setStartY(columnRef.current.offsetTop)
-
-      //     const posObj = positions;
-      //     // posObj[index] = { left: columnRef.current.offsetLeft, right: columnRef.current.offsetLeft + columnRef.current.offsetWidth }
-      //     posObj[columnRef.current.offsetLeft] = index
-      //     setPositions(posObj)
-      //   }
-      // }, [])
-
-      // const handleDrag = (e, ui) => {
-        //   const { x, y } = ui
-        //   const windowX = x + startX;
-
-        //   setMoveTo(coordinateToIndex(windowX))
-
-        //   setX(x)
-        //   setY(y)
-        // }
-
-
-
-  // const endHandler = () => {
-  //   reorderItems(index, moveTo);
-  //   setX(x)
-  //   setY(0)
-  // }

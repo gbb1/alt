@@ -9,8 +9,8 @@ import DeleteProject from './DeleteProject';
 
 const ProjectRow = ({ project, count, date, handleNav, projects, email, update, setUpdate }:any) => {
 
-  const [id, setId] = useState()
-  const [name, setName] = useState()
+  const [id, setId] = useState<number>()
+  const [name, setName] = useState<string>()
 
   useEffect(() => {
     setId(project.id)
@@ -37,9 +37,6 @@ const ProjectRow = ({ project, count, date, handleNav, projects, email, update, 
           Edit
         </button>
         <DeleteProject email={email} id={id} update={update} setUpdate={setUpdate} />
-        {/* <button id={project.id} className="btn normal-case" onClick={handleDelete}>
-          x
-        </button> */}
       </div>
     </div>
   )

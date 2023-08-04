@@ -11,32 +11,31 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
 
   const content = useMemo(() => {
     return items[xIndex].variations[yIndex].text
-  }, [items[xIndex].variations[yIndex].text])
+  }, [xIndex, yIndex, items])
 
-  const handleShow = (e, key) => {
+  const handleShow = (e:React.MouseEvent<HTMLElement>, key:number) => {
     e.preventDefault()
-    const ref = [...items]
-    ref[xIndex][key].show = !ref[xIndex][key].show
-    setItems(ref)
+    const _items = [...items]
+    _items[xIndex][key].show = !_items[xIndex][key].show
+    setItems(_items)
   }
 
-  const handleAltInput = (e, key) => {
+  const handleAltInput = (e:React.ChangeEvent<HTMLInputElement>, key:number) => {
     e.preventDefault()
 
-    let ref = [...items]
-    // console.log('va', ref[xIndex])
-    ref[xIndex][key].text = e.target.value
+    const _items = [...items]
+    _items[xIndex][key].text = e.target.value
 
-    setItems(ref)
+    setItems(_items)
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
 
-    let ref = [...items]
-    ref[xIndex].variations[yIndex].text = e.target.value
+    const _items = [...items]
+    _items[xIndex].variations[yIndex].text = e.target.value
 
-    setItems(ref)
+    setItems(_items)
   }
 
   return (
@@ -54,14 +53,7 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
             className="self-center text-xs"
           >string {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
-            {/* test */}
           </div>
-          {/* <div
-            onClick={deleteVar}
-            className="bg-gray-100 rounded-[100%] p-1"
-          >
-            <IoClose value={{ color: 'white' }} />
-          </div> */}
         </div>
         <TextField state={content} handleChange={handleChange} xIndex={xIndex} id={''} />
         <div>

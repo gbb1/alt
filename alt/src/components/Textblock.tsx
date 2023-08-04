@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
 
 import { IoClose } from 'react-icons/io5'
 import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'
@@ -11,55 +10,55 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
 
   const content = useMemo(() => {
     return items[xIndex].variations[yIndex].text
-  }, [items[xIndex].variations[yIndex].text])
+  }, [xIndex, yIndex, items])
 
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
 
-    let ref = [...items]
-    ref[xIndex].variations[yIndex].text = e.target.value
-    setItems(ref)
+    const _items = [...items]
+    _items[xIndex].variations[yIndex].text = e.target.value
+    setItems(_items)
   }
 
-  const handleClone = (e) => {
+  const handleClone = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    let ref = [...items]
-    ref[xIndex].variations[yIndex].text = ref[xIndex].variations[0].text
-    setItems(ref)
+    const _items = [...items]
+    _items[xIndex].variations[yIndex].text = _items[xIndex].variations[0].text
+    setItems(_items)
   }
 
-  const deleteVar = (e) => {
+  const deleteVar = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
 
-    let ref = [...items]
-    let variations = ref[xIndex].variations
+    const _items = [...items]
+    const variations = _items[xIndex].variations
 
     variations.splice(yIndex, 1)
 
-    ref[xIndex].variations = variations
-    setItems(ref)
+    _items[xIndex].variations = variations
+    setItems(_items)
 
   }
 
-  const addVar = (e) => {
+  const addVar = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    let ref = [...items]
+    const _items = [...items]
 
-    ref[xIndex].variations.push({
+    _items[xIndex].variations.push({
       text: '',
       starred: false,
     })
 
-    setItems(ref)
+    setItems(_items)
   }
 
-  const handleStar = (e) => {
+  const handleStar = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    let ref = [...items]
+    const _items = [...items]
 
-    ref[xIndex].variations[yIndex].starred = !ref[xIndex].variations[yIndex].starred
-    setItems(ref)
+    _items[xIndex].variations[yIndex].starred = !_items[xIndex].variations[yIndex].starred
+    setItems(_items)
   }
 
   return (

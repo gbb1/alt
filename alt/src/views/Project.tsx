@@ -1,28 +1,19 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import ReactDOM from 'react-dom/client';
-import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState, useRef, useContext } from 'react';
 import {
-  BrowserRouter as Router, Link, Route, Routes, useLocation
+ useLocation
 } from 'react-router-dom';
-import { auth } from '../../firebaseConfig'
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
-import { BiSolidHide, BiSolidShow } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
 
-import { getProject, saveProject } from '../../db/projects';
 import { useGetProject } from '../hooks/getProject';
 import { useSaveProject } from '../hooks/saveProject';
 
-import html2canvas from 'html2canvas'
 import LoadingColumns from '../components/LoadingColumns';
-import CSVExport from '../components/CSVExport';
 
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "firebase/storage";
+import { ref, deleteObject } from "firebase/storage";
 import { storage } from '../../firebaseConfig'
 
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
 
@@ -34,7 +25,8 @@ const Project = () => {
   // const user = auth.currentUser
 
   const location = useLocation();
-  const [update, setUpdate] = useState(false)
+  const [update, setUpdate] = useState<boolean>(false)
+
   const { project_id, email, size } = location.state;
 
   const { project, loading, error } = useGetProject(email, project_id, update);
@@ -42,12 +34,12 @@ const Project = () => {
   const [items, setItems] = useState<[]>([])
   const [dragging, setDragging] = useState<boolean>(false)
 
-  const moveRef = useRef<any>(null)
-  const moveOverRef = useRef<any>(null)
-  const dragged = useRef<any>(null)
+  const moveRef = useRef(null)
+  const moveOverRef = useRef(null)
+  const dragged = useRef(null)
 
-  const [moved, setMoved] = useState(null)
-  const [movedOver, setMovedOver] = useState(null)
+  const [moved, setMoved] = useState<null | number>(null)
+  const [movedOver, setMovedOver] = useState<null | number>(null)
 
   const { mainProject, setMainProject } = useContext(ProjectContext)
   const { mainItems, setMainItems } = useContext(ItemsContext)
@@ -57,99 +49,47 @@ const Project = () => {
   const { saving, saveError } = useSaveProject(email, project_id, items, false)
 
   useEffect(() => {
-    console.log('setting context,', project)
     setItems(project.data)
     setMainProject(project)
-  }, [project])
+  }, [project, setMainProject])
 
   useEffect(() => {
     return () => {
       setMainItems([])
       setMainProject({})
     }
-  }, [])
+  }, [setMainItems, setMainProject])
 
   useEffect(() => {
-    console.log('setting items')
     setMainItems(items)
-  }, [items])
-
-  // useEffect(() => {
-  //   console.log('items',items)
-  // }, [items])
-
-  // useEffect(() => {
-  //   console.log(saving)
-  // }, [saving])
-  // const [varMoved, setVarMoved] = useState(null)
-  // const [varMovedOver, setVarMovedOver] = useState(null)
-  // const [varDragging, setVarDragging] = useState(false)
-
-  const [selected, setSelected] = useState(null)
+  }, [items, setMainItems])
 
 
-  // useEffect(() => {
-  //   console.log(loading)
-  // }, [loading])
-  // useEffect(() => {
-  //   const saveTimer = setInterval(saveUpdates, 5000); // Save updates every 5 seconds
+  const [selected, setSelected] = useState<null | number>(null)
 
-  //   // Cleanup the timer on unmount
-  //   return () => clearInterval(saveTimer);
-  // }, []);
+  // const handleSort = () => {
 
-  // const saveUpdates = () => {
-  //   const data = [...items]
-  //   console.log('data', data)
-  //   console.log('items in saver', items)
-  //   saveProject('test@gmail.com', project_id, data)
-  //     .then(() => {
-  //       console.log('saved')
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
+  //   const [moveFrom, moveTo] = [moveRef.current, moveOverRef.current]
+
+  //   const _items:[] = [...items]
+
+  //   const draggedItemContent = _items.splice(moved, 1)[0]
+
+  //   _items.splice(movedOver, 0, draggedItemContent)
+
+  //   setItems(_items)
+
+  //   moveRef.current = null
+  //   moveOverRef.current = null
+
   // }
 
-  const [test, setTest] = useState(null)
-
-  // const takeScreenShot = () => {
-  //   const element = canvasRef.current
-  //   if (!element) return
-  //   html2canvas(element).then((canvas) => {
-  //     let image = canvas.toDataURL('image/jpeg')
-  //     setTest(image)
-
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-
-  const handleSort = () => {
-
-    const [moveFrom, moveTo] = [moveRef.current, moveOverRef.current]
-
-    const _items:[] = [...items]
-
-    const draggedItemContent = _items.splice(moved, 1)[0]
-
-    _items.splice(movedOver, 0, draggedItemContent)
-
-    setItems(_items)
-
-    moveRef.current = null
-    moveOverRef.current = null
-
-  }
-
-  const handleDelete = (e, index) => {
+  const handleDelete = (e:React.MouseEvent<HTMLElement>, index:number) => {
     e.preventDefault()
 
     const _items = [...items]
     const old = _items.splice(index, 1)
 
-    console.log('old', old)
     const path = old[0].path
 
     const oldRef = ref(storage, path);
@@ -176,24 +116,18 @@ const Project = () => {
   }
 
 
-  const dragOver = (moveFrom, moveTo) => {
+  const dragOver = (moveFrom:number, moveTo:number) => {
 
     let _items = [...items]
 
     const moved = _items.splice(moveFrom, 1)
     _items = _items.slice(0, moveTo).concat(moved).concat(_items.slice(moveTo))
 
-    // const temp = _items[moveFrom]
-    // _items[moveFrom] = _items[moveTo]
-    // _items[moveTo] = temp
-
     setItems(_items)
   }
 
 
-  const onDragStart = (e, index) => {
-    // console.log(e)
-    // console.log(e.target.id)
+  const onDragStart = (e:DragEvent, index:number) => {
     if (e.target.id==='drag-column') {
       moveRef.current = index
       setMoved(index)
@@ -201,37 +135,18 @@ const Project = () => {
     }
   }
 
-  // useEffect(() => {
-  //   const element = document.getElementById('drag-' + moved)
-
-  //   if (element?.classList.contains('border-2')) {
-  //     element?.classList.remove('border-2')
-  //   } else {
-  //     element?.classList.remove('border-2')
-  //   }
-
-
-  //   // setTimeout(function(){
-  //   //   // e.target.style.visibility = "hidden";
-  //   //   // e.target.classList.add('border-2')
-  //   //   // e.target.classList.add('p-0')
-  //   // }, 0);
-  // }, [moved])
-
-  const onDragOver = (e, index) => {
+  const onDragOver = (e:DragEvent, index:number) => {
     if (dragging) {
       moveOverRef.current = index
       setMovedOver((curr) => index)
     }
   }
 
-  const handleClick = (e) => {
+  const handleClick = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    let ref = [...items]
-    // let index = Math.floor(Math.random() * (test.length))
+    const _items = [...items]
 
-    ref.push({
-      // color: test[index],
+    _items.push({
       sentence:'',
       variations: [{
         text: '',
@@ -246,29 +161,24 @@ const Project = () => {
         text: '',
       },
     })
-    setSelected(ref.length - 1)
-    setItems(ref)
+
+    setSelected(_items.length - 1)
+    setItems(_items)
   }
 
   useEffect(() => {
     dragOver(moved, movedOver)
     setMoved((curr) => movedOver)
     setSelected((curr) => movedOver)
-  }, [movedOver])
+  }, [movedOver, dragOver, moved])
 
   const onDragEnd = (e) => {
     e.preventDefault()
     setDragging(false)
   }
 
-  // if (loading) return <div className="mt-[100px] w-full flex ">...</div>
-
   return (
     <div className="relative">
-      {/* Project: */}
-      {/* <div className="h-[8vh] w-full min-h-[50px]"></div> */}
-      {/* <button onClick={takeScreenShot}>Test</button> */}
-      {/* <img src={test} /> */}
       <div ref={canvasRef} className="flex flex-row gap-4 w-max ml-[.5%] pt-10 absolute left-0 justify-start px-10 pb-20">
         {
           loading
@@ -326,21 +236,3 @@ const Project = () => {
 }
 
 export default Project
-
-
-/*
-
-                    ${ index === moveOverRef.current
-                        ? moveRef.current > index
-                          ? ''
-                          : ''
-                        : ''
-                    }
-                    ${
-                      index === moveRef.current
-                      ? ''
-                      : ''
-                    }
-
-
-*/

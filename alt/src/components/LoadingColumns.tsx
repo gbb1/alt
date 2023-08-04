@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 const LoadingColumns = ({ size }) => {
 
   size = size || 3
-  const [loads, setLoads] = useState(new Array(size).fill(0))
+  const [loads, setLoads] = useState<Array<number>>(new Array(size).fill(0))
 
   useEffect(() => {
 
