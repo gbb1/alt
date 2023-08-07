@@ -6,6 +6,7 @@
 ![alt text](http://g.recordit.co/ikkBkLP4jG.gif)
 - Adding content and starting to ideate is super easy with as many variations as you want.
 - Prepare your content for handoff with UI details and translation strings.
+- You can quickly duplicate your reference string to make small edits, and star your favorite variations. 
 
 ## Organizing your workspace:
 ![alt text](http://g.recordit.co/oy3lyHdEVK.gif)
