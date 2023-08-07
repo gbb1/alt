@@ -16,7 +16,7 @@
 ### Adding images:
 ![alt text](http://g.recordit.co/gix8nXmn8j.gif)
 - It's easy to add or update the screenshot you're using as a reference.
-- All images are automatically stored in the cloud, and deleted when you delete them in your workspace.
+- All images are automatically stored in the cloud, and deleted from cloud storage when you delete them in your workspace.
 
 
 
