@@ -11,22 +11,19 @@
 
 ### Project Workspace:
 
-In the product overview, site visitors can:
-
-![alt text](http://g.recordit.co/oy3lyHdEVK.gif)
-- Navigate through multiple images via an image carousel
-- View and zoom in on images of different clothing items
-  - In the expanded view, zooming will follow mouse movement
-
-
-![alt text](http://g.recordit.co/gix8nXmn8j.gif)
-- Preview images in the carousel with scrollable thumbnails
-  - Buttons will dynamically render that allow users to scroll up and down through the thumbnails
-  - Thumbnail scroll will track the user's most relevant recent interaction, whether with the style options, image carousel, or other thumbnails
-
+In the project workspace, you can add new pieces of content to ideate and drag and drop to organize your workflow.
 
 ![alt text](http://g.recordit.co/ikkBkLP4jG.gif)
-- Explore different styles, and see which items are on sale
+- Adding content and starting to ideate is super easy with as many variations as you want.
+- Prepare your content for handoff with UI details and translation strings.
+
+![alt text](http://g.recordit.co/oy3lyHdEVK.gif)
+- Drag and drop to reorder columns, or to update different variations of your working content.
+- The order and hierarchy is saved so you can pick up right where you left off when you come back.
+
+![alt text](http://g.recordit.co/gix8nXmn8j.gif)
+- It's easy to add or update the screenshot you're using as a reference.
+- All images are automatically stored in the cloud, and deleted when you delete them in your workspace.
 
 
 ![alt text](http://g.recordit.co/pwhRT0bewT.gif)
