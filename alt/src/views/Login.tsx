@@ -121,6 +121,7 @@ const Login = () => {
       <div className={`${mod3Vis ? '' : 'invisible'}`}>
         <Module4 isVisible={mod3Vis} />
       </div>
+      <div className="w-full py-6 mb-6 text-xl text-[#1C1E21]/90 flex flex-row gap-2 items-center justify-center">Original design, inspired by WhatsApp web.</div>
     </div>
 
   )
