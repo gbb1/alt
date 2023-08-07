@@ -1,9 +1,10 @@
 import { db, storage } from '../firebaseConfig'
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "firebase/storage";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
 import { MD5 } from 'crypto-js';
 
-const createUser = async (email:string) => {
+const createUser = async (email:string | null) => {
+  if (!email) return
   const userData = {
     email: email,
     count: 0,
@@ -18,7 +19,7 @@ const createUser = async (email:string) => {
   if (!userSnap.exists()) {
     setDoc(userRef, userData, { merge: true })
       .then(() => {
-        console.log('written');
+        // console.log('written');
       })
       .catch((err) => {
         console.log(err);

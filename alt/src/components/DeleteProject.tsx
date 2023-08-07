@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 
 import { deleteProject } from '../../db/projects'
 import { IoClose } from 'react-icons/io5'
 
 
-const DeleteProject = ({ email, setUpdate, update, id }) => {
+const DeleteProject = ({ email, setUpdate, update, id }:any) => {
 
   const [loading, setLoading] = useState<boolean>(false)
 

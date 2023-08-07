@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 
 import './module.css'
 
 
-const Module3 = ({ isVisible }) => {
+const Module3 = ({ isVisible }:any) => {
 
   const [show1, setShow1] = useState<boolean>(false)
   const [show2, setShow2] = useState<boolean>(false)

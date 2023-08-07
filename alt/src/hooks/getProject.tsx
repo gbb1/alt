@@ -1,4 +1,6 @@
-import { useState, useEffect, useMemo } from 'react'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react'
 import { getProject } from '../../db/projects.ts'
 
 
@@ -11,6 +13,7 @@ const useGetProject = (user:string, project_id:number, refresh:boolean) => {
     setLoading(true)
     getProject(user, project_id)
       .then((res) => {
+        //@ts-ignore
         setProject(res)
         setLoading(false)
       })

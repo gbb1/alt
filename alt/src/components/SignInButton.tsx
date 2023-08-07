@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
+
 import { useNavigate } from 'react-router';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
-import {
-  BrowserRouter as Router, Link, Route, Routes,
-} from 'react-router-dom';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebaseConfig'
 
-import { FcGoogle } from 'react-icons/fc'
 import { AiFillGoogleCircle } from 'react-icons/ai'
 
 import { createUser } from '../../db/projects'
@@ -33,11 +28,6 @@ const LoginButton = () => {
       .catch((err) => {
         console.log(err);
       })
-  }
-
-  const signUpNav = (e:React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    navigate('/signup');
   }
 
   return (

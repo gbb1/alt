@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from 'react';
 
 import { IoClose } from 'react-icons/io5'
@@ -39,18 +40,6 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
     _items[xIndex].variations = variations
     setItems(_items)
 
-  }
-
-  const addVar = (e:React.MouseEvent<HTMLElement>) => {
-    e.preventDefault()
-    const _items = [...items]
-
-    _items[xIndex].variations.push({
-      text: '',
-      starred: false,
-    })
-
-    setItems(_items)
   }
 
   const handleStar = (e:React.MouseEvent<HTMLElement>) => {
