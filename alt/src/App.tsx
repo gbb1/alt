@@ -6,8 +6,6 @@ import {
 
 import { auth, db } from '../firebaseConfig'
 import { useAuthState } from 'react-firebase-hooks/auth';
-// import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-
 
 import NavBar from './components/Navbar';
 import Project from './views/Project'
@@ -18,6 +16,8 @@ import Footer from './components/Footer';
 import { ProjectContext } from './context/mainProject';
 import { ItemsContext } from './context/itemsContext';
 import { SavingContext } from './context/savingContext';
+
+import './App.css'
 
 function App() {
 
