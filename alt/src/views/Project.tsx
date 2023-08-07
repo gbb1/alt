@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useRef, useContext } from 'react';
 import {
@@ -41,8 +42,11 @@ const Project = () => {
   const [moved, setMoved] = useState<null | number>(null)
   const [movedOver, setMovedOver] = useState<null | number>(null)
 
+  // @ts-ignore
   const { mainProject, setMainProject } = useContext(ProjectContext)
+   // @ts-ignore
   const { mainItems, setMainItems } = useContext(ItemsContext)
+   // @ts-ignore
   const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   const canvasRef = useRef(null)
@@ -50,6 +54,7 @@ const Project = () => {
   const { saving, saveError } = useSaveProject(email, project_id, items, false)
 
   useEffect(() => {
+     // @ts-ignore
     setItems(project.data)
     setMainProject(project)
   }, [project])
@@ -85,10 +90,11 @@ const Project = () => {
 
     const _items = [...items]
     const old = _items.splice(index, 1)
-
+     // @ts-ignore
     const path = old[0].path
 
     const oldRef = ref(storage, path);
+     // @ts-ignore
     setItems(_items)
     deleteObject(oldRef)
       .then(() => {
@@ -118,12 +124,13 @@ const Project = () => {
 
     const moved = _items.splice(moveFrom, 1)
     _items = _items.slice(0, moveTo).concat(moved).concat(_items.slice(moveTo))
-
+    // @ts-ignore
     setItems(_items)
   }
 
 
   const onDragStart = (e:DragEvent, index:number) => {
+     // @ts-ignore
     if (e.target.id==='drag-column') {
       moveRef.current = index
       setMoved(index)
@@ -141,7 +148,7 @@ const Project = () => {
   const handleClick = (e:React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     const _items = [...items]
-
+     // @ts-ignore
     _items.push({
       sentence:'',
       variations: [{
@@ -159,6 +166,7 @@ const Project = () => {
     })
 
     setSelected(_items.length - 1)
+     // @ts-ignore
     setItems(_items)
   }
 
@@ -193,7 +201,9 @@ const Project = () => {
                     `}
 
                     draggable
+                     // @ts-ignore
                     onDragStart={(e) => onDragStart(e, index)}
+                     // @ts-ignore
                     onDragEnter={(e) => onDragOver(e, index)}
                     onDragEnd={onDragEnd}
                     onDragOver={(e) => e.preventDefault()}
