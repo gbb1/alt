@@ -13,6 +13,7 @@ import { useGetProjects } from '../hooks/projects'
 
 import ProjectRow from '../components/ProjectRow.tsx';
 import LoadingProjects from '../components/LoadingProjects.tsx';
+import LoadingMain from '../components/LoadingMain.tsx';
 
 import '../App.css'
 
@@ -21,6 +22,7 @@ const Overview = () => {
   const navigate = useNavigate()
   const [update, setUpdate] = useState<boolean>(false)
   const [load, setLoad] = useState<boolean>(false)
+  const [loadingMain, setLoadingMain] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
 
 
@@ -28,13 +30,11 @@ const Overview = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-
       if (user) {
         if (!user.email) return
+        setLoadingMain(false)
         if (email.length === 0) setEmail(user.email)
-
       } else {
-
         navigate('/login');
       }
     });
@@ -55,6 +55,7 @@ const Overview = () => {
     navigate('/project', { state: { project_id, email } });
   }
 
+  if (loadingMain) return <LoadingMain />
 
   return (
     <div className="overscroll-none fixed w-full">
