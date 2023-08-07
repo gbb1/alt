@@ -12,8 +12,6 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   const [movedOver, setMovedOver] = useState<number | null>(null)
   const [varDragging, setVarDragging] = useState<boolean>(false)
 
-  // const [hide, setHide] = useState(false)
-
   const dragOver = (moveFrom:number, moveTo:number) => {
 
     const ref = [...items]

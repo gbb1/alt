@@ -17,6 +17,7 @@ import Footer from './components/Footer';
 
 import { ProjectContext } from './context/mainProject';
 import { ItemsContext } from './context/itemsContext';
+import { SavingContext } from './context/savingContext';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 
   const [mainProject, setMainProject] = useState<object>({})
   const [mainItems, setMainItems] = useState<Array<object>>([])
+  const [mainSaving, setMainSaving] = useState<boolean>(false)
 
   const [user] = useAuthState(auth);
 
@@ -45,15 +47,17 @@ function App() {
       <div onScroll={handleScroll} className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
         <ProjectContext.Provider value={{ mainProject, setMainProject }} >
           <ItemsContext.Provider value={{ mainItems, setMainItems }} >
-            <Router>
-              <NavBar navRef={navRef} user={user} />
-              <Routes>
-                <Route path='/' element={<Overview setMainProject={setMainProject} />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/project' element={<Project setMainProject={setMainProject} />} />
-              </Routes>
-            </Router>
-            </ItemsContext.Provider>
+            <SavingContext.Provider value={{ mainSaving, setMainSaving}} >
+              <Router>
+                <NavBar navRef={navRef} user={user} />
+                <Routes>
+                  <Route path='/' element={<Overview setMainProject={setMainProject} />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/project' element={<Project setMainProject={setMainProject} />} />
+                </Routes>
+              </Router>
+            </SavingContext.Provider >
+          </ItemsContext.Provider>
         </ProjectContext.Provider>
       </div>
     </div>

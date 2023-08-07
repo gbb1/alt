@@ -8,6 +8,7 @@ import LoginButton from './SignInButton';
 import Logo from '../assets/logo2.png'
 import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
+import { SavingContext } from '../context/savingContext';
 
 import './module.css'
 
@@ -22,6 +23,7 @@ const NavBar = ({ navRef, user }) => {
 
   const { mainProject, setMainProject } = useContext(ProjectContext)
   const { mainItems, setMainItems } = useContext(ItemsContext)
+  const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   useEffect(() => {
     setLoading(true)
@@ -52,6 +54,13 @@ const NavBar = ({ navRef, user }) => {
         {mainProject ? mainProject.name : ''}
       </div>
       <div className="flex flex-row items-center gap-5">
+        {/* <div className="opacity-30">
+          {
+            mainSaving
+            ? <div className="flex flex-row gap-2">Saving <span className="loading loading-spinner loading-xs"></span></div>
+            : 'Saved'
+          }
+        </div> */}
         {
           mainProject && mainItems.length > 0
           ? <div className="fade-in-delay0 "><CSVExport items={mainItems} project={mainProject} /></div>

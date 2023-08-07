@@ -72,15 +72,39 @@ const CSVExport = ({ items, project }) => {
   }
 
   return (
-    <button
-    type="submit"
-    className=""
-    onClick={handleClick} >
-      <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
-        Export to csv
-        <LuDownloadCloud />
-      </div>
-  </button>
+
+    <div>
+      <button className="" onClick={()=>window.my_modal_3.showModal()}>
+        <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+          Export to csv
+          <LuDownloadCloud />
+        </div>
+      </button>
+      <dialog id="my_modal_3" className="modal">
+        <form method="dialog" className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <h3 className="font-normal text-lg text-gray-400">Export to csv</h3>
+          <h1 className="font-bold text-3xl">Here's how it works:</h1>
+          <div className="flex flex-col gap-4 py-4">
+            <p className=" ">• Upload your csv to Excel or Google Sheets.</p>
+            <p className="">• All your main variations, UI labels, and translation strings will be formatted automatically.</p>
+            <p className="">• To view your screenshots, delete the ' character at the beginning of the text in the screenshots column.</p>
+            <p className="">• Note that any screenshots will no longer be visible if this project is deleted.</p>
+          </div>
+          <div className="flex flex-row w-full justify-end">
+            <button
+              type="submit"
+              className=""
+              onClick={handleClick} >
+                <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+                  Export
+                </div>
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+
 
   )
 }

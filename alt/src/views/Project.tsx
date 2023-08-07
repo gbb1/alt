@@ -16,13 +16,12 @@ import { storage } from '../../firebaseConfig'
 
 import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
+import { SavingContext } from '../context/savingContext';
 
 
 import Column from '../components/Column';
 
 const Project = () => {
-
-  // const user = auth.currentUser
 
   const location = useLocation();
   const [update, setUpdate] = useState<boolean>(false)
@@ -43,6 +42,7 @@ const Project = () => {
 
   const { mainProject, setMainProject } = useContext(ProjectContext)
   const { mainItems, setMainItems } = useContext(ItemsContext)
+  const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   const canvasRef = useRef(null)
 
@@ -51,38 +51,33 @@ const Project = () => {
   useEffect(() => {
     setItems(project.data)
     setMainProject(project)
-  }, [project, setMainProject])
+  }, [project])
 
   useEffect(() => {
     return () => {
       setMainItems([])
       setMainProject({})
     }
-  }, [setMainItems, setMainProject])
+  }, [])
 
   useEffect(() => {
     setMainItems(items)
-  }, [items, setMainItems])
+  }, [items])
+
+  // useEffect(() => {
+  //   console.log('saving')
+  //   if (saving && !mainSaving) {
+  //     setMainSaving(true)
+  //   }
+
+  //   if (!saving) {
+  //     setMainSaving(false)
+  //   }
+  // }, [saving])
 
 
   const [selected, setSelected] = useState<null | number>(null)
 
-  // const handleSort = () => {
-
-  //   const [moveFrom, moveTo] = [moveRef.current, moveOverRef.current]
-
-  //   const _items:[] = [...items]
-
-  //   const draggedItemContent = _items.splice(moved, 1)[0]
-
-  //   _items.splice(movedOver, 0, draggedItemContent)
-
-  //   setItems(_items)
-
-  //   moveRef.current = null
-  //   moveOverRef.current = null
-
-  // }
 
   const handleDelete = (e:React.MouseEvent<HTMLElement>, index:number) => {
     e.preventDefault()
@@ -170,7 +165,7 @@ const Project = () => {
     dragOver(moved, movedOver)
     setMoved((curr) => movedOver)
     setSelected((curr) => movedOver)
-  }, [movedOver, dragOver, moved])
+  }, [movedOver])
 
   const onDragEnd = (e) => {
     e.preventDefault()
@@ -193,9 +188,9 @@ const Project = () => {
                       bg-[#1C1E21]/90
                       p-2
                       rounded-md
-                      ${ index === moved && dragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0' : ''}
+                      ${ index === moved && dragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0 mx-2 transition-all' : ''}
                     `}
-                    // border-[#65D072]
+
                     draggable
                     onDragStart={(e) => onDragStart(e, index)}
                     onDragEnter={(e) => onDragOver(e, index)}
@@ -210,7 +205,7 @@ const Project = () => {
                       >
                         <MdOutlineDragIndicator />
                       </div>
-                      <div className='text-white flex cursor-pointer ml-auto absolute right-[5%] bg-gray-400 p-1 rounded-full' onClick={(e) => handleDelete(e, index)}>
+                      <div className='text-white flex cursor-pointer ml-auto absolute right-[5%] bg-gray-400 p-1 rounded-full hover:bg-gray-200' onClick={(e) => handleDelete(e, index)}>
                         <IoClose />
                       </div>
                     </div>

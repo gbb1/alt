@@ -34,8 +34,8 @@ const Module2 = ({ isVisible }:any) => {
     <div className="overflow-y-auto mx-10">
       <div className="flex-col justify-center">
 
-        <div className={`p-10 rounded-lg flex flex-row flex-wrap md:flex-nowrap gap-10 ${ isVisible ? '' : 'invisible'}`}>
-          <div className="flex flex-col gap-2 lg:gap-5 justify-center w-full md:max-w-[50%]">
+        <div className={`p-10 rounded-lg flex flex-row flex-wrap lg:flex-nowrap gap-10 ${ isVisible ? '' : 'invisible'}`}>
+          <div className="flex flex-col gap-2 lg:gap-5 justify-center w-full lg:max-w-[50%]">
             <h1 className={`text-4xl lg:text-6xl pl-10 text-[#65D072] font-bold ${ show1 ? 'fade-in-delay2' : 'invisible'}`}>alt. is built for your workflow</h1>
             <div className={`py-2 pl-20 mt-5 lg:mt-5 text-2xl lg:text-3xl font-light text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left w-full ${ show1 ? 'fade-in-delay2' : 'invisible'}`}>
               • Quickly create variations of content and add a screenshot for reference.

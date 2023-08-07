@@ -63,7 +63,7 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
 
   return (
       <div
-        className={`cursor-pointer max-w-[300px] bg-[#F0F2F5] rounded-md w-full h-min p-1 inset-0 top-0 ${moved === yIndex && varDragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0' : ''}`}
+        className={`cursor-pointer max-w-[300px] bg-[#F0F2F5] rounded-md w-full h-min p-1 inset-0 top-0 ${moved === yIndex && varDragging ? 'border-2 border-[#65D072] translate-x-0 translate-y-0 my-2 transition-all' : ''}`}
         draggable
         id={`drag-variation`}
         onDragStart={(e) => onDragStart(e, yIndex)}

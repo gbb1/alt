@@ -11,14 +11,11 @@ import { FcGoogle } from 'react-icons/fc'
 import { AiFillGoogleCircle } from 'react-icons/ai'
 
 import { createUser } from '../../db/projects'
-// Import the functions you need from the SDKs you ne
-// import { userAuth } from '../AuthContext'
+
 
 const LoginButton = () => {
 
   const navigate = useNavigate();
-  // const [email, setEmail] = useState('')
-  // const [pw, setPw] = useState('')
 
   const signInWithGoogle = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
