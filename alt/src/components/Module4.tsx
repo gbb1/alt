@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react'
+import Profile from '../assets/profile.png'
 
 import './module.css'
 
@@ -35,15 +36,18 @@ const Module4 = ({ isVisible }) => {
     <div className={`bg-[#1C1E21]/90 p-10 rounded-lg min-h-[60vh] flex flex-row flex-wrap items-center gap-10 lg:flex-nowrap justify-between mx-10 mt-5 mb-10 ${show1 ? 'fade-in-delay0' : 'invisible'}`}>
 
         <div className="flex flex-col">
+          <img src={Profile} className="rounded-full h-[20%] w-[20%] border-4 border-white my-2" />
           <h1 className="text-6xl text-[#65D072] font-bold w-full">
             Thanks for taking a look!
           </h1>
-          <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</div>
+          <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">I'm Gabe, a full stack engineer with a background in Stats and Linguistics, and professional experience as a Content Designer.</div>
+          <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2 flex flex-row flex-wrap">If you enjoyed this project, add me on <a className="text-[#6590D0] hover:text-[#65D072]" href='https://www.linkedin.com/in/gabriel-bennett-brandt/'>Linkedin</a> or check out my <a className="text-[#6590D0] hover:text-[#65D072]" href='https://gbb1.github.io/portfolio/'>portfolio</a>!</div>
+          <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2"></div>
           <div className="py-6 text-xl text-[#FBF5EC] flex flex-row gap-2">Original design, inspired by WhatsApp web.</div>
 
         </div>
 
-        <div className="p-4 md:p-6 w-full max-w-[50%] ">
+        <div className="p-4 md:p-6 w-full lg:max-w-[50%] ">
             <div className="font-normal text-3xl text-[#65D072] mt-2 mb-3 md:mb-6 ">
               Get in touch
             </div>
