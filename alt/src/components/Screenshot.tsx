@@ -94,14 +94,18 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
         />
         <div className="flex flex-row gap-2 items-center">
           Set screenshot
-          <FaRegImage />
+          {
+            loading
+            ? <span className="loading loading-spinner loading-xs"></span>
+            : <FaRegImage />
+          }
         </div>
       </label>
 
       {
 
         loading && (!image)
-          ? <div className="w-full max-w-full rounded-lg bg-gray-400 h-[40px] animate-pulse"></div>
+          ? <div></div> //<div className="w-full max-w-full rounded-lg bg-gray-400 h-[40px] animate-pulse"></div>
           : <img className="w-full max-w-full rounded-lg object-cover" src={image} />
 
       }
