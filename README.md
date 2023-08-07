@@ -1,4 +1,4 @@
-<div align="center"><img src="https://i.ibb.co/hVQJ6WN/Group-35.png" alt="Group-15" border="0" width="60%"/> </div>
+<div align="center"><img src="https://i.ibb.co/hVQJ6WN/Group-35.png" alt="Group-15" border="0" width="100%"/> </div>
 
 <div align="center">
 Shop products, see multiple styles and similar items, plus questions, answers, and reviews from other customers.
