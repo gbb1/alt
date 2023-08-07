@@ -9,17 +9,17 @@
   - [Questions and Answers](#questions-and-answers)
   - [Ratings and Reviews](#ratings-and-reviews)
 
-### Overview:
+### Project Workspace:
 
 In the product overview, site visitors can:
 
-![alt text](https://github.com/gbb1/FEC/blob/main/overviewGifs/ImagesGif.gif)
+![alt text](http://g.recordit.co/oy3lyHdEVK.gif)
 - Navigate through multiple images via an image carousel
 - View and zoom in on images of different clothing items
   - In the expanded view, zooming will follow mouse movement
 
 
-![alt text](https://github.com/gbb1/FEC/blob/main/overviewGifs/thumbnailGif.gif)
+![alt text](http://g.recordit.co/gix8nXmn8j.gif)
 - Preview images in the carousel with scrollable thumbnails
   - Buttons will dynamically render that allow users to scroll up and down through the thumbnails
   - Thumbnail scroll will track the user's most relevant recent interaction, whether with the style options, image carousel, or other thumbnails
