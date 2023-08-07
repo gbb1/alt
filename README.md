@@ -4,7 +4,7 @@
 
 ### Adding content:
 ![alt text](http://g.recordit.co/ikkBkLP4jG.gif)
-- Adding content and starting to ideate is super easy with as many variations as you want.
+- Adding content and starting to ideate is super easy when you can quickly create as many variations as you want.
 - Prepare your content for handoff with UI details and translation strings.
 - You can quickly duplicate your reference string to make small edits, and star your favorite variations. 
 
