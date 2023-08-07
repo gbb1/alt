@@ -25,7 +25,7 @@ In the product overview, site visitors can:
   - Thumbnail scroll will track the user's most relevant recent interaction, whether with the style options, image carousel, or other thumbnails
 
 
-![alt text](http://g.recordit.co/cdWYH2w1cs.gif)
+![alt text](http://g.recordit.co/ikkBkLP4jG.gif)
 - Explore different styles, and see which items are on sale
 
 
