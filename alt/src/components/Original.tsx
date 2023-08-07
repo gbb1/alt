@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useMemo } from 'react';
 
 import { FaCircleMinus } from 'react-icons/fa6'
 import { FaCirclePlus } from 'react-icons/fa6'

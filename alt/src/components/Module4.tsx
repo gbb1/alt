@@ -10,8 +10,8 @@ const Module4 = ({ isVisible }) => {
   const [message, setMessage] = useState<string>('');
 
   const [show1, setShow1] = useState<boolean>(false)
-  const [show2, setShow2] = useState<boolean>(false)
-  const [show3, setShow3] = useState<boolean>(false)
+  // const [show2, setShow2] = useState<boolean>(false)
+  // const [show3, setShow3] = useState<boolean>(false)
 
   useEffect(() => {
     if (isVisible) {

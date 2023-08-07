@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router';
 
 import { auth } from '../../firebaseConfig'
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import LoginButton from './SignInButton';
 
 import Logo from '../assets/logo2.png'

@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
-
-import { IoClose } from 'react-icons/io5'
+import React, { useEffect, useState } from 'react';
 
 import { updateName } from '../../db/projects'
 
 
-const ProjectName = ({ email, name, project, update, id }:any) => {
+const ProjectName = ({ email, name, id }:any) => {
 
   const [text, setText] = useState<string>(name || '')
   const [debouncedText, setDebouncedText] = useState<string>('');

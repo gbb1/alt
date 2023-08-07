@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Col1 from '../assets/col1.png'
 import Col2 from '../assets/col2.png'

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ReactDOM from 'react-dom/client';
+import { useEffect, useState } from 'react';
 
 import Textblock from './Textblock';
 import Original from './Original';

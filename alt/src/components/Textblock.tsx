@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { IoClose } from 'react-icons/io5'
 import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'

@@ -1,7 +1,3 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
-
-import { IoClose } from 'react-icons/io5'
 
 
 const TextField = ({ state, handleChange, xIndex, id }:any) => {

@@ -1,19 +1,18 @@
 import { useEffect, useState, useMemo } from "react";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { MD5 } from 'crypto-js';
 
-import { storage } from '../../firebaseConfig'
+// import { storage } from '../../firebaseConfig'
 import { FaRegImage } from 'react-icons/fa6'
 
 const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
   const [files, setFiles] = useState<[] | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  // const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false)
 
   const storage = getStorage()
 
   const image = useMemo(() => {
-
     return items[xIndex].screenshot || ''
   }, [items[xIndex].screenshot])
 
