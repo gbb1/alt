@@ -1,6 +1,6 @@
 <div align="center"><img src="https://i.ibb.co/mRwnq6P/Group-35-1.png" alt="Group-15" border="0" width="60%"/> </div>
 
-<div align="center">
+<div align="center" padding="10px">
 Shop products, see multiple styles and similar items, plus questions, answers, and reviews from other customers.
 </div>
 
