@@ -1,4 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -18,15 +20,15 @@ const Login = () => {
   const [mod2Vis, setMod2Vis] = useState<boolean>(false)
   const [mod3Vis, setMod3Vis] = useState<boolean>(false)
 
-  const handleVisible = (callback:any) => {
+  const handleVisible = useCallback((callback:any) => {
     callback(true)
-  }
+  }, [])
 
   const module2Ref = useRef(null)
   const module3Ref = useRef(null)
 
   useEffect(() => {
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
       } else {

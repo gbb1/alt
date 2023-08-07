@@ -1,23 +1,51 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ExportToCsv } from 'export-to-csv';
 
 import { LuDownloadCloud } from 'react-icons/lu'
 
 import './module.css'
 
-const CSVExport = ({ items, project }) => {
+const CSVExport = ({ items, project }:any) => {
 
   items = items || []
 
-  const formatItems = (data:[]) => {
+  interface stored_text {
+    text: string;
+  }
+
+  interface column {
+    screenshot: string;
+    variations: Array<stored_text>;
+    ui_component: stored_text;
+    translation_string: stored_text;
+  }
+
+  interface csv_data {
+    Screenshot: string,
+    Content: string,
+    'UI Component': string,
+    'Translation String': string,
+  }
+
+  const formatItems = (data:column[]) => {
     const vals = []
 
     for (const col of data) {
-      const newData = {}
+      const newData:csv_data = {
+        Screenshot: '',
+        Content: '',
+        'UI Component': '',
+        'Translation String': '',
+      }
       const imageString = '=IMAGE("' + col.screenshot + '", 1)'
-      newData.screenshot = col.screenshot === undefined ? '=IMAGE' : imageString
-      newData.content = col.variations.length > 0 ? col.variations[0].text : ''
-      newData.ui_component = col.ui_component.text
-      newData.translation_string = col.translation_string.text
+      newData.Screenshot = col.screenshot === undefined ? '' : imageString
+
+      if (col.variations.length > 0) {
+        newData.Content = col.variations[0].text
+      }
+      newData['UI Component'] = col.ui_component.text
+      newData['Translation String'] = col.translation_string.text
       vals.push(newData)
     }
 
@@ -74,7 +102,10 @@ const CSVExport = ({ items, project }) => {
   return (
 
     <div>
-      <button className="" onClick={()=>window.my_modal_3.showModal()}>
+      <button className="" onClick={() =>
+          // @ts-ignore
+        window.my_modal_3.showModal()
+      }>
         <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
           Export to csv
           <LuDownloadCloud />

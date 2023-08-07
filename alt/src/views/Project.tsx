@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useRef, useContext } from 'react';
 import {
  useLocation
 } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { MdOutlineDragIndicator } from 'react-icons/md'
 import { IoClose } from 'react-icons/io5'
 
 import { useGetProject } from '../hooks/getProject';
-import { useSaveProject } from '../hooks/saveProject';
+// import { onAuthStateChanged } from 'firebase/auth';
 
 import LoadingColumns from '../components/LoadingColumns';
 
@@ -20,23 +23,33 @@ import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
 import { SavingContext } from '../context/savingContext';
 
+// import { auth } from '../../firebaseConfig'
+
 
 import Column from '../components/Column';
 
 const Project = () => {
 
   const location = useLocation();
+  //@ts-ignore
   const [update, setUpdate] = useState<boolean>(false)
 
-  const { project_id, email, size } = location.state;
+  const navigate = useNavigate()
 
-  const { project, loading, error } = useGetProject(email, project_id, update);
+  useEffect(() => {
+    if (location.state === null) navigate('/');
+  })
+
+  // @ts-ignore
+  const { project_id, email, size } = location.state === null ? {} : location.state;
+
+  const { project, loading } = useGetProject(email, project_id, update);
 
   const [items, setItems] = useState<[]>([])
   const [dragging, setDragging] = useState<boolean>(false)
 
-  const moveRef = useRef(null)
-  const moveOverRef = useRef(null)
+  // const moveRef = useRef(null)
+  // const moveOverRef = useRef(null)
   const dragged = useRef(null)
 
   const [moved, setMoved] = useState<null | number>(null)
@@ -51,7 +64,7 @@ const Project = () => {
 
   const canvasRef = useRef(null)
 
-  const { saving, saveError } = useSaveProject(email, project_id, items, false)
+  // const { saving, saveError } = useSaveProject(email, project_id, items)
 
   useEffect(() => {
      // @ts-ignore
@@ -107,19 +120,20 @@ const Project = () => {
 
   }
 
-  const reorderItems = (moveFrom:number, moveTo:number) => {
-    setItems(curr => {
-      const ref = curr
-      const moved = ref.splice(moveFrom, 1)[0];
-      ref.splice(moveTo, 0, moved)
+  // const reorderItems = (moveFrom:null | number, moveTo:null | number) => {
+  //   if (!moveFrom || !moveTo) return
+  //   setItems(curr => {
+  //     const ref = curr
+  //     const moved = ref.splice(moveFrom, 1)[0];
+  //     ref.splice(moveTo, 0, moved)
 
-      return ref
-    });
-  }
+  //     return ref
+  //   });
+  // }
 
 
-  const dragOver = (moveFrom:number, moveTo:number) => {
-
+  const dragOver = (moveFrom:null | number, moveTo:null | number) => {
+    if (!moveFrom || !moveTo) return
     let _items = [...items]
 
     const moved = _items.splice(moveFrom, 1)
@@ -132,16 +146,18 @@ const Project = () => {
   const onDragStart = (e:DragEvent, index:number) => {
      // @ts-ignore
     if (e.target.id==='drag-column') {
-      moveRef.current = index
+      // if (!moveRef.current) return
+
+        // moveRef.current = index
       setMoved(index)
       setDragging(true)
     }
   }
 
-  const onDragOver = (e:DragEvent, index:number) => {
+  const onDragOver = (_e:DragEvent, index:number) => {
     if (dragging) {
-      moveOverRef.current = index
-      setMovedOver((curr) => index)
+      // moveOverRef.current = index
+      setMovedOver((_curr) => index)
     }
   }
 
@@ -172,11 +188,11 @@ const Project = () => {
 
   useEffect(() => {
     dragOver(moved, movedOver)
-    setMoved((curr) => movedOver)
-    setSelected((curr) => movedOver)
+    setMoved((_curr) => movedOver)
+    setSelected((_curr) => movedOver)
   }, [movedOver])
 
-  const onDragEnd = (e) => {
+  const onDragEnd = (e:any) => {
     e.preventDefault()
     setDragging(false)
   }
@@ -220,7 +236,9 @@ const Project = () => {
                         <IoClose />
                       </div>
                     </div>
-                    <Column user={email} projectId={project_id} index={index} items={items} setItems={setItems} color={x.color} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
+                    <Column
+                      //@ts-ignore
+                      user={email} projectId={project_id} index={index} items={items} setItems={setItems} sentence={x.variations[0]} obj={x} selected={selected} dragging={dragging} setDragging={setDragging} onDragStart={onDragStart} />
                   </div>
                 </div>
               )

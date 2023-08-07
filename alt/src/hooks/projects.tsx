@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react'
 import { getProjects } from '../../db/projects.ts'
 
@@ -12,8 +13,8 @@ const useGetProjects = (user:string, refresh:boolean) => {
   useEffect(() => {
 
     getProjects(user)
-      .then((res) => {
-        res = res.sort((a, b) => b.accessed.seconds - a.accessed.seconds)
+      .then((res:any) => {
+        res = res.sort((a:any, b:any) => b.accessed.seconds - a.accessed.seconds)
         setProjects(res)
         setLoading(false)
       })

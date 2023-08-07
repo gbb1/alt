@@ -94,8 +94,11 @@ const getProjects = async (userId:string) => {
     }
 
     const data = userSnap.data()
-    console.log(data)
-    resolve(data.projects)
+
+    if (data === undefined) reject()
+    else {
+      resolve(data.projects)
+    }
 
   })
 
@@ -116,9 +119,12 @@ const getProject = async (userId:string, projectId:number) => {
     }
 
     const data = userSnap.data()
-    for (let proj of data.projects) {
-      if (proj.id === projectId) {
-        resolve(proj)
+    if (data === undefined) reject()
+    else {
+      for (const proj of data.projects) {
+        if (proj.id === projectId) {
+          resolve(proj)
+        }
       }
     }
     reject()

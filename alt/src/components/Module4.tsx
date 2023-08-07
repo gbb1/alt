@@ -1,17 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { useState, useEffect } from 'react'
 import Profile from '../assets/profile.png'
 
 import './module.css'
 
-const Module4 = ({ isVisible }) => {
+const Module4 = ({ isVisible }:any) => {
 
   const [subject, setSubject] = useState<string>('Let\'s connect 👋');
   const [message, setMessage] = useState<string>('');
 
   const [show1, setShow1] = useState<boolean>(false)
-  // const [show2, setShow2] = useState<boolean>(false)
-  // const [show3, setShow3] = useState<boolean>(false)
 
   useEffect(() => {
     if (isVisible) {
@@ -22,13 +22,15 @@ const Module4 = ({ isVisible }) => {
     }
   }, [isVisible])
 
-  const handleInput = (event:React.ChangeEvent<HTMLElement>) => {
+  const handleInput = (event:React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const actions = {
-      'subject': () => setSubject(event.target.value),
-      'message': () => setMessage(event.target.value),
+
+    if (event.target.id === 'subject') {
+      setSubject(event.target.value)
     }
-    actions[event.target.id]();
+    if (event.target.id === 'message') {
+      setMessage(event.target.value)
+    }
   }
 
   return (
@@ -56,7 +58,9 @@ const Module4 = ({ isVisible }) => {
                 </div>
                 <div className="sm:col-span-2">
                     <label htmlFor="message" className="block mb-2 text-sm font-medium text-[#65D072]">Your message</label>
-                    <textarea onChange={handleInput} id="message" rows="6" className="block p-2.5 w-full text-[12px] md:text-sm text-gray-900 bg-[#FBF5EC] rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="We'd make a great team..."></textarea>
+                    <textarea
+                      //@ts-ignore
+                      onChange={handleInput} id="message" rows="6" className="block p-2.5 w-full text-[12px] md:text-sm text-gray-900 bg-[#FBF5EC] rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="We'd make a great team..."></textarea>
                 </div>
 
                 <button

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const LoadingProjects = () => {
 
-  const [loads, setLoads] = useState<Array<number>>([0,0,0])
+  // const [loads, setLoads] = useState<Array<number>>([0,0,0])
+  const loads = [0,0,0]
 
   return (
     <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain max-h-[50vh] px-2 pt-2">

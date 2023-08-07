@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 
 import { useState, useEffect } from 'react'
@@ -18,6 +19,7 @@ const useSaveProject = (user:string, project_id:string, dataState:[]) => {
       })
       .catch((err) => {
         console.log(err)
+        setSaveError(err)
       })
   }
 

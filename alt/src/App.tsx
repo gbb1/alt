@@ -1,35 +1,38 @@
-import { useState, useRef, useEffect, useContext, createContext } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useState, useRef } from 'react'
 
 import {
   BrowserRouter as Router, Route, Routes,
 } from 'react-router-dom';
 
-import { auth, db } from '../firebaseConfig'
+import { auth } from '../firebaseConfig'
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import NavBar from './components/Navbar';
 import Project from './views/Project'
 import Overview from './views/Overview';
 import Login from './views/Login';
-import Footer from './components/Footer';
 
 import { ProjectContext } from './context/mainProject';
 import { ItemsContext } from './context/itemsContext';
-import { SavingContext } from './context/savingContext';
+// import { SavingContext } from './context/savingContext';
 
 import './App.css'
 
 function App() {
 
-  const navRef = useRef(null)
+  const navRef = useRef<HTMLDivElement>(null)
 
   const [mainProject, setMainProject] = useState<object>({})
   const [mainItems, setMainItems] = useState<Array<object>>([])
-  const [mainSaving, setMainSaving] = useState<boolean>(false)
+  // const [mainSaving, setMainSaving] = useState<boolean>(false)
 
   const [user] = useAuthState(auth);
 
   const handleScroll = (event:any) => {
+    if (!navRef.current) return
+    if (!navRef.current.classList) return
     if (event.target.scrollTop > 0) {
       navRef.current.classList.add('transition-all');
       navRef.current.classList.add('border-b-2');
@@ -46,17 +49,19 @@ function App() {
     <div className="">
       <div onScroll={handleScroll} className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
         <ProjectContext.Provider value={{ mainProject, setMainProject }} >
-          <ItemsContext.Provider value={{ mainItems, setMainItems }} >
-            <SavingContext.Provider value={{ mainSaving, setMainSaving}} >
+          <ItemsContext.Provider
+            // @ts-ignore
+            value={{ mainItems, setMainItems }} >
               <Router>
                 <NavBar navRef={navRef} user={user} />
                 <Routes>
-                  <Route path='/' element={<Overview setMainProject={setMainProject} />} />
+                  <Route path='/' element={<Overview />} />
                   <Route path='/login' element={<Login />} />
-                  <Route path='/project' element={<Project setMainProject={setMainProject} />} />
+                  <Route path='/project' element={<Project
+                    //@ts-ignore
+                    setMainProject={setMainProject} />} />
                 </Routes>
               </Router>
-            </SavingContext.Provider >
           </ItemsContext.Provider>
         </ProjectContext.Provider>
       </div>

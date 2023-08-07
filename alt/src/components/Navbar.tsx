@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router';
 
@@ -8,30 +10,30 @@ import LoginButton from './SignInButton';
 import Logo from '../assets/logo2.png'
 import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
-import { SavingContext } from '../context/savingContext';
+// import { SavingContext } from '../context/savingContext';
 
 import './module.css'
 
 import CSVExport from './CSVExport';
 
-const NavBar = ({ navRef, user }) => {
+const NavBar = ({ navRef, user }:any) => {
 
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  // const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true)
   const navigate = useNavigate()
 
 
-  const { mainProject, setMainProject } = useContext(ProjectContext)
-  const { mainItems, setMainItems } = useContext(ItemsContext)
-  const { mainSaving, setMainSaving } = useContext(SavingContext)
+  const { mainProject } = useContext<any>(ProjectContext)
+  const { mainItems } = useContext<any>(ItemsContext)
+  // const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   useEffect(() => {
     setLoading(true)
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setLoggedIn(true);
+        // setLoggedIn(true);
       } else {
-        setLoggedIn(false);
+        // setLoggedIn(false);
       }
       setLoading(false)
     });
@@ -41,7 +43,7 @@ const NavBar = ({ navRef, user }) => {
     };
   }, []);
 
-  const homeNav = (e:React.MouseEvent<HTMLElement>) => {
+  const homeNav = (_e:React.MouseEvent<HTMLElement>) => {
     navigate('/')
   }
 

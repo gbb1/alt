@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
 const TextField = ({ state, handleChange, xIndex, id }:any) => {

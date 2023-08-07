@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useState, useMemo } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { MD5 } from 'crypto-js';
@@ -5,8 +9,8 @@ import { MD5 } from 'crypto-js';
 // import { storage } from '../../firebaseConfig'
 import { FaRegImage } from 'react-icons/fa6'
 
-const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
-  const [files, setFiles] = useState<[] | null>(null);
+const Screenshot = ({ user, projectId, items, setItems, xIndex }:any) => {
+  const [files, setFiles] = useState<Array<Blob> | null>(null);
   // const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -18,6 +22,7 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
 
   useEffect(() => {
     if (!files) return;
+    if (!files[0]) return;
 
     const objUrl = URL.createObjectURL(files[0])
     uploadFile(files[0], objUrl)
@@ -43,11 +48,12 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
     const path = 'screenshots/' + hash + '/' + projectId + '/' + objUrl
 
     const fileImageRef = ref(storage, path);
+    // @ts-ignore
     const storageRef = ref(storage, fileImageRef)
 
     setLoading(true)
     uploadBytes(storageRef, file)
-      .then((snapshot) => {
+      .then((_snapshot) => {
         getDownloadURL(storageRef)
           .then((url) => {
             const ref = [...items]
@@ -56,7 +62,7 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
               obj.screenshot = ''
               obj.path = ''
             }
-            let prior = obj.path
+            const prior = obj.path
             obj.screenshot = url;
             obj.path = path
             setItems(ref)
@@ -69,7 +75,7 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
             const oldRef = ref(storage, old);
             return deleteObject(oldRef)
           })
-          .then((res) => {
+          .then((_res) => {
             // console.log(res)
           })
       })
@@ -87,6 +93,7 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }) => {
           accept="image/jpg, image/jpeg, image/png"
           onChange={(e) => {
             if (e.target.files && e.target.files.length > 0) {
+              // @ts-ignore
               setFiles(e.target.files);
             }
           }}

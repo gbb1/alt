@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 
 import Textblock from './Textblock';
@@ -24,8 +27,8 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
     setItems(ref)
   }
 
-  const onDragStart = (e:DragEvent, index:number) => {
-    if (e.target?.id === 'drag-variation') {
+  const onDragStart = (e:MouseEvent, index:number) => {
+    if ((e.target as HTMLDivElement).id === 'drag-variation') {
       setMoved(index)
       setVarDragging(true)
     }
@@ -43,21 +46,22 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
     setItems(_items)
   }
 
-  const startDrag = (e:DragEvent) => {
-    e.preventDefault()
-    setDragging(true)
+  // const startDrag = (e:DragEvent) => {
+  //   e.preventDefault()
+  //   setDragging(true)
 
-  }
+  // }
 
-  const onDragOver = (e:DragEvent, index:number) => {
+  const onDragOver = (_e:DragEvent, index:number) => {
     if (varDragging) {
-      setMovedOver((curr) => index)
+      setMovedOver((_curr) => index)
     }
   }
 
   useEffect(() => {
+    if (!moved || !movedOver) return
     dragOver(moved, movedOver)
-    setMoved((curr) => movedOver)
+    setMoved((_curr) => movedOver)
   }, [movedOver])
 
   const onDragEnd = (e:DragEvent) => {
@@ -71,7 +75,7 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
     <div className="flex flex-col gap-3 p-2">
       <Screenshot user={user} projectId={projectId} items={items} setItems={setItems} xIndex={index} />
       {
-        obj.variations.map((vari:object, yIndex:number) => {
+        obj.variations.map((_vari:object, yIndex:number) => {
           if (yIndex === 0) {
 
             return (

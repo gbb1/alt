@@ -12,14 +12,14 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
     return items[xIndex].variations[yIndex].text
   }, [xIndex, yIndex, items])
 
-  const handleShow = (e:React.MouseEvent<HTMLElement>, key:number) => {
+  const handleShow = (e:React.MouseEvent<HTMLElement>, key:string) => {
     e.preventDefault()
     const _items = [...items]
     _items[xIndex][key].show = !_items[xIndex][key].show
     setItems(_items)
   }
 
-  const handleAltInput = (e:React.ChangeEvent<HTMLInputElement>, key:number) => {
+  const handleAltInput = (e:React.ChangeEvent<HTMLInputElement>, key:string) => {
     e.preventDefault()
 
     const _items = [...items]
@@ -68,7 +68,7 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
           </div>
           {
             obj.ui_component.show
-            ? <TextField state={obj.ui_component.text} handleChange={(e) => handleAltInput(e, 'ui_component')} xIndex={xIndex} id={'ui_component'} />
+            ? <TextField state={obj.ui_component.text} handleChange={(e:any) => handleAltInput(e, 'ui_component')} xIndex={xIndex} id={'ui_component'} />
             : null
           }
         </div>
@@ -85,7 +85,7 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
           </div>
           {
             obj.translation_string.show
-            ? <TextField state={obj.translation_string.text} handleChange={(e) => handleAltInput(e, 'translation_string')} xIndex={xIndex} id={'translation_string'} />
+            ? <TextField state={obj.translation_string.text} handleChange={(e:any) => handleAltInput(e, 'translation_string')} xIndex={xIndex} id={'translation_string'} />
             : null
           }
         </div>

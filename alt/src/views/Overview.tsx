@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -6,14 +9,14 @@ import { auth } from '../../firebaseConfig'
 import { addProject } from '../../db/projects.ts'
 import { useGetProjects } from '../hooks/projects'
 
-import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useAuthState } from 'react-firebase-hooks/auth';
 
 import ProjectRow from '../components/ProjectRow.tsx';
 import LoadingProjects from '../components/LoadingProjects.tsx';
 
 import '../App.css'
 
-const Overview = ({ setMainProject }) => {
+const Overview = () => {
 
   const navigate = useNavigate()
   const [update, setUpdate] = useState<boolean>(false)
@@ -21,13 +24,13 @@ const Overview = ({ setMainProject }) => {
   const [email, setEmail] = useState<string>('')
 
 
-  const user = useAuthState(auth);
+  // const user = useAuthState(auth);
 
   useEffect(() => {
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
 
       if (user) {
-
+        if (!user.email) return
         if (email.length === 0) setEmail(user.email)
 
       } else {
@@ -37,9 +40,9 @@ const Overview = ({ setMainProject }) => {
     });
   }, [])
 
-  const { projects, loading, error } = useGetProjects(email, update);
+  const { projects, loading } = useGetProjects(email, update);
 
-  const handleClick = (e:React.MouseEvent<HTMLElement>) => {
+  const handleClick = (_e:React.MouseEvent<HTMLElement>) => {
     setLoad(true)
     addProject(email).then(() => {
       setUpdate(!update)
@@ -48,7 +51,7 @@ const Overview = ({ setMainProject }) => {
   }
 
   const handleNav = (e:React.MouseEvent<HTMLElement>) => {
-    const project_id = e.target.id
+    const project_id = (e.target as HTMLDivElement).id
     navigate('/project', { state: { project_id, email } });
   }
 
@@ -90,7 +93,7 @@ const Overview = ({ setMainProject }) => {
           ? <LoadingProjects />
           : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain scroll max-h-[50vh] px-2 pt-2">
             {
-              projects && projects.map((p, index) => {
+              projects && projects.map((p:any, index) => {
 
                 const date = new Date(p.accessed.seconds * 1000)
                 const count = p.data.length
