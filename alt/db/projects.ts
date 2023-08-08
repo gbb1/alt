@@ -62,7 +62,7 @@ const addProject = async (userId:string) => {
     const data = userSnap.data()
     const index = data.count + 1
 
-    console.log('creating project', data.count, index)
+    // console.log('creating project', data.count, index)
 
     project.id = index
     project.name = 'Project ' + index
@@ -84,6 +84,7 @@ const addProject = async (userId:string) => {
 const getProjects = async (userId:string) => {
 
   const hash = MD5(userId).toString();
+  console.log('requesting', userId, hash)
   const userRef = doc(db, 'users', hash);
   const userSnap = await getDoc(userRef);
 
