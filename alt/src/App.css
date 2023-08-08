@@ -87,3 +87,7 @@
 :root {
   color-scheme: only light;
 }
+
+:root{
+  zoom: 90%;
+}
