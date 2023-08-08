@@ -84,7 +84,7 @@ const addProject = async (userId:string) => {
 const getProjects = async (userId:string) => {
 
   const hash = MD5(userId).toString();
-  console.log('requesting', userId, hash)
+  // console.log('requesting', userId, hash)
   const userRef = doc(db, 'users', hash);
   const userSnap = await getDoc(userRef);
 

@@ -64,7 +64,7 @@ const NavBar = ({ navRef, user }:any) => {
           }
         </div> */}
         {
-          mainProject && mainItems.length > 0
+          mainProject &&  mainProject?.length > 0
           ? <div className="fade-in-delay0 "><CSVExport items={mainItems} project={mainProject} /></div>
           : null
         }

@@ -12,7 +12,7 @@ import { MdOutlineDragIndicator } from 'react-icons/md'
 import { IoClose } from 'react-icons/io5'
 
 import { useGetProject } from '../hooks/getProject';
-// import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import LoadingColumns from '../components/LoadingColumns';
 
@@ -23,7 +23,7 @@ import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
 // import { SavingContext } from '../context/savingContext';
 
-// import { auth } from '../../firebaseConfig'
+import { auth } from '../../firebaseConfig'
 
 
 import Column from '../components/Column';
@@ -39,6 +39,14 @@ const Project = () => {
   useEffect(() => {
     if (location.state === null) navigate('/');
   })
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login');
+      }
+    });
+  }, [])
 
   // @ts-ignore
   const { project_id, email } = location.state;
@@ -100,13 +108,15 @@ const Project = () => {
     const oldRef = ref(storage, path);
      // @ts-ignore
     setItems(_items)
-    deleteObject(oldRef)
-      .then(() => {
-        console.log('deleted')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    if (path?.length > 0) {
+      deleteObject(oldRef)
+        .then(() => {
+          console.log('deleted')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 
 
@@ -172,15 +182,13 @@ const Project = () => {
     setDragging(false)
   }
 
-  console.log('here')
-
   return (
     <div className="relative">
       <div ref={canvasRef} className="flex flex-row gap-4 w-max ml-[.5%] pt-10 absolute left-0 justify-start px-10 pb-20">
         {
           loading
           ? <LoadingColumns />
-          : items.map((x:object, index:number) => {
+          : items && items.map((x:object, index:number) => {
               return (
                 <div key={'column' + index} className="w-min" onClick={() => setSelected(index)}>
                   <div

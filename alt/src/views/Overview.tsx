@@ -25,9 +25,6 @@ const Overview = () => {
   const [loadingMain, setLoadingMain] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
 
-
-  // const user = useAuthState(auth);
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
