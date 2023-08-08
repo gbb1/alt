@@ -30,7 +30,7 @@ const ProjectName = ({ email, name, id }:any) => {
     if (!debouncedText) return
     updateName(email, id, debouncedText)
       .then(() => {
-        console.log('saved new name')
+        // console.log('saved new name')
       })
       .catch((err) => {
         console.log(err)
