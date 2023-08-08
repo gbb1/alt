@@ -18,6 +18,7 @@ const useGetProject = (user:string, project_id:number, refresh:boolean) => {
         setLoading(false)
       })
       .catch((err) => {
+        console.log('Getting project error', err)
         setError(err)
       })
 

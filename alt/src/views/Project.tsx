@@ -41,8 +41,8 @@ const Project = () => {
   })
 
   // @ts-ignore
-  const { project_id, email, size } = location.state;
-  console.log(project_id, email, size)
+  const { project_id, email } = location.state;
+  // console.log(project_id, email, size)
 
   const { project, loading } = useGetProject(email, project_id, update);
 
