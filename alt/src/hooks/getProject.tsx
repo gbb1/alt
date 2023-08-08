@@ -15,6 +15,7 @@ const useGetProject = (user:string, project_id:number, refresh:boolean) => {
       .then((res) => {
         //@ts-ignore
         setProject(res)
+        console.log('Project grab success', res)
         setLoading(false)
       })
       .catch((err) => {

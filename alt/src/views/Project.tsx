@@ -182,7 +182,7 @@ const Project = () => {
       },
     })
 
-    console.log('lenght1,',_items.length)
+    // console.log('lenght1,',_items.length)
     setSelected(_items.length - 1)
      // @ts-ignore
     setItems(_items)

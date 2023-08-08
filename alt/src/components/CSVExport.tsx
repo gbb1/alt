@@ -30,7 +30,7 @@ const CSVExport = ({ items, project }:any) => {
 
   const formatItems = (data:column[]) => {
     const vals = []
-    console.log('length2', data)
+    // console.log('length2', data)
     if (data.length === 0) return
 
     for (const col of data) {
