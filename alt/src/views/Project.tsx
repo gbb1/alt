@@ -46,7 +46,7 @@ const Project = () => {
 
   const { project, loading } = useGetProject(email, project_id, update);
 
-  const [items, setItems] = useState<[]>([])
+  const [items, setItems] = useState<Array<any>>([])
   const [dragging, setDragging] = useState<boolean>(false)
 
   // const moveRef = useRef(null)
@@ -84,16 +84,6 @@ const Project = () => {
     setMainItems(items)
   }, [items])
 
-  // useEffect(() => {
-  //   console.log('saving')
-  //   if (saving && !mainSaving) {
-  //     setMainSaving(true)
-  //   }
-
-  //   if (!saving) {
-  //     setMainSaving(false)
-  //   }
-  // }, [saving])
 
 
   const [selected, setSelected] = useState<null | number>(null)
@@ -117,20 +107,7 @@ const Project = () => {
       .catch((err) => {
         console.log(err)
       })
-
-
   }
-
-  // const reorderItems = (moveFrom:null | number, moveTo:null | number) => {
-  //   if (!moveFrom || !moveTo) return
-  //   setItems(curr => {
-  //     const ref = curr
-  //     const moved = ref.splice(moveFrom, 1)[0];
-  //     ref.splice(moveTo, 0, moved)
-
-  //     return ref
-  //   });
-  // }
 
 
   const dragOver = (moveFrom:null | number, moveTo:null | number) => {
@@ -147,9 +124,6 @@ const Project = () => {
   const onDragStart = (e:DragEvent, index:number) => {
      // @ts-ignore
     if (e.target.id==='drag-column') {
-      // if (!moveRef.current) return
-
-        // moveRef.current = index
       setMoved(index)
       setDragging(true)
     }
@@ -157,7 +131,6 @@ const Project = () => {
 
   const onDragOver = (_e:DragEvent, index:number) => {
     if (dragging) {
-      // moveOverRef.current = index
       setMovedOver((_curr) => index)
     }
   }
@@ -198,6 +171,8 @@ const Project = () => {
     e.preventDefault()
     setDragging(false)
   }
+
+  console.log('here')
 
   return (
     <div className="relative">

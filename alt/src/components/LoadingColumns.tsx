@@ -6,6 +6,7 @@ const LoadingColumns = () => {
   const size = 3
   // const [loads, setLoads] = useState<Array<number>>(new Array(size).fill(0))
   const loads = new Array(size).fill(0)
+  console.log('loading', loads)
 
   return (
     <div className="flex flex-row gap-4 w-full max-w-[95%] ml-[.5%] absolute left-0 justify-start px-10 pb-20">
