@@ -30,6 +30,8 @@ const CSVExport = ({ items, project }:any) => {
 
   const formatItems = (data:column[]) => {
     const vals = []
+    console.log('length2', data)
+    if (data.length === 0) return
 
     for (const col of data) {
       const newData:csv_data = {
@@ -44,6 +46,7 @@ const CSVExport = ({ items, project }:any) => {
       if (col.variations.length > 0) {
         newData.Content = col.variations[0].text
       }
+
       newData['UI Component'] = col.ui_component.text
       newData['Translation String'] = col.translation_string.text
       vals.push(newData)

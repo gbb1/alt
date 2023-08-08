@@ -21,7 +21,7 @@ import { storage } from '../../firebaseConfig'
 
 import { ProjectContext } from '../context/mainProject';
 import { ItemsContext } from '../context/itemsContext';
-import { SavingContext } from '../context/savingContext';
+// import { SavingContext } from '../context/savingContext';
 
 // import { auth } from '../../firebaseConfig'
 
@@ -61,7 +61,7 @@ const Project = () => {
    // @ts-ignore
   const { mainItems, setMainItems } = useContext(ItemsContext)
    // @ts-ignore
-  const { mainSaving, setMainSaving } = useContext(SavingContext)
+  // const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   const canvasRef = useRef(null)
 
@@ -182,6 +182,7 @@ const Project = () => {
       },
     })
 
+    console.log('lenght1,',_items.length)
     setSelected(_items.length - 1)
      // @ts-ignore
     setItems(_items)
