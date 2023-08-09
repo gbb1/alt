@@ -213,7 +213,7 @@ const Project = () => {
                     <div className="w-full flex justify-between items-center p-1 gap-5 relative min-h-[40px] ">
                       <div
                       id='dragger'
-                      className="rotate-90 flex w-min dark:text-[#1C1E21]/90 h-min bg-gray-200 rounded-sm py-2 px-1 z-[3] absolute right-[45%]"
+                      className="hidden md:block rotate-90 flex w-min dark:text-[#1C1E21]/90 h-min bg-gray-200 rounded-sm py-2 px-1 z-[3] absolute right-[45%]"
                       >
                         <MdOutlineDragIndicator />
                       </div>
