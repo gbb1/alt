@@ -35,7 +35,7 @@ const LoginButton = () => {
       type="submit"
       className=""
       onClick={signInWithGoogle} >
-        <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+        <div className="btn gap-2 dark:text-[#1C1E21]/90 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
           <AiFillGoogleCircle /> Sign in with Google
         </div>
     </button>

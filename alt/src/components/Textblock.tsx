@@ -62,17 +62,17 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
       >
         <div className="flex flex-row p-1 items-center justify-between">
           <div
-            className="self-center text-xs"
+            className="self-center text-xs dark:text-[#1C1E21]/90"
           >string {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
             <div
-              className="bg-gray-100 rounded-[100%] p-1"
+              className="bg-gray-100 rounded-[100%] p-1 dark:text-[#1C1E21]/90"
               onClick={handleClone}
             >
               <FaClone />
             </div>
             <div
-              className="bg-gray-100 rounded-[100%] p-1"
+              className="dark:text-[#1C1E21]/90 bg-gray-100 rounded-[100%] p-1 "
               onClick={handleStar}
             >
               {
@@ -84,7 +84,7 @@ const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDrag
             </div>
             <div
               onClick={deleteVar}
-              className="bg-gray-100 rounded-[100%] p-1"
+              className="bg-gray-100 rounded-[100%] p-1 dark:text-[#1C1E21]/90"
             >
               <IoClose value={{ color: 'white' }} />
             </div>

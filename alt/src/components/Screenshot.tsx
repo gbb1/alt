@@ -72,7 +72,6 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }:any) => {
           .then((old) => {
             if (!old.length) return
 
-            console.log(old)
             const oldRef = ref(storage, old);
             if (oldRef) {
               return deleteObject(oldRef)
@@ -101,7 +100,7 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }:any) => {
             }
           }}
         />
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row gap-2 items-center dark:text-[#1C1E21]/90">
           Set screenshot
           {
             loading

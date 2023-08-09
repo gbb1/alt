@@ -89,22 +89,22 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="overflow-y-auto mx-10 mt-5">
+    <div className="flex flex-col gap-5 md:gap-10">
+      <div className="overflow-y-auto mx-4 md:mx-10 mt-5">
 
         <div className="flex-col-reverse lg:flex-row-reverse gap-20">
-          <div className="bg-[#1C1E21]/90 p-10 rounded-lg min-h-[60vh] flex flex-col justify-center">
-            <h1 className="text-8xl text-[#65D072] font-bold w-[90%] ">Figma, Google docs, and Trello walk into a bar...</h1>
-            <div className="py-6 text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</div>
+          <div className="bg-[#1C1E21]/90 p-6 md:p-10 rounded-lg h-max md:min-h-[60vh] flex flex-col justify-center">
+            <h1 className="text-2xl md:text-8xl text-[#65D072] font-bold w-[90%] ">Figma, Google docs, and Trello walk into a bar...</h1>
+            <div className="py-6 text-md md:text-3xl text-[#FBF5EC] flex flex-row gap-2">alt. is a project editor built for the Content Design process, from ideation to organization to translation.</div>
 
-            <div className="mt-8">
+            <div className="md:mt-8">
               {
                 user
                 ? <button
                   type="submit"
                   className=""
                   onClick={handleNav} >
-                    <div className="btn gap-2 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+                    <div className="btn gap-2 text-[#1C1E21]/90 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
                       Let's go
                     </div>
                 </button>
@@ -123,7 +123,9 @@ const Login = () => {
       <div className={`${mod3Vis ? '' : 'invisible'}`}>
         <Module4 isVisible={mod3Vis} />
       </div>
-      <div className="w-full py-6 mb-6 text-xl text-[#1C1E21]/90 flex flex-row gap-2 items-center justify-center">Original design, inspired by WhatsApp web.</div>
+      <div className="w-full flex flex-row justify-center">
+        <div className="py-6 mb-6 text-sm md:text-xl text-[#1C1E21]/90 flex flex-row gap-2 max-w-[80%] items-center justify-center">Original design, inspired by WhatsApp web. Made for desktop.</div>
+      </div>
     </div>
 
   )

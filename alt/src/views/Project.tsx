@@ -213,11 +213,11 @@ const Project = () => {
                     <div className="w-full flex justify-between items-center p-1 gap-5 relative min-h-[40px] ">
                       <div
                       id='dragger'
-                      className="rotate-90 flex w-min h-min bg-gray-200 rounded-sm py-2 px-1 z-[3] absolute right-[45%]"
+                      className="rotate-90 flex w-min dark:text-[#1C1E21]/90 h-min bg-gray-200 rounded-sm py-2 px-1 z-[3] absolute right-[45%]"
                       >
                         <MdOutlineDragIndicator />
                       </div>
-                      <div className='text-white flex cursor-pointer ml-auto absolute right-[5%] bg-gray-400 p-1 rounded-full hover:bg-gray-200' onClick={(e) => handleDelete(e, index)}>
+                      <div className='text-white flex dark:text-[#1C1E21]/90 cursor-pointer ml-auto absolute right-[5%] bg-gray-400 p-1 rounded-full hover:bg-gray-200' onClick={(e) => handleDelete(e, index)}>
                         <IoClose />
                       </div>
                     </div>
@@ -234,7 +234,7 @@ const Project = () => {
         ? null
         : <button
           onClick={handleClick}
-          className="hover:bg-gray-200 transition-all w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+          className="dark:text-[#1C1E21]/90 hover:bg-gray-200 transition-all w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded-[1000px] flex flex-row items-center justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
         >
           +
         </button>

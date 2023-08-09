@@ -52,7 +52,7 @@ const NavBar = ({ navRef, user }:any) => {
       <div className="flex flex-row cursor-pointer items-center gap-5" onClick={homeNav} >
         <img src={Logo} className="w-[40px]" />
       </div>
-      <div className="flex flex-row font-bold fade-in-delay0 fixed left-[45%]">
+      <div className="flex flex-row font-bold fade-in-delay0 absolute left-[45%] dark:text-[#1C1E21]/90">
         {mainProject ? mainProject.name : ''}
       </div>
       <div className="flex flex-row items-center gap-5">

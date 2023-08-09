@@ -41,7 +41,7 @@ const ProjectName = ({ email, name, id }:any) => {
   return (
 
         <div className="flex flex-col items-start p-2 m-1 relative h-min text-white bg-transparent">
-          <input type="text" className="bg-transparent p-1" value={text || ''} onChange={handleChange} />
+          <input type="text" className="bg-transparent p-1 text-sm md:text-normal" value={text || ''} onChange={handleChange} />
         </div>
   )
 }

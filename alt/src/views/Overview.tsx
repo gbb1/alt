@@ -56,13 +56,13 @@ const Overview = () => {
 
   return (
     <div className="overscroll-none fixed w-full">
-      <div className="flex flex-col w-full gap-4 mt-[5vh] px-[5%] overscroll-none ">
-        <div className="flex flex-row justify-between gap-4">
-          <h1 className="text-5xl text-[#1C1E21]/90 font-bold">Your projects:</h1>
+      <div className="flex flex-col w-full md:gap-4 mt-[5vh] px-[5%] overscroll-none ">
+        <div className="flex flex-row justify-between gap-4 items-center">
+          <h1 className="text-2xl md:text-5xl text-[#1C1E21]/90 font-bold">Your projects:</h1>
 
           <button
             onClick={handleClick}
-            className="btn normal-case w-max px-4 py-2 rounded-full flex flex-row items-center gap-2 justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
+            className="btn normal-case w-max px-4 py-2 dark:text-[#1C1E21]/90 rounded-full flex flex-row items-center gap-2 justify-center bg-[#65D072] border-2 border-[#1C1E21]/90"
           >
             <div className=''>Create project</div>
             {
@@ -72,7 +72,7 @@ const Overview = () => {
             }
           </button>
         </div>
-        <div className="flex flex-row w-full pt-4 px-4 rounded-lg justify-between">
+        <div className="flex flex-row w-full pt-4 px-2 md:px-4 rounded-lg justify-between">
           Project
           <div className="translate-x-20 invisible md:visible">
             Details
@@ -89,7 +89,7 @@ const Overview = () => {
         {
           loading
           ? <LoadingProjects />
-          : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain scroll max-h-[50vh] px-2 pt-2">
+          : <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain scroll max-h-[65vh] md:max-h-[50vh] px-2 md:pt-2">
             {
               projects && projects.map((p:any, index) => {
 

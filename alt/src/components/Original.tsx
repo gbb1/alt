@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from 'react';
 
 import { FaCircleMinus } from 'react-icons/fa6'
@@ -49,7 +50,7 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
       >
         <div className="flex flex-row p-2 items-center justify-between">
           <div
-            className="self-center text-xs"
+            className="self-center text-xs dark:text-[#1C1E21]/90"
           >string {xIndex}, alt {yIndex}</div>
           <div className="flex flex-row">
           </div>
@@ -57,8 +58,8 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
         <TextField state={content} handleChange={handleChange} xIndex={xIndex} id={''} />
         <div>
         <div className="flex flex-row justify-between items-center">
-          <div className="py-2 text-xs w-max rounded-sm ml-1">UI component:</div>
-            <div className="" id="ui_component"  onClick={(e) => handleShow(e, 'ui_component')}>
+          <div className="py-2 text-xs w-max rounded-sm ml-1 dark:text-[#1C1E21]/90">UI component:</div>
+            <div className="dark:text-[#1C1E21]/90" id="ui_component"  onClick={(e) => handleShow(e, 'ui_component')}>
               {
                 obj.ui_component.show
                 ? <FaCircleMinus />
@@ -74,8 +75,8 @@ const Original = ({ moved, xIndex, yIndex, obj, items, setItems, onDragStart, on
         </div>
         <div>
           <div className="flex flex-row justify-between items-center">
-            <div className="py-2 text-xs w-max rounded-sm ml-1">Translation info:</div>
-            <div className="" id="translation_string" onClick={(e) => handleShow(e, 'translation_string')}>
+            <div className="py-2 text-xs w-max rounded-sm ml-1 dark:text-[#1C1E21]/90">Translation info:</div>
+            <div className="dark:text-[#1C1E21]/90" id="translation_string" onClick={(e) => handleShow(e, 'translation_string')}>
               {
                 obj.translation_string.show
                 ? <FaCircleMinus />
