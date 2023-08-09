@@ -27,6 +27,7 @@ import { auth } from '../../firebaseConfig'
 
 
 import Column from '../components/Column';
+import { useSaveProject } from '../hooks/saveProject';
 
 const Project = () => {
 
@@ -50,15 +51,15 @@ const Project = () => {
 
   // @ts-ignore
   const { project_id, email } = location.state;
-  // console.log(project_id, email, size)
 
   const { project, loading } = useGetProject(email, project_id, update);
 
   const [items, setItems] = useState<Array<any>>([])
   const [dragging, setDragging] = useState<boolean>(false)
 
-  // const moveRef = useRef(null)
-  // const moveOverRef = useRef(null)
+    // @ts-ignore
+    const { saving, saveError } = useSaveProject(email, project_id, items);
+
   const dragged = useRef(null)
 
   const [moved, setMoved] = useState<null | number>(null)
@@ -68,12 +69,8 @@ const Project = () => {
   const { mainProject, setMainProject } = useContext(ProjectContext)
    // @ts-ignore
   const { mainItems, setMainItems } = useContext(ItemsContext)
-   // @ts-ignore
-  // const { mainSaving, setMainSaving } = useContext(SavingContext)
 
   const canvasRef = useRef(null)
-
-  // const { saving, saveError } = useSaveProject(email, project_id, items)
 
   useEffect(() => {
      // @ts-ignore
@@ -105,18 +102,21 @@ const Project = () => {
      // @ts-ignore
     const path = old[0].path
 
-    const oldRef = ref(storage, path);
-     // @ts-ignore
-    setItems(_items)
-    if (path?.length > 0) {
-      deleteObject(oldRef)
+    if (path) {
+      const oldRef = ref(storage, path);
+       // @ts-ignore
+      if (path?.length > 0) {
+        deleteObject(oldRef)
         .then(() => {
           console.log('deleted')
         })
         .catch((err) => {
           console.log(err)
         })
+      }
     }
+    setItems(_items)
+
   }
 
 

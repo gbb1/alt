@@ -72,8 +72,11 @@ const Screenshot = ({ user, projectId, items, setItems, xIndex }:any) => {
           .then((old) => {
             if (!old.length) return
 
+            console.log(old)
             const oldRef = ref(storage, old);
-            return deleteObject(oldRef)
+            if (oldRef) {
+              return deleteObject(oldRef)
+            }
           })
           .then((_res) => {
             // console.log(res)
