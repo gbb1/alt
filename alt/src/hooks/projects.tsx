@@ -2,8 +2,6 @@
 import { useState, useEffect } from 'react'
 import { getProjects } from '../../db/projects.ts'
 
-
-
 const useGetProjects = (user:string, refresh:boolean) => {
 
   const [projects, setProjects] = useState([]);

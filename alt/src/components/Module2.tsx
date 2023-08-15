@@ -41,7 +41,7 @@ const Module2 = ({ isVisible }:any) => {
             <div className={`py-2 pl-2 md:pl-20 mt-5 lg:mt-5 text-sm md:text-2xl lg:text-3xl font-light text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left w-full ${ show1 ? 'fade-in-delay2' : 'invisible'}`}>
               • Quickly create variations of content and add a screenshot for reference.
             </div>
-            <div className={`py-2 pl-2 md:pl-20  w-full text-sm md:text-2xllg:text-3xl font-light text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left w-full  ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>
+            <div className={`py-2 pl-2 md:pl-20  w-full text-sm md:text-2xl lg:text-3xl font-light text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left w-full  ${ show2 ? 'fade-in-delay2' : 'invisible'}`}>
               • Drag and drop your variations or star your favorites to quickly organize your process.            </div>
             <div className={`py-2 pl-2 md:pl-20 text-sm md:text-2xl lg:text-3xl font-light text-[#1C1E21]/90 flex flex-row gap-2 text-left lg:text-left w-full ${ show3 ? 'fade-in-delay2' : 'invisible'}`}>
               • Export your work to a csv so you can ship it or make changes in a spreadsheet.
