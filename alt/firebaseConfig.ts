@@ -22,6 +22,4 @@ const auth = initializeAuth(app, {
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-console.log(auth)
-
 export { storage, auth, db}
