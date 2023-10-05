@@ -121,15 +121,16 @@ const Project = () => {
 
 
   const dragOver = (moveFrom:null | number, moveTo:null | number) => {
-    if (!moveFrom || !moveTo) return
-    let _items = [...items]
-
-    const moved = _items.splice(moveFrom, 1)
-    _items = _items.slice(0, moveTo).concat(moved).concat(_items.slice(moveTo))
+    if (moveFrom === null || moveTo === null) return
     // @ts-ignore
-    setItems(_items)
-  }
+    setItems((curr) => {
+      let _items = [...curr]
 
+      const dragged = _items.splice(moveFrom, 1)
+      _items = _items.slice(0, moveTo).concat(dragged).concat(_items.slice(moveTo))
+      return _items
+    })
+  }
 
   const onDragStart = (e:DragEvent, index:number) => {
      // @ts-ignore
@@ -172,6 +173,7 @@ const Project = () => {
   }
 
   useEffect(() => {
+    console.log('moved', moved, 'movedover', movedOver)
     dragOver(moved, movedOver)
     setMoved((_curr) => movedOver)
     setSelected((_curr) => movedOver)

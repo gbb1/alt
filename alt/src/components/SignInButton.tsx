@@ -1,7 +1,8 @@
 
 import { useNavigate } from 'react-router';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { auth } from '../../firebaseConfig'
+
 
 import { AiFillGoogleCircle } from 'react-icons/ai'
 
@@ -28,6 +29,7 @@ const LoginButton = () => {
       .catch((err) => {
         console.log(err);
       })
+    signInWithRedirect(auth, new GoogleAuthProvider());
   }
 
   return (

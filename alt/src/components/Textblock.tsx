@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 
 import { IoClose } from 'react-icons/io5'
 import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'
@@ -9,12 +9,16 @@ import TextField from './TextField';
 
 const Textblock = ({ moved, xIndex, yIndex, items, setItems, onDragStart, onDragEnd, onDragOver, varDragging }:any) => {
 
+  // console.log('items', items)
+
   const content = useMemo(() => {
     return items[xIndex].variations[yIndex].text
   }, [xIndex, yIndex, items])
 
 
+
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    console.log('running handle change')
     e.preventDefault()
 
     const _items = [...items]

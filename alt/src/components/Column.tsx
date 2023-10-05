@@ -15,7 +15,6 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   const [varDragging, setVarDragging] = useState<boolean>(false)
 
   const dragOver = (moveFrom:number, moveTo:number) => {
-
     const ref = [...items]
     let _vars = [...ref[index].variations]
 
@@ -46,12 +45,6 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
     setItems(_items)
   }
 
-  // const startDrag = (e:DragEvent) => {
-  //   e.preventDefault()
-  //   setDragging(true)
-
-  // }
-
   const onDragOver = (_e:DragEvent, index:number) => {
     if (varDragging) {
       setMovedOver((_curr) => index)
@@ -59,7 +52,7 @@ const Column = ({ user, projectId, index, items, setItems, obj, setDragging }:an
   }
 
   useEffect(() => {
-    if (!moved || !movedOver) return
+    if (moved === null || movedOver === null) return
     dragOver(moved, movedOver)
     setMoved((_curr) => movedOver)
   }, [movedOver])
