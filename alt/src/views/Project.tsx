@@ -173,7 +173,6 @@ const Project = () => {
   }
 
   useEffect(() => {
-    console.log('moved', moved, 'movedover', movedOver)
     dragOver(moved, movedOver)
     setMoved((_curr) => movedOver)
     setSelected((_curr) => movedOver)
