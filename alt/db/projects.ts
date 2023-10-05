@@ -16,7 +16,7 @@ const createUser = async (email:string | null) => {
   const userSnap = await getDoc(userRef);
 
 
-  if (!userSnap.exists()) {
+  if (email === 'demo@gmail.com' || !userSnap.exists()) {
     setDoc(userRef, userData, { merge: true })
       .then(() => {
         // console.log('written');

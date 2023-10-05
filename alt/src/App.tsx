@@ -13,6 +13,7 @@ import NavBar from './components/Navbar';
 import Project from './views/Project'
 import Overview from './views/Overview';
 import Login from './views/Login';
+import Demo from './views/Demo';
 
 import { ProjectContext } from './context/mainProject';
 import { ItemsContext } from './context/itemsContext';
@@ -48,22 +49,23 @@ function App() {
 
     <div className="">
       <div onScroll={handleScroll} className="fixed top-0 left-0 h-full w-full bg-[#FBF5EC] overflow-auto">
-        <ProjectContext.Provider value={{ mainProject, setMainProject }} >
-          <ItemsContext.Provider
-            // @ts-ignore
-            value={{ mainItems, setMainItems }} >
-              <Router>
-                <NavBar navRef={navRef} user={user} />
-                <Routes>
-                  <Route path='/' element={<Overview />} />
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/project' element={<Project
-                    //@ts-ignore
-                    setMainProject={setMainProject} />} />
-                </Routes>
-              </Router>
-          </ItemsContext.Provider>
-        </ProjectContext.Provider>
+          <ProjectContext.Provider value={{ mainProject, setMainProject }} >
+            <ItemsContext.Provider
+              // @ts-ignore
+              value={{ mainItems, setMainItems }} >
+                <Router>
+                  <NavBar navRef={navRef} user={user} />
+                  <Routes>
+                    <Route path='/' element={<Overview />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/project' element={<Project
+                      //@ts-ignore
+                      setMainProject={setMainProject} />} />
+                    <Route path='/demo' element={<Demo />} />
+                  </Routes>
+                </Router>
+            </ItemsContext.Provider>
+          </ProjectContext.Provider>
       </div>
     </div>
   )

@@ -6,7 +6,13 @@ export default defineConfig({
   plugins: [
     react(),
     crossOriginIsolation(),
+
   ],
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+    },
+  },
 
   //   watch: {
   //     usePolling: true,

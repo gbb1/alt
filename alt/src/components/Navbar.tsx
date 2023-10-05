@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 import { auth } from '../../firebaseConfig'
 import { signOut } from 'firebase/auth';
@@ -21,7 +22,7 @@ const NavBar = ({ navRef, user }:any) => {
   // const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true)
   const navigate = useNavigate()
-
+  const location = useLocation();
 
   const { mainProject } = useContext<any>(ProjectContext)
   const { mainItems } = useContext<any>(ItemsContext)
@@ -75,7 +76,18 @@ const NavBar = ({ navRef, user }:any) => {
             ? <button
               onClick={() => signOut(auth).then(() => { console.log('Ciao!')})}
               className="gap-2 normal-case font-medium flex flex-row text-sm hover:text-[#65D072] text-[#1C1E21]/90 transition-opacity transition-all" >Log out</button>
-            : <LoginButton />
+            : (location?.state?.email === "demo@gmail.com" || location?.state?.pathname === '/demo')
+              ?  <button
+                  type="button"
+                  className=""
+                  //@ts-ignore
+                  onClick={() => navigate('/')} >
+                    <div className="btn gap-2 dark:text-[#1C1E21]/90 text-sm normal-case flex flex-row bg-[#65D072] border-2 border-[#1C1E21]/90 rounded-full px-4">
+                      {/* <AiFillGoogleCircle /> Sign in with Google */}
+                      Home
+                    </div>
+                </button>
+              : <LoginButton />
         }
       </div>
     </div>
@@ -84,5 +96,3 @@ const NavBar = ({ navRef, user }:any) => {
 }
 
 export default NavBar
-
-// text-[#65D072]

@@ -9,9 +9,8 @@ const useGetProjects = (user:string, refresh:boolean) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-
     getProjects(user)
-      .then((res:any) => {
+    .then((res:any) => {
         res = res.sort((a:any, b:any) => b.accessed.seconds - a.accessed.seconds)
         setProjects(res)
         setLoading(false)

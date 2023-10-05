@@ -42,6 +42,7 @@ const Project = () => {
   })
 
   useEffect(() => {
+    if (email === 'demo@gmail.com') return
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         navigate('/login');
@@ -58,7 +59,7 @@ const Project = () => {
   const [dragging, setDragging] = useState<boolean>(false)
 
     // @ts-ignore
-    const { saving, saveError } = useSaveProject(email, project_id, items);
+  const { saving, saveError } = useSaveProject(email, project_id, items);
 
   const dragged = useRef(null)
 
