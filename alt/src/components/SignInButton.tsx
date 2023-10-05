@@ -27,7 +27,7 @@ const LoginButton = () => {
             console.log('err')
           })
       })
-      .catch((err) => {
+      .catch(() => {
         alert('Firebase error, working on a fix :)')
       })
     } catch (e) {
