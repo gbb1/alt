@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 import { IoClose } from 'react-icons/io5'
 import { FaStar, FaRegStar, FaClone } from 'react-icons/fa6'

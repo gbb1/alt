@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router';
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth } from '../../firebaseConfig'
 
 
