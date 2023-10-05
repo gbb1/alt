@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router';
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebaseConfig'
 
 
@@ -16,7 +16,8 @@ const LoginButton = () => {
   const signInWithGoogle = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    signInWithPopup(auth, new GoogleAuthProvider())
+    try {
+      signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
         createUser(response.user.email)
           .then(() => {
@@ -27,9 +28,11 @@ const LoginButton = () => {
           })
       })
       .catch((err) => {
-        console.log(err);
+        alert('Firebase error, working on a fix :)')
       })
-    signInWithRedirect(auth, new GoogleAuthProvider());
+    } catch (e) {
+      alert((e as Error).message)
+    }
   }
 
   return (
